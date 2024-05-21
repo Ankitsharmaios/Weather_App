@@ -1,0 +1,46 @@
+PODS:
+  - Alamofire (5.0.0-rc.2)
+  - AlamofireObjectMapper (6.2.0):
+    - Alamofire (= 5.0.0-rc.2)
+    - ObjectMapper (~> 3.5.1)
+  - Loaf (0.7.0)
+  - ObjectMapper (3.5.3)
+  - ReachabilitySwift (5.2.1)
+  - SDWebImage (5.19.1):
+    - SDWebImage/Core (= 5.19.1)
+  - SDWebImage/Core (5.19.1)
+  - SVProgressHUD (2.3.1):
+    - SVProgressHUD/Core (= 2.3.1)
+  - SVProgressHUD/Core (2.3.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 5.0.0-rc.2)
+  - AlamofireObjectMapper
+  - Loaf
+  - ObjectMapper
+  - ReachabilitySwift
+  - SDWebImage
+  - SVProgressHUD
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AlamofireObjectMapper
+    - Loaf
+    - ObjectMapper
+    - ReachabilitySwift
+    - SDWebImage
+    - SVProgressHUD
+
+SPEC CHECKSUMS:
+  Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
+  AlamofireObjectMapper: 74d1440c92c42bbcc2b5f4dc81654ac095ec669f
+  Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
+  ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
+  ReachabilitySwift: 5ae15e16814b5f9ef568963fb2c87aeb49158c66
+  SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
+  SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
+
+PODFILE CHECKSUM: d53aca71efc4d7bba8e644c57906a39705bb4bdb
+
+COCOAPODS: 1.15.2
