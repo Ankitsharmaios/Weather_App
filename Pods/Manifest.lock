@@ -12,6 +12,7 @@ PODS:
   - SVProgressHUD (2.3.1):
     - SVProgressHUD/Core (= 2.3.1)
   - SVProgressHUD/Core (2.3.1)
+  - Toast-Swift (5.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.2)
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - ReachabilitySwift
   - SDWebImage
   - SVProgressHUD
+  - Toast-Swift (~> 5.0.0)
 
 SPEC REPOS:
   trunk:
@@ -31,6 +33,7 @@ SPEC REPOS:
     - ReachabilitySwift
     - SDWebImage
     - SVProgressHUD
+    - Toast-Swift
 
 SPEC CHECKSUMS:
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
@@ -40,7 +43,8 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 5ae15e16814b5f9ef568963fb2c87aeb49158c66
   SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: d53aca71efc4d7bba8e644c57906a39705bb4bdb
+PODFILE CHECKSUM: 1069e6ef86639c453821ac3376fd3fd669d37ec4
 
 COCOAPODS: 1.15.2

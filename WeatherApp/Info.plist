@@ -9,6 +9,10 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>helvetica_bold.ttf</string>
+		<string>helvetica_medium.ttf</string>
+		<string>helvetica_regular.ttf</string>
+		<string>helvetica_semibold.ttf</string>
 		<string>nunitosans_black.TTF</string>
 		<string>nunitosans_bold.TTF</string>
 		<string>nunitosans_extrabold.TTF</string>

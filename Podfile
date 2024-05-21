@@ -15,4 +15,5 @@ target 'WeatherApp' do
   pod 'SDWebImage'
   pod 'SVProgressHUD'
   pod 'Loaf'
+  pod 'Toast-Swift', '~> 5.0.0'
 end

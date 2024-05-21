@@ -9,6 +9,7 @@ import UIKit
 
 class WeatherViewController: WhiteColorNoneNavigation {
     
+    @IBOutlet weak var selectCityBtn: UIButton!
     @IBOutlet weak var lblWeatherApp: UILabel!
     @IBOutlet weak var collectioninnerView: UIView!
     @IBOutlet weak var weatherImageView: UIImageView!
@@ -23,7 +24,7 @@ class WeatherViewController: WhiteColorNoneNavigation {
     
     var arrWeatherData: WeatherListModel?
     var hourModel = [HourModel]()
-    
+    var hourModels = [Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?[0].hour]
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -96,6 +97,94 @@ class WeatherViewController: WhiteColorNoneNavigation {
         self.collectionView.reloadData()
     }
     
+//    func bindDatareset(){
+//        
+//        locationAddressLbl.text = "\(Singleton.sharedInstance.arrCityWeatherData?.locations?.name ?? "")," + " " + (Singleton.sharedInstance.arrCityWeatherData?.locations?.region ?? "")
+//        dateLbl.text = getConvertedDate(format: "d MMM yyyy", dateString: (arrWeatherData?.locations?.localtime ?? ""))
+//        
+//        //        temperatureLbl.text = "\(arrWeatherData?.current?.temp_c ?? 0)"
+//        statusLbl.text = Singleton.sharedInstance.arrCityWeatherData?.current?.condition?.text ?? ""
+//        
+//        let attrString = NSMutableAttributedString(string: "\(Singleton.sharedInstance.arrCityWeatherData?.current?.temp_c ?? 0)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: temperatureLbl.font.pointSize)])
+//
+//        attrString.append(NSMutableAttributedString(string:"°", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30),.baselineOffset: NSNumber(value: 40)]))
+//        temperatureLbl.attributedText = attrString
+//        
+//        
+//        
+//        hourModel = [hourModels]
+//        if Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?.count ?? 0 > 0 {
+//            let hourCount = Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?[0].hour?.suffix(from: 17).prefix(4)
+//            for item in hourCount ?? [] {
+//                hourModel.append(item)
+//            }
+//        }
+//        
+//        dayTitleLbl.text = "Next \(Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?.count ?? 0) Days"
+//        
+//        
+//        self.tableView.delegate = self
+//        self.tableView.dataSource = self
+//        self.tableView.reloadData()
+//        
+//        self.collectionView.delegate = self
+//        self.collectionView.dataSource = self
+//        self.collectionView.reloadData()
+//    }
+//    
+    func bindDatareset() {
+        // Safely unwrap arrCityWeatherData
+        guard let arrWeatherData = Singleton.sharedInstance.arrCityWeatherData else {
+            // Handle the case when arrWeatherData is nil, maybe show an error message or return from the function
+            return
+        }
+        
+        // Set location and date labels
+        locationAddressLbl.text = "\(arrWeatherData.locations?.name ?? ""), \(arrWeatherData.locations?.region ?? "")"
+        dateLbl.text = getConvertedDate(format: "d MMM yyyy", dateString: arrWeatherData.locations?.localtime ?? "")
+        
+        // Set status label
+        statusLbl.text = arrWeatherData.current?.condition?.text ?? ""
+        
+        // Set temperature label with attributed string
+        let attrString = NSMutableAttributedString(
+            string: "\(arrWeatherData.current?.temp_c ?? 0)",
+            attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: temperatureLbl.font.pointSize)]
+        )
+        attrString.append(
+            NSMutableAttributedString(
+                string: "°",
+                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30), .baselineOffset: NSNumber(value: 40)]
+            )
+        )
+        temperatureLbl.attributedText = attrString
+        
+        // Initialize hourModel as an empty array of HourModel
+        hourModel = [HourModel]()
+        
+        // Check if forecast data is available
+        if let forecastDay = arrWeatherData.forecast?.forecastday, forecastDay.count > 0 {
+            // Get the last 4 hours of the forecast starting from the 17th hour
+            if let hourCount = forecastDay[0].hour?.suffix(from: 17).prefix(4) {
+                for item in hourCount {
+                    hourModel.append(item)
+                }
+            }
+        }
+        
+        // Set day title label
+        dayTitleLbl.text = "Next \(arrWeatherData.forecast?.forecastday?.count ?? 0) Days"
+        
+        // Reload table view and collection view
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.reloadData()
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.reloadData()
+    }
+
     /*
      // MARK: - Navigation
      
@@ -106,6 +195,15 @@ class WeatherViewController: WhiteColorNoneNavigation {
      }
      */
     
+    @IBAction func selectCityAction(_ sender: Any)
+    {
+        let CitysPopUPVC = CitysPopUPVC.getInstance()
+        CitysPopUPVC.modalPresentationStyle = .overCurrentContext
+        CitysPopUPVC.callback = {
+            self.bindDatareset()
+        }
+        present(CitysPopUPVC, animated: true)
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -121,13 +219,26 @@ extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: WeatherListCell.identifier, for: indexPath) as? WeatherListCell {
+          
+            if Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?.count ?? 0 > 0
+            {
+                
+                let data = Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?[indexPath.row]
+                // 2023-03-16
+                cell.dateLbl.text = getCustomConvertedDate(format: "dd MMMM yyyy", toFormat: "yyyy-MM-dd", dateString: data?.date ?? "")
+                cell.statusLbl.text = data?.day?.condition?.text ?? ""
+                cell.temperatureLbl.text = "\(data?.day?.mintemp_c ?? 0) / \(data?.day?.maxtemp_c ?? 0)"
+                cell.imageIcon.getImage(data?.day?.condition?.icon?.replacingOccurrences(of: "//", with: "https://") ?? "")
+            }else
+            {
+                let data = arrWeatherData?.forecast?.forecastday?[indexPath.row]
+                // 2023-03-16
+                cell.dateLbl.text = getCustomConvertedDate(format: "dd MMMM yyyy", toFormat: "yyyy-MM-dd", dateString: data?.date ?? "")
+                cell.statusLbl.text = data?.day?.condition?.text ?? ""
+                cell.temperatureLbl.text = "\(data?.day?.mintemp_c ?? 0) / \(data?.day?.maxtemp_c ?? 0)"
+                cell.imageIcon.getImage(data?.day?.condition?.icon?.replacingOccurrences(of: "//", with: "https://") ?? "")
+            }
             
-            let data = arrWeatherData?.forecast?.forecastday?[indexPath.row]
-            // 2023-03-16
-            cell.dateLbl.text = getCustomConvertedDate(format: "dd MMMM yyyy", toFormat: "yyyy-MM-dd", dateString: data?.date ?? "")
-            cell.statusLbl.text = data?.day?.condition?.text ?? ""
-            cell.temperatureLbl.text = "\(data?.day?.maxtemp_c ?? 0) / \(data?.day?.mintemp_c ?? 0)"
-            cell.imageIcon.getImage(data?.day?.condition?.icon?.replacingOccurrences(of: "//", with: "https://") ?? "")
             return cell
         }
         
@@ -146,8 +257,9 @@ extension WeatherViewController: UITableViewDelegate {
 //MARK: - UICollectionViewDataSource
 extension WeatherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return hourModel.count
+        return min(hourModel.count, 3)
     }
+
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherDayListCollectionCell.identifier, for: indexPath) as? WeatherDayListCollectionCell {
@@ -162,12 +274,18 @@ extension WeatherViewController: UICollectionViewDataSource {
         }
         return UICollectionViewCell()
     }
+    
+    
+    
+    
+    
+    
 }
 
 //MARK: - UICollectionViewDelegate
 extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 70, height: 80)
+        return CGSize(width: 95, height: 80)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -182,19 +300,18 @@ extension WeatherViewController {
         DataManager.shared.getWeatherDetail() { [weak self] (result) in
             switch result {
             case .success(let appWeatherModel):
-                //                print("appBannerListModel ", appBannerListModel)
+                    print("appWeatherModel ", appWeatherModel)
                 self?.arrWeatherData = appWeatherModel
                 self?.bindData()
                 
             case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
-               // APPLICATION_DELEGATE.genarateUserToken { statuscode in
-                 //   if statuscode {
-                        // Call API
-                     //   self?.getWeatherData()
-               //     }
-              //  }
             }
         }
     }
+    
+    
+    
+    
+    
 }
