@@ -26,7 +26,7 @@ class WeatherViewController: WhiteColorNoneNavigation {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Ankit")
+       
         cellNib()
         getWeatherData()
         setFont()
