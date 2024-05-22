@@ -32,12 +32,17 @@ class CitysPopUPVC: UIViewController {
         super.viewDidLoad()
         setupUI()
         registerNib()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector (tap))  //Tap function will call when user tap on button
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(long))  //Long function will call when user long press on button.
-        longGesture.minimumPressDuration = 2
+        // Gesture recognizers setup
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(long))
+        longGesture.minimumPressDuration = 3
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
         tapGesture.numberOfTapsRequired = 1
+
         btnChangeLocation.addGestureRecognizer(tapGesture)
         btnChangeLocation.addGestureRecognizer(longGesture)
+
+        
     }
     
     func registerNib()
@@ -62,19 +67,34 @@ class CitysPopUPVC: UIViewController {
     }
     
     
+    // Tap gesture action
     @objc func tap() {
-        if self.selectedCity == ""
-        {
+        if self.selectedCity.isEmpty {
             self.view.makeToast("Please Select City")
-        }else
-        {
+        } else {
             getCityWeatherData(cityname: self.selectedCity)
         }
-        }
-
-    @objc func long() {
-        print("Long press")
     }
+
+    // Long press gesture action
+    @objc func long(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            print("Long press began")
+            DispatchQueue.main.async {
+                self.dismiss(animated: true) { [self] in
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    if let destinationVC = storyboard.instantiateViewController(withIdentifier: "WelcomeToTheWeatherAppVC") as? WelcomeToTheWeatherAppVC {
+                        destinationVC.modalPresentationStyle = .overCurrentContext
+                        if let viewController = UIViewController.currentViewcc() {
+                            // Present the new view controller after the dismissal animation completes
+                            viewController.present(destinationVC, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
     @IBAction func dissmissAction(_ sender: Any)
     {

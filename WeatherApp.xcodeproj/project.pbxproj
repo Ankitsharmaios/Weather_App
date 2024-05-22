@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */; };
+		1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */; };
 		14AF4BAE2BFC6B790042CB95 /* PopUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AF4BAD2BFC6B790042CB95 /* PopUp.storyboard */; };
 		14AF4BB12BFC6DA00042CB95 /* CitysPopUPVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF4BB02BFC6DA00042CB95 /* CitysPopUPVC.swift */; };
 		14AF4BB42BFC72540042CB95 /* UIViewControllerExtented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF4BB32BFC72540042CB95 /* UIViewControllerExtented.swift */; };
@@ -69,6 +71,8 @@
 
 /* Begin PBXFileReference section */
 		0B4D3880110DF7A00E159173 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeToTheWeatherAppVC.swift; sourceTree = "<group>"; };
+		1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyNumberVC.swift; sourceTree = "<group>"; };
 		14AF4BAD2BFC6B790042CB95 /* PopUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PopUp.storyboard; sourceTree = "<group>"; };
 		14AF4BB02BFC6DA00042CB95 /* CitysPopUPVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitysPopUPVC.swift; sourceTree = "<group>"; };
 		14AF4BB32BFC72540042CB95 /* UIViewControllerExtented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtented.swift; sourceTree = "<group>"; };
@@ -302,6 +306,8 @@
 			children = (
 				14AF4BAF2BFC6D750042CB95 /* PopUPControllers */,
 				14D3CE152BFB5D4700E700CB /* WeatherViewController.swift */,
+				1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */,
+				1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -595,6 +601,8 @@
 				14D3CE512BFB68E000E700CB /* APILogs.swift in Sources */,
 				14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */,
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
+				1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */,
+				1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */,
 				14AF4BE32BFCC1B60042CB95 /* Singleton.swift in Sources */,
 				14D3CDE82BFB5CCD00E700CB /* SceneDelegate.swift in Sources */,
 			);

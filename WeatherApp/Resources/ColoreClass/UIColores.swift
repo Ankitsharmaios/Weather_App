@@ -50,7 +50,12 @@ class AppColor {
     var selectedCityColure : UIColor = {
         return  #colorLiteral(red: 0, green: 0.5019607843, blue: 0.4117647059, alpha: 1)  //  #008069
     }()
-    
+    var greenToast_Colure : UIColor = {
+        return  #colorLiteral(red: 0.2666666667, green: 0.7019607843, blue: 0.2862745098, alpha: 1)  //  #44b349
+    }()
+    var text_LightColure : UIColor = {
+        return  #colorLiteral(red: 0.4235294118, green: 0.4745098039, blue: 0.5098039216, alpha: 1)  //  #6c7982
+    }()
     //================================ ==========================================
  /*
     var greyEdit : UIColor = { // CCCCCC

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//import IQKeyboardManagerSwift
+import IQKeyboardManagerSwift
 //import GoogleMaps
 import Loaf
 import ObjectMapper
@@ -230,6 +230,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         getFirebaseData()
     }
     */
+        
+        IQKeyboardManager.shared.enable = true
         return true
 }
 
