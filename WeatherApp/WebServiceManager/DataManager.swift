@@ -55,8 +55,8 @@ class DataManager: NSObject {
 struct WebServiceURL {
 //    static let URLDomain = "http://uboapis.testingbeta.in/api/" // Live
 //    static let URLDomain = "https://api.univia.tk/api/" // Staging --- Last used - till 10/01/2024
-    static let URLDomain = "https://api.univia.cc/api/" // After 10/01/2024 changes
-    static let globasDomain = "https://api.univia.cc" //Note : Where above domain change please this also
+    static let URLDomain = "https://wadmin.testingbeta.online/api/" // After 10/01/2024 changes
+  //  static let globasDomain = "https://api.univia.cc" //Note : Where above domain change please this also
 }
 
 //------------------------------------------------------------------------------
@@ -65,86 +65,9 @@ struct WebServiceURL {
 //------------------------------------------------------------------------------
 
 enum WSEndPoints: String {
-    case GenerateToken = "GenerateToken"
-    case AppLanguageList = "AppLanguageList?"
-    case GetLanguageLabels = "languageLabels"
-    case UserLoginv3 = "userLoginv3"
-    case VerifyOTPv2 = "verifyOTPv2"
-    case GetBannerList = "BannerList"
+    case RegisterCheck = "RegisterCheck"
+    case VerifyOTP = "VerifyOTP"
     
-    case GetProductCategoryList = "ProductCategoryList?"
-    case GetProductSubCategoryList = "ProductSubCategoryList?"
-    case GetProductBrandList = "ProductBrandList?"
-    case GetProductList = "ProductList"
-    case GetProductDetail = "ProductDetail"
-    case addProductWishList = "ProductWishList"
-    
-    
-    case AddToCartProduct = "AddToCartProduct"
-    case GetCartList = "UFACartList"
-    case GetStoreAddressList = "StoreAddressList"
-    case CartQuantityUpdate = "CartQuantityUpdate"
-    case GetCustomerAddressList = "CustomerAddressList"
-    case AddCustomerAddress = "CustomerAddress"
-    
-    case UFACheckout = "UFACheckout"
-    case UFAPlaceOrder = "UFAPlaceOrder"
-    case GetOrderList = "OrderList"
-    case GetOrderDetail = "OrderDetail"
-    
-    case ChangeOrderStatus = "ChangeOrderStatus"
-    case RewardHistoryList = "RewardHistoryList"
-    case Checkout = "Checkout"
-    case CouponList = "CouponList"
-    
-    case CompanyDetails = "CompanyDetails"
-    case GetNotificationDetail = "GetNotificationDetail"
-    
-    //Kheti tab
-    case AddFarmApi = "AddFarm"
-    case GetFarmCropsList = "FarmCrops"
-    case AddCropsInFarm = "AddCropsInFarm"
-    case AddFarmCropIncomeExpense = "AddFarmCropIncomeExpense"
-    case IncomeDetail = "IncomeDetail"
-    
-    case CropListData = "CropListData"
-    case GetCropCategoryList = "CropCategoryList"
-    case MandiCropPrice = "MandiCropPrice"
-    case CropEditAddData = "CropEditAddData"
-    
-    case AAAForm_AddServiceRequest = "AddServiceRequest"
-    case SideMenuServiceRequestList = "ServiceRequestList"
-    
-    case FarmerQuestionsList = "FarmerQuestionsList"
-    case GetBlogList = "BlogList"
-    case GetCropDetail = "CropDetail"
-    case GetQuestionDetail = "QuestionDetail"
-    case AddCommentQuestion = "addCommentQuestion"
-    
-    
-    case LegalPageListList = "LegalPageList"
-    case customerLikeBlogWishList = "customerLikeBlog"
-    case addCommentBlogWishList = "addCommentBlog"
-    case MandiWishList = "MandiWishList"
-    case LikeQuestion = "LikeQuestion"
-    case AddFarmerQuestions = "FarmerQuestions"
-    case GetPetsList = "PetsList"
-    case GetDiseaseList = "DiseaseList"
-    
-    //BlogDetail
-    case BlogDetail = "BlogDetail"
-//    case BlogWishList = "BlogWishList"
-    
-    //MARK: Jignesh
-    case BlogWishList = "BlogWishList"
-    
-    //MyProfileView
-    case ProfileList = "ProfileList"
-    case BadgeDetails = "BadgeDetails"
-    case EditProfileLocationDetail = "Location"
-    case EditUGAProfile = "EditUGAProfile"
-    case UFARegister = "UFARegister"
-    case MarkedAsDeleted = "MarkedAsDeleted"
 }
 
 

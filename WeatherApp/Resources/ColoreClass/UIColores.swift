@@ -56,6 +56,12 @@ class AppColor {
     var text_LightColure : UIColor = {
         return  #colorLiteral(red: 0.4235294118, green: 0.4745098039, blue: 0.5098039216, alpha: 1)  //  #6c7982
     }()
+    var text_Weather : UIColor = {
+            return  #colorLiteral(red: 0.1137254902, green: 0.6666666667, blue: 0.3803921569, alpha: 1)  //  #1daa61
+        }()
+        var searchbgView : UIColor = {
+            return  #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)  //  #F5F5F5
+        }()
     //================================ ==========================================
  /*
     var greyEdit : UIColor = { // CCCCCC

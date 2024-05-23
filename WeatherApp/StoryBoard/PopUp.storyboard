@@ -108,7 +108,98 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-263.35877862595419" y="-47.183098591549296"/>
+            <point key="canvasLocation" x="-378" y="-49"/>
+        </scene>
+        <!--Two step verification Pop UpVC-->
+        <scene sceneID="tQU-44-ncU">
+            <objects>
+                <viewController storyboardIdentifier="Two_step_verificationPopUpVC" id="je4-Cq-krD" customClass="Two_step_verificationPopUpVC" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HSJ-Pr-Nsq">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3A0-rR-kBT">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eLy-vL-zJX">
+                                <rect key="frame" x="25" y="338.66666666666669" width="343" height="200.00000000000006"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVc-aT-Cg0">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your two-step verification PIN" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGr-Mz-DDE">
+                                                <rect key="frame" x="15" y="12.333333333333314" width="280" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="hsI-T9-O04"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="61W-6b-P8f"/>
+                                            <constraint firstItem="VGr-Mz-DDE" firstAttribute="centerY" secondItem="KVc-aT-Cg0" secondAttribute="centerY" id="KCS-y3-ZPk"/>
+                                            <constraint firstItem="VGr-Mz-DDE" firstAttribute="leading" secondItem="KVc-aT-Cg0" secondAttribute="leading" constant="15" id="lzf-wX-zSv"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C5e-RA-LAZ" customClass="DPOTPView" customModule="DPOTPView">
+                                        <rect key="frame" x="50" y="80" width="243" height="51"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="51" id="Afm-ce-u0H"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You will be asked for it periodically to help you remember it. Forgot PIN?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jza-cA-YjX">
+                                        <rect key="frame" x="15" y="146" width="313" height="36"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="KVc-aT-Cg0" firstAttribute="leading" secondItem="eLy-vL-zJX" secondAttribute="leading" id="8IP-sT-VHC"/>
+                                    <constraint firstItem="C5e-RA-LAZ" firstAttribute="centerX" secondItem="KVc-aT-Cg0" secondAttribute="centerX" id="9ai-hC-l70"/>
+                                    <constraint firstItem="C5e-RA-LAZ" firstAttribute="leading" secondItem="eLy-vL-zJX" secondAttribute="leading" constant="50" id="9fL-q0-DRl"/>
+                                    <constraint firstAttribute="trailing" secondItem="KVc-aT-Cg0" secondAttribute="trailing" id="GsZ-tE-8tL"/>
+                                    <constraint firstAttribute="trailing" secondItem="jza-cA-YjX" secondAttribute="trailing" constant="15" id="L59-38-RgW"/>
+                                    <constraint firstAttribute="height" constant="200" id="NEO-sB-JeF"/>
+                                    <constraint firstAttribute="trailing" secondItem="C5e-RA-LAZ" secondAttribute="trailing" constant="50" id="RX2-s0-jIa"/>
+                                    <constraint firstItem="jza-cA-YjX" firstAttribute="leading" secondItem="eLy-vL-zJX" secondAttribute="leading" constant="15" id="cAC-pp-Mza"/>
+                                    <constraint firstItem="KVc-aT-Cg0" firstAttribute="top" secondItem="eLy-vL-zJX" secondAttribute="top" id="fNe-9v-1WG"/>
+                                    <constraint firstItem="C5e-RA-LAZ" firstAttribute="top" secondItem="KVc-aT-Cg0" secondAttribute="bottom" constant="20" id="lK6-xF-ttm"/>
+                                    <constraint firstItem="jza-cA-YjX" firstAttribute="top" secondItem="C5e-RA-LAZ" secondAttribute="bottom" constant="15" id="zJM-Tn-5dm"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="xNm-O4-SHr"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xNm-O4-SHr" firstAttribute="trailing" secondItem="3A0-rR-kBT" secondAttribute="trailing" id="PI7-AA-TOb"/>
+                            <constraint firstItem="3A0-rR-kBT" firstAttribute="top" secondItem="xNm-O4-SHr" secondAttribute="top" id="VJ8-vz-bJX"/>
+                            <constraint firstItem="xNm-O4-SHr" firstAttribute="trailing" secondItem="eLy-vL-zJX" secondAttribute="trailing" constant="25" id="Vzk-d0-zfG"/>
+                            <constraint firstItem="xNm-O4-SHr" firstAttribute="bottom" secondItem="3A0-rR-kBT" secondAttribute="bottom" id="cHi-p8-PkC"/>
+                            <constraint firstItem="eLy-vL-zJX" firstAttribute="leading" secondItem="xNm-O4-SHr" secondAttribute="leading" constant="25" id="hOB-nO-zue"/>
+                            <constraint firstItem="eLy-vL-zJX" firstAttribute="centerX" secondItem="3A0-rR-kBT" secondAttribute="centerX" id="i6P-SE-cSp"/>
+                            <constraint firstItem="3A0-rR-kBT" firstAttribute="leading" secondItem="xNm-O4-SHr" secondAttribute="leading" id="mjy-bC-kgH"/>
+                            <constraint firstItem="eLy-vL-zJX" firstAttribute="centerY" secondItem="3A0-rR-kBT" secondAttribute="centerY" id="qzp-as-96G"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="lblEnterYou" destination="VGr-Mz-DDE" id="IUV-kn-SoA"/>
+                        <outlet property="lblYouwillbe" destination="jza-cA-YjX" id="cgy-OQ-zi2"/>
+                        <outlet property="mainView" destination="eLy-vL-zJX" id="4xR-ER-UcZ"/>
+                        <outlet property="otpView" destination="C5e-RA-LAZ" id="RHL-eO-aYx"/>
+                        <outlet property="topGreenView" destination="KVc-aT-Cg0" id="0xS-H0-DCj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MfM-Kc-74v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1185" y="-39"/>
         </scene>
     </scenes>
     <resources>
