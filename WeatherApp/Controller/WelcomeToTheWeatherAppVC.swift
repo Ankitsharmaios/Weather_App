@@ -19,7 +19,7 @@ class WelcomeToTheWeatherAppVC: UIViewController , UITextFieldDelegate {
     @IBOutlet weak var numberView: UIView!
     @IBOutlet weak var btnNext: UIButton!
     
-    
+    var userRegisterData:RegisterModel?
     
     class func getInstance()-> WelcomeToTheWeatherAppVC {
         return WelcomeToTheWeatherAppVC.viewController(storyboard: Constants.Storyboard.Main)
@@ -38,8 +38,8 @@ class WelcomeToTheWeatherAppVC: UIViewController , UITextFieldDelegate {
         //  lblWeatherAppWillNeed.font = Helvetica.helvetica_medium.font(size: 14)
         
         
-        countryView.layer.backgroundColor = appThemeColor.selectedCityColure.cgColor
-        numberView.layer.backgroundColor = appThemeColor.selectedCityColure.cgColor
+        countryView.layer.backgroundColor = appThemeColor.text_Weather.cgColor
+        numberView.layer.backgroundColor = appThemeColor.text_Weather.cgColor
         
         
         btnNext.setTitleColor(appThemeColor.white, for: .normal)
@@ -76,14 +76,31 @@ class WelcomeToTheWeatherAppVC: UIViewController , UITextFieldDelegate {
 
     @IBAction func nextAction(_ sender: Any)
     {
-    
-        numberValidation()
-        let VerifyNumberVC = VerifyNumberVC.getInstance()
-        VerifyNumberVC.modalPresentationStyle = .overCurrentContext
         
-        present(VerifyNumberVC, animated: true)
+        // Configure the toast style
+        var toastStyle = ToastStyle()
+        toastStyle.backgroundColor = appThemeColor.text_Weather
+       
+        
+        
+        // Check if the number field is empty
+        if numberField.text?.isEmpty == true {
+            // If the text field is empty, show a toast message with custom style
+            self.view.makeToast("Phone number required", duration: 2.0, position: .bottom, style: toastStyle)
+            return
+        }
+
+        // Check if the mobile number is not 10 digits long
+        if let mobileNumber = numberField.text, mobileNumber.count != 10 {
+            // If the mobile number is not 10 digits long, show a toast message with custom style
+            self.view.makeToast("Enter valid Phone Number", duration: 2.0, position: .bottom, style: toastStyle)
+            return
+        }
+        
+        self.view.endEditing(true)
+        self.userRegister()
+
     }
-    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Check if the text field is the mobile number text field
@@ -117,6 +134,50 @@ class WelcomeToTheWeatherAppVC: UIViewController , UITextFieldDelegate {
     
     
 }
+
+extension WelcomeToTheWeatherAppVC
+{
+    //MARK: Call Api
+    func userRegister(){
+        let param = ["DeviceName":AppSetting.DeviceType,
+                     "DeviceVersion":AppSetting.DeviceVersion,
+                     "UniqueId":AppSetting.DeviceId,
+                     "PhoneNo": numberField.text ?? "",
+                     "FCMToken":AppSetting.FCMTokenString
+                     ] as [String : Any]
+        
+        DataManager.shared.UserRegister(params: param,isLoader: false, view: view) { [weak self] (result) in
+            switch result {
+            case .success(let userRegister):
+                print("userRegister ", userRegister)
+                self?.userRegisterData = userRegister
+                
+                if userRegister.statusMessage?.lowercased() == "User exist!".lowercased() || userRegister.statusMessage?.lowercased() == "Data added successully".lowercased(){
+                    DispatchQueue.main.async {
+                                let VerifyNumberVC = VerifyNumberVC.getInstance()
+                                    VerifyNumberVC.modalPresentationStyle = .overCurrentContext
+                        VerifyNumberVC.number = self?.numberField.text ?? ""
+                        VerifyNumberVC.userStatusMessage = userRegister.statusMessage ?? ""
+                        self?.present(VerifyNumberVC, animated: true)
+                    }
+                }
+                
+            case .failure(let apiError):
+                print("Error ", apiError.localizedDescription)
+                
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 extension UIViewController {
     static func currentViewcc() -> UIViewController? {
         var viewController = UIApplication.shared.windows.first?.rootViewController

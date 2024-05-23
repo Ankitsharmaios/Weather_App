@@ -96,42 +96,7 @@ class WeatherViewController: WhiteColorNoneNavigation {
         self.collectionView.dataSource = self
         self.collectionView.reloadData()
     }
-    
-//    func bindDatareset(){
-//        
-//        locationAddressLbl.text = "\(Singleton.sharedInstance.arrCityWeatherData?.locations?.name ?? "")," + " " + (Singleton.sharedInstance.arrCityWeatherData?.locations?.region ?? "")
-//        dateLbl.text = getConvertedDate(format: "d MMM yyyy", dateString: (arrWeatherData?.locations?.localtime ?? ""))
-//        
-//        //        temperatureLbl.text = "\(arrWeatherData?.current?.temp_c ?? 0)"
-//        statusLbl.text = Singleton.sharedInstance.arrCityWeatherData?.current?.condition?.text ?? ""
-//        
-//        let attrString = NSMutableAttributedString(string: "\(Singleton.sharedInstance.arrCityWeatherData?.current?.temp_c ?? 0)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: temperatureLbl.font.pointSize)])
-//
-//        attrString.append(NSMutableAttributedString(string:"°", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30),.baselineOffset: NSNumber(value: 40)]))
-//        temperatureLbl.attributedText = attrString
-//        
-//        
-//        
-//        hourModel = [hourModels]
-//        if Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?.count ?? 0 > 0 {
-//            let hourCount = Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?[0].hour?.suffix(from: 17).prefix(4)
-//            for item in hourCount ?? [] {
-//                hourModel.append(item)
-//            }
-//        }
-//        
-//        dayTitleLbl.text = "Next \(Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?.count ?? 0) Days"
-//        
-//        
-//        self.tableView.delegate = self
-//        self.tableView.dataSource = self
-//        self.tableView.reloadData()
-//        
-//        self.collectionView.delegate = self
-//        self.collectionView.dataSource = self
-//        self.collectionView.reloadData()
-//    }
-//    
+ 
     func bindDatareset() {
         // Safely unwrap arrCityWeatherData
         guard let arrWeatherData = Singleton.sharedInstance.arrCityWeatherData else {
