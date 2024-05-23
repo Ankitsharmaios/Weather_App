@@ -4,6 +4,7 @@ PODS:
     - Alamofire (= 5.0.0-rc.2)
     - ObjectMapper (~> 3.5.1)
   - DPOTPView (1.5.12)
+  - EFCountingLabel (5.1.5)
   - IQKeyboardManagerSwift (7.0.2)
   - Loaf (0.7.0)
   - ObjectMapper (3.5.3)
@@ -20,6 +21,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.2)
   - AlamofireObjectMapper
   - DPOTPView
+  - EFCountingLabel
   - IQKeyboardManagerSwift
   - Loaf
   - ObjectMapper
@@ -33,6 +35,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireObjectMapper
     - DPOTPView
+    - EFCountingLabel
     - IQKeyboardManagerSwift
     - Loaf
     - ObjectMapper
@@ -45,6 +48,7 @@ SPEC CHECKSUMS:
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
   AlamofireObjectMapper: 74d1440c92c42bbcc2b5f4dc81654ac095ec669f
   DPOTPView: 28d8a0a84a2ff4b1e4a7712065aba1cbb14e2704
+  EFCountingLabel: d2e259de6ffa896cb9c325e14d5be1fccf8bfa7f
   IQKeyboardManagerSwift: d338c11a896e9f29603443700c4567e32f830c22
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
@@ -53,6 +57,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 0d362086c47c7db1d4d7956b097046b429e0575f
+PODFILE CHECKSUM: e56fda2c064e7bf5138342290f2ba7727350a95e
 
 COCOAPODS: 1.15.2

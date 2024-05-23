@@ -18,4 +18,5 @@ target 'WeatherApp' do
   pod 'Toast-Swift', '~> 5.0.0'
   pod 'IQKeyboardManagerSwift'
   pod 'DPOTPView'
+  pod 'EFCountingLabel'
 end
