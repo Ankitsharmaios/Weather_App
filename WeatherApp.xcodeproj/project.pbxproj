@@ -15,6 +15,9 @@
 		14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C452BFF7B8D004F8894 /* DashChatsVC.swift */; };
 		14392C492BFF7B8D004F8894 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C462BFF7B8D004F8894 /* TabBarVC.swift */; };
 		14392C4B2BFF7BE2004F8894 /* DashBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */; };
+		14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */; };
+		14A3E2A02C00557900417919 /* optionHeaderTblvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */; };
+		14A3E2A22C00578500417919 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3E2A12C00578500417919 /* UIView.swift */; };
 		14AF4BAE2BFC6B790042CB95 /* PopUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AF4BAD2BFC6B790042CB95 /* PopUp.storyboard */; };
 		14AF4BB12BFC6DA00042CB95 /* CitysPopUPVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF4BB02BFC6DA00042CB95 /* CitysPopUPVC.swift */; };
 		14AF4BB42BFC72540042CB95 /* UIViewControllerExtented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF4BB32BFC72540042CB95 /* UIViewControllerExtented.swift */; };
@@ -85,6 +88,9 @@
 		14392C452BFF7B8D004F8894 /* DashChatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashChatsVC.swift; sourceTree = "<group>"; };
 		14392C462BFF7B8D004F8894 /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DashBoard.storyboard; sourceTree = "<group>"; };
+		14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = optionHeaderTblvCell.swift; sourceTree = "<group>"; };
+		14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = optionHeaderTblvCell.xib; sourceTree = "<group>"; };
+		14A3E2A12C00578500417919 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		14AF4BAD2BFC6B790042CB95 /* PopUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PopUp.storyboard; sourceTree = "<group>"; };
 		14AF4BB02BFC6DA00042CB95 /* CitysPopUPVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitysPopUPVC.swift; sourceTree = "<group>"; };
 		14AF4BB32BFC72540042CB95 /* UIViewControllerExtented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtented.swift; sourceTree = "<group>"; };
@@ -170,6 +176,15 @@
 				14392C462BFF7B8D004F8894 /* TabBarVC.swift */,
 			);
 			path = TabBarControllers;
+			sourceTree = "<group>";
+		};
+		14A3E29C2C00555400417919 /* OptionHeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */,
+				14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */,
+			);
+			path = OptionHeaderCell;
 			sourceTree = "<group>";
 		};
 		14AF4BAF2BFC6D750042CB95 /* PopUPControllers */ = {
@@ -293,6 +308,7 @@
 				14D3CE422BFB655A00E700CB /* UICollectionViewCell.swift */,
 				14D3CE402BFB652300E700CB /* UITableViewCell.swift */,
 				14D3CE322BFB625000E700CB /* CommonFile.swift */,
+				14A3E2A12C00578500417919 /* UIView.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -397,6 +413,7 @@
 		14D3CE5C2BFB791300E700CB /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				14A3E29C2C00555400417919 /* OptionHeaderCell */,
 				14AF4BBC2BFC80510042CB95 /* CitysCell */,
 				14D3CE1B2BFB5D9500E700CB /* WeatherCell */,
 			);
@@ -531,6 +548,7 @@
 				14D3CE2C2BFB5F0C00E700CB /* nunitosans_extrabold.TTF in Resources */,
 				14D3CDF22BFB5CCE00E700CB /* Base in Resources */,
 				14D3CE1F2BFB5D9500E700CB /* WeatherListCell.xib in Resources */,
+				14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */,
 				14D3CE2E2BFB5F0C00E700CB /* nunitosans_semibold.TTF in Resources */,
 				14D3CE1D2BFB5D9500E700CB /* WeatherDayListCollectionCell.xib in Resources */,
 				14AF4BC02BFC80940042CB95 /* CitysCollectionViewCell.xib in Resources */,
@@ -623,6 +641,7 @@
 				14D3CE162BFB5D4700E700CB /* WeatherViewController.swift in Sources */,
 				14D3CE412BFB652300E700CB /* UITableViewCell.swift in Sources */,
 				14D3CE432BFB655A00E700CB /* UICollectionViewCell.swift in Sources */,
+				14A3E2A02C00557900417919 /* optionHeaderTblvCell.swift in Sources */,
 				14D3CE302BFB5F7300E700CB /* WeatherListModel.swift in Sources */,
 				14D3CE552BFB68E000E700CB /* NetworkManager.swift in Sources */,
 				14D3CE1C2BFB5D9500E700CB /* WeatherDayListCollectionCell.swift in Sources */,
@@ -634,6 +653,7 @@
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
 				1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */,
 				1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */,
+				14A3E2A22C00578500417919 /* UIView.swift in Sources */,
 				14AF4BE32BFCC1B60042CB95 /* Singleton.swift in Sources */,
 				14D3CDE82BFB5CCD00E700CB /* SceneDelegate.swift in Sources */,
 				14392C442BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift in Sources */,
@@ -817,23 +837,30 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9J9RPN8HF2;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "camera use.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = demoWebRtc.WeatherApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Wildcard Development";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -846,23 +873,30 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9J9RPN8HF2;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "camera use.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = demoWebRtc.WeatherApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Wildcard Development";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

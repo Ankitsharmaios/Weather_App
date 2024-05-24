@@ -69,13 +69,13 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeatherApp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5tN-aT-72f">
-                                        <rect key="frame" x="15" y="10.000000000000002" width="238" height="27.666666666666671"/>
+                                        <rect key="frame" x="15" y="9.9999999999999982" width="238" height="27.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lHa-cB-Ga9">
-                                        <rect key="frame" x="308" y="4" width="85" height="40"/>
+                                        <rect key="frame" x="308" y="3.6666666666666714" width="85" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mme-Da-7yG">
                                                 <rect key="frame" x="0.0" y="0.0" width="37.666666666666664" height="40"/>
@@ -100,7 +100,7 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3b-Y3-YAq">
-                                        <rect key="frame" x="15" y="52.666666666666657" width="363" height="45"/>
+                                        <rect key="frame" x="15" y="52.333333333333343" width="363" height="45"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Muj-uN-TFK">
                                                 <rect key="frame" x="50" y="0.0" width="298" height="45"/>
@@ -125,7 +125,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="M3x-pZ-jlW">
-                                        <rect key="frame" x="0.0" y="102.66666666666669" width="393" height="563.33333333333326"/>
+                                        <rect key="frame" x="0.0" y="102.33333333333331" width="393" height="563.66666666666674"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Db-jl-DGA">
@@ -163,17 +163,28 @@
                                     <constraint firstAttribute="trailing" secondItem="g3b-Y3-YAq" secondAttribute="trailing" constant="15" id="hpI-7w-5Nx"/>
                                     <constraint firstItem="M3x-pZ-jlW" firstAttribute="top" secondItem="g3b-Y3-YAq" secondAttribute="bottom" constant="5" id="i57-ju-iFA"/>
                                     <constraint firstAttribute="trailing" secondItem="0Db-jl-DGA" secondAttribute="trailing" constant="15" id="tEV-jM-7Dc"/>
+                                    <constraint firstItem="lHa-cB-Ga9" firstAttribute="top" secondItem="B4y-oS-rDd" secondAttribute="top" constant="3.6699999999999999" id="vtI-zn-I0a"/>
                                     <constraint firstAttribute="bottom" secondItem="M3x-pZ-jlW" secondAttribute="bottom" id="yRQ-Ud-2PV"/>
                                     <constraint firstAttribute="trailing" secondItem="5tN-aT-72f" secondAttribute="trailing" constant="140" id="ynj-OC-pY6"/>
                                     <constraint firstItem="5tN-aT-72f" firstAttribute="top" secondItem="B4y-oS-rDd" secondAttribute="top" constant="10" id="z1i-WF-3Za"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="28h-aZ-wr8">
+                                <rect key="frame" x="223" y="151.66666666666666" width="160" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Z6j-0Y-kzs"/>
+                                    <constraint firstAttribute="width" constant="160" id="csi-AS-gwO"/>
+                                </constraints>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dNP-ng-e7h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="dNP-ng-e7h" firstAttribute="bottom" secondItem="B4y-oS-rDd" secondAttribute="bottom" id="9zF-vy-OMq"/>
+                            <constraint firstItem="dNP-ng-e7h" firstAttribute="trailing" secondItem="28h-aZ-wr8" secondAttribute="trailing" constant="10" id="Dem-M2-xlG"/>
                             <constraint firstItem="B4y-oS-rDd" firstAttribute="top" secondItem="dNP-ng-e7h" secondAttribute="top" id="GI6-nl-SQ3"/>
+                            <constraint firstItem="28h-aZ-wr8" firstAttribute="top" secondItem="Mme-Da-7yG" secondAttribute="bottom" constant="5" id="Rfi-wh-Me2"/>
                             <constraint firstItem="dNP-ng-e7h" firstAttribute="trailing" secondItem="B4y-oS-rDd" secondAttribute="trailing" id="X1x-Rx-TVc"/>
                             <constraint firstItem="B4y-oS-rDd" firstAttribute="leading" secondItem="dNP-ng-e7h" secondAttribute="leading" id="zMV-Ck-ZNP"/>
                         </constraints>
@@ -189,6 +200,8 @@
                         <outlet property="searchbgView" destination="g3b-Y3-YAq" id="c2M-EI-hOS"/>
                         <outlet property="searchtxt" destination="Muj-uN-TFK" id="qLb-6s-11c"/>
                         <outlet property="stackView" destination="lHa-cB-Ga9" id="kS5-SC-i50"/>
+                        <outlet property="topTableView" destination="28h-aZ-wr8" id="5la-5L-nXW"/>
+                        <outlet property="toptableHeightLayout" destination="Z6j-0Y-kzs" id="V4O-Fo-MSI"/>
                         <outlet property="weatherLbl" destination="5tN-aT-72f" id="e9f-Hs-ACR"/>
                     </connections>
                 </viewController>
@@ -315,7 +328,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
