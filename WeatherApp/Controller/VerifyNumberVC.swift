@@ -165,7 +165,7 @@ extension VerifyNumberVC
                     
                     if self?.userStatusMessage.lowercased() == "User exist!".lowercased(){
                         DispatchQueue.main.async {
-                                    let VerifyOTPVC = Two_step_verificationPopUpVC.getInstance()
+                                    let VerifyOTPVC = ProfileVC.getInstance()
                                     VerifyOTPVC.modalPresentationStyle = .overCurrentContext
                                     self?.present(VerifyOTPVC, animated: true)
                         }
