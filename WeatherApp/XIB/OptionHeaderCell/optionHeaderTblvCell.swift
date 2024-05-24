@@ -20,7 +20,7 @@ class optionHeaderTblvCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     func setupUi(){
-        nameLbl.font = Nunitonsans.nuniton_regular.font(size: 16)
+        nameLbl.font = Nunitonsans.nuniton_semiBold.font(size: 16)
     }
     
 }
