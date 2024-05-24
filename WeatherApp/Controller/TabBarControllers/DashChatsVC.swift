@@ -9,6 +9,7 @@ import UIKit
 
 class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var toptableHeightLayout: NSLayoutConstraint!
     @IBOutlet weak var topTableView: UITableView!
     @IBOutlet weak var toptablebgView: UIView!
@@ -36,7 +37,11 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     func setupUI(){
         topTableView.register(UINib(nibName: "optionHeaderTblvCell", bundle: nil),forCellReuseIdentifier: "optionHeaderTblvCell")
+        chatTableView.register(UINib(nibName: "ChatsTBlvCell", bundle: nil),forCellReuseIdentifier: "ChatsTBlvCell")
         topTableView.dataSource = self
+        chatTableView.dataSource = self
+        chatTableView.delegate = self
+        chatTableView.separatorStyle = .none
         toptableHeightLayout.constant = CGFloat(CGFloat((OptionNames.count)) * (40))
         topTableView.separatorStyle = .none
         topTableView.reloadData()
@@ -82,18 +87,46 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
 }
 // MARK: TableView Methods
-extension DashChatsVC:UITableViewDataSource{
+extension DashChatsVC:UITableViewDataSource,UITableViewDelegate{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if tableView == chatTableView{
+            return 1
+        }else{
+            return 1
+        }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return OptionNames.count
+        if tableView == chatTableView{
+            return 2
+        }else{
+            return OptionNames.count
+        }
+      
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = topTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
-            cell.nameLbl.text = OptionNames[indexPath.row]
-            return cell
+        if tableView == chatTableView{
+            if let cell = chatTableView .dequeueReusableCell(withIdentifier: "ChatsTBlvCell", for: indexPath) as? ChatsTBlvCell{
+                return cell
+            }
+        }else{
+            if let cell = topTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
+                cell.nameLbl.text = OptionNames[indexPath.row]
+                return cell
+            }
         }
         return UITableViewCell()
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == chatTableView{
+            return 70
+        }else{
+            
+        }
+        return CGFloat()
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = InnerChatVC.getInstance()
+        controller.modalPresentationStyle = .overFullScreen
+        self.present(controller, animated: true)
     }
 }

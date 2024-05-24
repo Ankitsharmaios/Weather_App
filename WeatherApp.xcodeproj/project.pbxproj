@@ -27,6 +27,10 @@
 		14AF4BBF2BFC80940042CB95 /* CitysCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF4BBD2BFC80940042CB95 /* CitysCollectionViewCell.swift */; };
 		14AF4BC02BFC80940042CB95 /* CitysCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14AF4BBE2BFC80940042CB95 /* CitysCollectionViewCell.xib */; };
 		14AF4BE32BFCC1B60042CB95 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF4BE22BFCC1B60042CB95 /* Singleton.swift */; };
+		14AFB24B2C0073D200F0D93D /* ChatsTBlvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14AFB24A2C0073D200F0D93D /* ChatsTBlvCell.xib */; };
+		14AFB24C2C0073D200F0D93D /* ChatsTBlvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB2492C0073D200F0D93D /* ChatsTBlvCell.swift */; };
+		14AFB24E2C00919C00F0D93D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFB24D2C00919C00F0D93D /* GoogleService-Info.plist */; };
+		14AFB2502C0092CA00F0D93D /* InnerChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */; };
 		14B3742E2C006D6500AC949B /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B3742D2C006D6500AC949B /* ProfileVC.swift */; };
 		14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CDE52BFB5CCD00E700CB /* AppDelegate.swift */; };
 		14D3CDE82BFB5CCD00E700CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CDE72BFB5CCD00E700CB /* SceneDelegate.swift */; };
@@ -107,6 +111,10 @@
 		14AF4BBD2BFC80940042CB95 /* CitysCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitysCollectionViewCell.swift; sourceTree = "<group>"; };
 		14AF4BBE2BFC80940042CB95 /* CitysCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CitysCollectionViewCell.xib; sourceTree = "<group>"; };
 		14AF4BE22BFCC1B60042CB95 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		14AFB2492C0073D200F0D93D /* ChatsTBlvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTBlvCell.swift; sourceTree = "<group>"; };
+		14AFB24A2C0073D200F0D93D /* ChatsTBlvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatsTBlvCell.xib; sourceTree = "<group>"; };
+		14AFB24D2C00919C00F0D93D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerChatVC.swift; sourceTree = "<group>"; };
 		14B3742D2C006D6500AC949B /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		14D3CDE22BFB5CCD00E700CB /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D3CDE52BFB5CCD00E700CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +188,7 @@
 			children = (
 				14392C452BFF7B8D004F8894 /* DashChatsVC.swift */,
 				14392C462BFF7B8D004F8894 /* TabBarVC.swift */,
+				14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */,
 			);
 			path = TabBarControllers;
 			sourceTree = "<group>";
@@ -218,6 +227,15 @@
 				14AF4BBE2BFC80940042CB95 /* CitysCollectionViewCell.xib */,
 			);
 			path = CitysCell;
+			sourceTree = "<group>";
+		};
+		14AFB2482C0073B900F0D93D /* ChatsCells */ = {
+			isa = PBXGroup;
+			children = (
+				14AFB2492C0073D200F0D93D /* ChatsTBlvCell.swift */,
+				14AFB24A2C0073D200F0D93D /* ChatsTBlvCell.xib */,
+			);
+			path = ChatsCells;
 			sourceTree = "<group>";
 		};
 		14D3CDD92BFB5CCD00E700CB = {
@@ -259,6 +277,7 @@
 				14D3CE362BFB62B300E700CB /* Model */,
 				14D3CE312BFB621300E700CB /* extension */,
 				14D3CDF32BFB5CCE00E700CB /* Info.plist */,
+				14AFB24D2C00919C00F0D93D /* GoogleService-Info.plist */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -422,6 +441,7 @@
 		14D3CE5C2BFB791300E700CB /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				14AFB2482C0073B900F0D93D /* ChatsCells */,
 				14A3E29C2C00555400417919 /* OptionHeaderCell */,
 				14AF4BBC2BFC80510042CB95 /* CitysCell */,
 				14D3CE1B2BFB5D9500E700CB /* WeatherCell */,
@@ -552,6 +572,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14AFB24B2C0073D200F0D93D /* ChatsTBlvCell.xib in Resources */,
 				14D3CE2A2BFB5F0C00E700CB /* nunitosans_black.TTF in Resources */,
 				14D3CDEF2BFB5CCE00E700CB /* Assets.xcassets in Resources */,
 				14D3CE2C2BFB5F0C00E700CB /* nunitosans_extrabold.TTF in Resources */,
@@ -560,6 +581,7 @@
 				14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */,
 				14D3CE2E2BFB5F0C00E700CB /* nunitosans_semibold.TTF in Resources */,
 				14D3CE1D2BFB5D9500E700CB /* WeatherDayListCollectionCell.xib in Resources */,
+				14AFB24E2C00919C00F0D93D /* GoogleService-Info.plist in Resources */,
 				14AF4BC02BFC80940042CB95 /* CitysCollectionViewCell.xib in Resources */,
 				14D3CE2B2BFB5F0C00E700CB /* nunitosans_bold.TTF in Resources */,
 				14AF4BAE2BFC6B790042CB95 /* PopUp.storyboard in Resources */,
@@ -650,6 +672,7 @@
 				14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */,
 				14392C492BFF7B8D004F8894 /* TabBarVC.swift in Sources */,
 				14D3CE162BFB5D4700E700CB /* WeatherViewController.swift in Sources */,
+				14AFB2502C0092CA00F0D93D /* InnerChatVC.swift in Sources */,
 				14D3CE412BFB652300E700CB /* UITableViewCell.swift in Sources */,
 				14D3CE432BFB655A00E700CB /* UICollectionViewCell.swift in Sources */,
 				14A3E2A02C00557900417919 /* optionHeaderTblvCell.swift in Sources */,
@@ -659,6 +682,7 @@
 				14D3CE502BFB68E000E700CB /* Constant.swift in Sources */,
 				14D3CE452BFB659300E700CB /* UIImage.swift in Sources */,
 				14D3CE562BFB68E000E700CB /* Reachability.swift in Sources */,
+				14AFB24C2C0073D200F0D93D /* ChatsTBlvCell.swift in Sources */,
 				14D3CE512BFB68E000E700CB /* APILogs.swift in Sources */,
 				14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */,
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
