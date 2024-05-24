@@ -44,7 +44,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigatio
         lblPleaseProvide.textColor = appThemeColor.text_LightColure
         
         btnNext.setTitleColor(appThemeColor.white, for: .normal)
-        btnNext.titleLabel?.backgroundColor = appThemeColor.selectedCityColure
+        btnNext.layer.backgroundColor = appThemeColor.selectedCityColure.cgColor
         
         btnNext.layer.cornerRadius = btnNext.frame.size.height / 2
         btnNext.clipsToBounds = true
@@ -179,9 +179,11 @@ extension ProfileVC
                     DispatchQueue.main.async {
                         if statusMessage.lowercased() == "Profile Edit successully".lowercased()
                         {
-                            
+                            let Two_step_verificationVC =  Two_step_verificationVC.getInstance()
+                            Two_step_verificationVC.modalPresentationStyle = .overCurrentContext
+                            self.present(Two_step_verificationVC, animated: true)
                         
-                        })
+                        }
                     }
                 } else {
                     print("Failed to access StatusMessage from response")

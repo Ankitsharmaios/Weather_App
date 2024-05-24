@@ -59,9 +59,14 @@ class AppColor {
     var text_Weather : UIColor = {
             return  #colorLiteral(red: 0.1137254902, green: 0.6666666667, blue: 0.3803921569, alpha: 1)  //  #1daa61
         }()
-        var searchbgView : UIColor = {
+    var searchbgView : UIColor = {
             return  #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)  //  #F5F5F5
-        }()
+    }()
+    var btnLightGrey_BackGround : UIColor = {
+            return  #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1)  //  #ececec
+    }()
+    
+    
     //================================ ==========================================
  /*
     var greyEdit : UIColor = { // CCCCCC

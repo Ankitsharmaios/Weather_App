@@ -65,6 +65,10 @@
 		14D3CE562BFB68E000E700CB /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CE4D2BFB68E000E700CB /* Reachability.swift */; };
 		14D3CE572BFB68E000E700CB /* WebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CE4E2BFB68E000E700CB /* WebServices.swift */; };
 		14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CE5A2BFB6AA300E700CB /* Validation.swift */; };
+		14D950A42C00A32C00EDD4E8 /* Two-step-verificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D950A32C00A32C00EDD4E8 /* Two-step-verificationVC.swift */; };
+		14D950A62C00AC1900EDD4E8 /* PinSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D950A52C00AC1900EDD4E8 /* PinSetVC.swift */; };
+		14D950A82C00B6CC00EDD4E8 /* ConfirmPinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D950A72C00B6CC00EDD4E8 /* ConfirmPinVC.swift */; };
+		14D950AB2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D950AA2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift */; };
 		70D810CB3A22DB2EF280F369 /* Pods_WeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4D3880110DF7A00E159173 /* Pods_WeatherApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -153,6 +157,10 @@
 		14D3CE4D2BFB68E000E700CB /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		14D3CE4E2BFB68E000E700CB /* WebServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServices.swift; sourceTree = "<group>"; };
 		14D3CE5A2BFB6AA300E700CB /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		14D950A32C00A32C00EDD4E8 /* Two-step-verificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Two-step-verificationVC.swift"; sourceTree = "<group>"; };
+		14D950A52C00AC1900EDD4E8 /* PinSetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinSetVC.swift; sourceTree = "<group>"; };
+		14D950A72C00B6CC00EDD4E8 /* ConfirmPinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPinVC.swift; sourceTree = "<group>"; };
+		14D950AA2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTwoStepVerificationcodeModel.swift; sourceTree = "<group>"; };
 		73CF1AFA498B569ECB9CC7FB /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		7AE7CD4A886247067C92030F /* Pods-WeatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.debug.xcconfig"; path = "Target Support Files/Pods-WeatherApp/Pods-WeatherApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -345,6 +353,7 @@
 				14392C3F2BFF4256004F8894 /* RegisterModel.swift */,
 				14392C412BFF5D03004F8894 /* VerifyOTPModel.swift */,
 				147366262C0092D700419797 /* EditProfileModel.swift */,
+				14D950AA2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -377,6 +386,9 @@
 				1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */,
 				1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */,
 				14B3742D2C006D6500AC949B /* ProfileVC.swift */,
+				14D950A32C00A32C00EDD4E8 /* Two-step-verificationVC.swift */,
+				14D950A52C00AC1900EDD4E8 /* PinSetVC.swift */,
+				14D950A72C00B6CC00EDD4E8 /* ConfirmPinVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -657,6 +669,7 @@
 				14D3CE212BFB5E8000E700CB /* WhiteColorNoneNavigation.swift in Sources */,
 				14AF4BB12BFC6DA00042CB95 /* CitysPopUPVC.swift in Sources */,
 				147366252C008B9B00419797 /* SaveLocalData.swift in Sources */,
+				14D950A62C00AC1900EDD4E8 /* PinSetVC.swift in Sources */,
 				14D3CE542BFB68E000E700CB /* DataManager.swift in Sources */,
 				14AF4BBF2BFC80940042CB95 /* CitysCollectionViewCell.swift in Sources */,
 				14AF4BB42BFC72540042CB95 /* UIViewControllerExtented.swift in Sources */,
@@ -666,6 +679,7 @@
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
 				147366272C0092D700419797 /* EditProfileModel.swift in Sources */,
 				14D3CE1E2BFB5D9500E700CB /* WeatherListCell.swift in Sources */,
+				14D950AB2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift in Sources */,
 				14AF4BB62BFC72EC0042CB95 /* UIColores.swift in Sources */,
 				14D3CE572BFB68E000E700CB /* WebServices.swift in Sources */,
 				14392C422BFF5D03004F8894 /* VerifyOTPModel.swift in Sources */,
@@ -690,6 +704,8 @@
 				1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */,
 				14B3742E2C006D6500AC949B /* ProfileVC.swift in Sources */,
 				14A3E2A22C00578500417919 /* UIView.swift in Sources */,
+				14D950A82C00B6CC00EDD4E8 /* ConfirmPinVC.swift in Sources */,
+				14D950A42C00A32C00EDD4E8 /* Two-step-verificationVC.swift in Sources */,
 				14AF4BE32BFCC1B60042CB95 /* Singleton.swift in Sources */,
 				14D3CDE82BFB5CCD00E700CB /* SceneDelegate.swift in Sources */,
 				14392C442BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift in Sources */,

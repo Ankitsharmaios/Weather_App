@@ -136,6 +136,9 @@ class VerifyNumberVC: UIViewController {
             return
         }
         
+       
+        
+        
         self.view.endEditing(true)
         verifyOTP()
         
@@ -167,7 +170,7 @@ extension VerifyNumberVC
                                         
                                 saveUserData(userData: verifyOTP)
 
-                            let userDetail = verifyOTP.result
+                                        let userDetail = verifyOTP.result
                                       
                                         UserToken.userToken = userDetail?.hashToken ?? ""
                                         Singleton.sharedInstance.RegisterId = userDetail?.registerId ?? 0
@@ -175,27 +178,29 @@ extension VerifyNumberVC
                                         
                                         saveString(strin: UserToken.userToken, key: userDefaultsKeys.token.rawValue)
                                         saveString(strin: "\(Singleton.sharedInstance.RegisterId ?? 0)", key: userDefaultsKeys.RegisterId.rawValue)
-                                        
+                    
+                            if self?.userStatusMessage.lowercased() == "User exist!".lowercased(){
+                                DispatchQueue.main.async {
+                                            let VerifyOTPVC =  Two_step_verificationPopUpVC.getInstance()
+                                            VerifyOTPVC.modalPresentationStyle = .overCurrentContext
+                                            self?.present(VerifyOTPVC, animated: true)
+                                }
+                            }else if  self?.userStatusMessage.lowercased() == "Data added successully".lowercased(){
+                                DispatchQueue.main.async {
+                                            let ProfileVC = ProfileVC.getInstance()
+                                            ProfileVC.modalPresentationStyle = .overCurrentContext
+                                            self?.present(ProfileVC, animated: true)
+                                }
+                            }
                                     } else {
-
-                                       // self.view.makeToast("OTP required", duration: 2.0, position: .bottom, style: toastStyle)
+                                        var toastStyle = ToastStyle()
+                                        toastStyle.backgroundColor = appThemeColor.text_Weather
+                                        self?.view.makeToast("Incorrect OTP", duration: 2.0, position: .bottom, style: toastStyle)
                                         
                                     }
                 
                     
-                    if self?.userStatusMessage.lowercased() == "User exist!".lowercased(){
-                        DispatchQueue.main.async {
-                                    let VerifyOTPVC =  ProfileVC.getInstance()
-                                    VerifyOTPVC.modalPresentationStyle = .overCurrentContext
-                                    self?.present(VerifyOTPVC, animated: true)
-                        }
-                    }else if  self?.userStatusMessage.lowercased() == "Data added successully".lowercased(){
-                        DispatchQueue.main.async {
-                                    let VerifyOTPVC = ProfileVC.getInstance()
-                                    VerifyOTPVC.modalPresentationStyle = .overCurrentContext
-                                    self?.present(VerifyOTPVC, animated: true)
-                        }
-                    }
+                
                     
                 case .failure(let apiError):
                     print("Error ", apiError.localizedDescription)

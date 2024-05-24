@@ -43,7 +43,7 @@ class WelcomeToTheWeatherAppVC: UIViewController , UITextFieldDelegate {
         
         
         btnNext.setTitleColor(appThemeColor.white, for: .normal)
-        btnNext.titleLabel?.backgroundColor = appThemeColor.selectedCityColure
+        btnNext.layer.backgroundColor = appThemeColor.selectedCityColure.cgColor
         
         btnNext.layer.cornerRadius = btnNext.frame.size.height / 2
         btnNext.clipsToBounds = true
@@ -156,8 +156,9 @@ extension WelcomeToTheWeatherAppVC
                     DispatchQueue.main.async {
                                 let VerifyNumberVC = VerifyNumberVC.getInstance()
                                     VerifyNumberVC.modalPresentationStyle = .overCurrentContext
-                        VerifyNumberVC.number = self?.numberField.text ?? ""
-                        VerifyNumberVC.userStatusMessage = userRegister.statusMessage ?? ""
+                                    VerifyNumberVC.number = self?.numberField.text ?? ""
+                                    VerifyNumberVC.userStatusMessage = userRegister.statusMessage ?? ""
+                        
                         self?.present(VerifyNumberVC, animated: true)
                     }
                 }
