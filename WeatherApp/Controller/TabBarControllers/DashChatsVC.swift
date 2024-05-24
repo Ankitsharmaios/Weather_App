@@ -34,7 +34,17 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         setupUI()
         navigationController?.navigationBar.isHidden = true
         topTableView.isHidden = true
+//            let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+//            bgView.addGestureRecognizer(tap)
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        self.isTopTableHide = false
+        self.topTableView.isHidden = true
+    }
+//    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+//        // handling code
+//        self.topTableView.isHidden = true
+//    }
     func setupUI(){
         topTableView.register(UINib(nibName: "optionHeaderTblvCell", bundle: nil),forCellReuseIdentifier: "optionHeaderTblvCell")
         chatTableView.register(UINib(nibName: "ChatsTBlvCell", bundle: nil),forCellReuseIdentifier: "ChatsTBlvCell")
@@ -64,7 +74,6 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         }else{
             self.topTableView.isHidden = true
         }
-       // self.topTableView.reloadData()
     }
     
     @IBAction func cameraBtn(_ sender: Any) {
@@ -97,7 +106,7 @@ extension DashChatsVC:UITableViewDataSource,UITableViewDelegate{
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == chatTableView{
-            return 2
+            return 20
         }else{
             return OptionNames.count
         }
