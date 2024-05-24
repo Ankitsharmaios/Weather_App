@@ -15,6 +15,8 @@
 		14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C452BFF7B8D004F8894 /* DashChatsVC.swift */; };
 		14392C492BFF7B8D004F8894 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C462BFF7B8D004F8894 /* TabBarVC.swift */; };
 		14392C4B2BFF7BE2004F8894 /* DashBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */; };
+		147366252C008B9B00419797 /* SaveLocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147366242C008B9B00419797 /* SaveLocalData.swift */; };
+		147366272C0092D700419797 /* EditProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147366262C0092D700419797 /* EditProfileModel.swift */; };
 		14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */; };
 		14A3E2A02C00557900417919 /* optionHeaderTblvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */; };
 		14A3E2A22C00578500417919 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3E2A12C00578500417919 /* UIView.swift */; };
@@ -89,6 +91,8 @@
 		14392C452BFF7B8D004F8894 /* DashChatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashChatsVC.swift; sourceTree = "<group>"; };
 		14392C462BFF7B8D004F8894 /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DashBoard.storyboard; sourceTree = "<group>"; };
+		147366242C008B9B00419797 /* SaveLocalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveLocalData.swift; sourceTree = "<group>"; };
+		147366262C0092D700419797 /* EditProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileModel.swift; sourceTree = "<group>"; };
 		14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = optionHeaderTblvCell.swift; sourceTree = "<group>"; };
 		14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = optionHeaderTblvCell.xib; sourceTree = "<group>"; };
 		14A3E2A12C00578500417919 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -321,6 +325,7 @@
 				14D3CE2F2BFB5F7300E700CB /* WeatherListModel.swift */,
 				14392C3F2BFF4256004F8894 /* RegisterModel.swift */,
 				14392C412BFF5D03004F8894 /* VerifyOTPModel.swift */,
+				147366262C0092D700419797 /* EditProfileModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -360,6 +365,7 @@
 		14D3CE3A2BFB62FB00E700CB /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
+				147366242C008B9B00419797 /* SaveLocalData.swift */,
 				14D3CE202BFB5E8000E700CB /* WhiteColorNoneNavigation.swift */,
 			);
 			path = CustomClasses;
@@ -628,6 +634,7 @@
 			files = (
 				14D3CE212BFB5E8000E700CB /* WhiteColorNoneNavigation.swift in Sources */,
 				14AF4BB12BFC6DA00042CB95 /* CitysPopUPVC.swift in Sources */,
+				147366252C008B9B00419797 /* SaveLocalData.swift in Sources */,
 				14D3CE542BFB68E000E700CB /* DataManager.swift in Sources */,
 				14AF4BBF2BFC80940042CB95 /* CitysCollectionViewCell.swift in Sources */,
 				14AF4BB42BFC72540042CB95 /* UIViewControllerExtented.swift in Sources */,
@@ -635,6 +642,7 @@
 				14D3CE532BFB68E000E700CB /* CounterManaged.swift in Sources */,
 				14D3CE332BFB625000E700CB /* CommonFile.swift in Sources */,
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
+				147366272C0092D700419797 /* EditProfileModel.swift in Sources */,
 				14D3CE1E2BFB5D9500E700CB /* WeatherListCell.swift in Sources */,
 				14AF4BB62BFC72EC0042CB95 /* UIColores.swift in Sources */,
 				14D3CE572BFB68E000E700CB /* WebServices.swift in Sources */,

@@ -34,6 +34,7 @@ enum userDefaultsKeys: String {
     case languageData = "LanguageData"
     case NotificationCount = "NotificationCount"
     case CartCount = "CartCount"
+    case RegisterId = "RegisterId"
 }
 //
 //App setting

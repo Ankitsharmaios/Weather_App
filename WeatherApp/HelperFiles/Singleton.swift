@@ -12,5 +12,6 @@ class Singleton {
     
     static let sharedInstance = Singleton()
     var arrCityWeatherData: WeatherListModel?
+    var RegisterId: Int?
 }
 

@@ -163,14 +163,38 @@ extension VerifyNumberVC
                     print("verifyOTP ", verifyOTP)
                     self?.verifyOTPDATA = verifyOTP
                     
+                        if verifyOTP.status == true {
+                                        
+                                saveUserData(userData: verifyOTP)
+
+                            let userDetail = verifyOTP.result
+                                      
+                                        UserToken.userToken = userDetail?.hashToken ?? ""
+                                        Singleton.sharedInstance.RegisterId = userDetail?.registerId ?? 0
+                                        
+                                        
+                                        saveString(strin: UserToken.userToken, key: userDefaultsKeys.token.rawValue)
+                                        saveString(strin: "\(Singleton.sharedInstance.RegisterId ?? 0)", key: userDefaultsKeys.RegisterId.rawValue)
+                                        
+                                    } else {
+
+                                       // self.view.makeToast("OTP required", duration: 2.0, position: .bottom, style: toastStyle)
+                                        
+                                    }
+                
+                    
                     if self?.userStatusMessage.lowercased() == "User exist!".lowercased(){
+                        DispatchQueue.main.async {
+                                    let VerifyOTPVC =  ProfileVC.getInstance()
+                                    VerifyOTPVC.modalPresentationStyle = .overCurrentContext
+                                    self?.present(VerifyOTPVC, animated: true)
+                        }
+                    }else if  self?.userStatusMessage.lowercased() == "Data added successully".lowercased(){
                         DispatchQueue.main.async {
                                     let VerifyOTPVC = ProfileVC.getInstance()
                                     VerifyOTPVC.modalPresentationStyle = .overCurrentContext
                                     self?.present(VerifyOTPVC, animated: true)
                         }
-                    }else if  self?.userStatusMessage.lowercased() == "Data added successully".lowercased(){
-                        
                     }
                     
                 case .failure(let apiError):
