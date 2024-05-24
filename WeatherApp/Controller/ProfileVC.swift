@@ -181,7 +181,7 @@ extension ProfileVC
                         {
                             
                         
-                        })
+                        }
                     }
                 } else {
                     print("Failed to access StatusMessage from response")

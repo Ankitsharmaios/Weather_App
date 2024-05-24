@@ -22,4 +22,11 @@ extension UIView{
         view.layer.shadowRadius = 4
         view.layer.masksToBounds = false
     }
+    func addShadowToCollectionView(view: UICollectionView, value: CGFloat) {
+        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.layer.shadowOffset = CGSize(width: value, height: value)
+        view.layer.shadowOpacity = 0.5
+        view.layer.shadowRadius = 4
+        view.layer.masksToBounds = false
+    }
 }
