@@ -170,17 +170,8 @@ extension WelcomeToTheWeatherAppVC
         }
     }
 }
-
-
-
-
-
-
-
-
-
 extension UIViewController {
-    static func currentViewcc() -> UIViewController? {
+    static func currentViewc() -> UIViewController? {
         var viewController = UIApplication.shared.windows.first?.rootViewController
         while viewController?.presentedViewController != nil {
             viewController = viewController?.presentedViewController

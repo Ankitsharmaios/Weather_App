@@ -2,7 +2,9 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -147,10 +149,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C5e-RA-LAZ" customClass="DPOTPView" customModule="DPOTPView">
-                                        <rect key="frame" x="50" y="80" width="243" height="51"/>
+                                        <rect key="frame" x="50" y="80" width="243" height="40"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="51" id="Afm-ce-u0H"/>
+                                            <constraint firstAttribute="height" constant="40" id="Afm-ce-u0H"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You will be asked for it periodically to help you remember it. Forgot PIN?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jza-cA-YjX">
@@ -159,20 +161,28 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incorrect PIN. Try again." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gjz-jy-zXu">
+                                        <rect key="frame" x="91" y="120" width="161" height="18"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="textColor" name="RedColor_D62323"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="KVc-aT-Cg0" firstAttribute="leading" secondItem="eLy-vL-zJX" secondAttribute="leading" id="8IP-sT-VHC"/>
                                     <constraint firstItem="C5e-RA-LAZ" firstAttribute="centerX" secondItem="KVc-aT-Cg0" secondAttribute="centerX" id="9ai-hC-l70"/>
                                     <constraint firstItem="C5e-RA-LAZ" firstAttribute="leading" secondItem="eLy-vL-zJX" secondAttribute="leading" constant="50" id="9fL-q0-DRl"/>
+                                    <constraint firstItem="Gjz-jy-zXu" firstAttribute="top" secondItem="C5e-RA-LAZ" secondAttribute="bottom" id="BMs-kR-DgO"/>
                                     <constraint firstAttribute="trailing" secondItem="KVc-aT-Cg0" secondAttribute="trailing" id="GsZ-tE-8tL"/>
                                     <constraint firstAttribute="trailing" secondItem="jza-cA-YjX" secondAttribute="trailing" constant="15" id="L59-38-RgW"/>
                                     <constraint firstAttribute="height" constant="200" id="NEO-sB-JeF"/>
                                     <constraint firstAttribute="trailing" secondItem="C5e-RA-LAZ" secondAttribute="trailing" constant="50" id="RX2-s0-jIa"/>
+                                    <constraint firstItem="Gjz-jy-zXu" firstAttribute="centerX" secondItem="C5e-RA-LAZ" secondAttribute="centerX" id="TFp-wf-EvS"/>
                                     <constraint firstItem="jza-cA-YjX" firstAttribute="leading" secondItem="eLy-vL-zJX" secondAttribute="leading" constant="15" id="cAC-pp-Mza"/>
+                                    <constraint firstItem="jza-cA-YjX" firstAttribute="top" secondItem="C5e-RA-LAZ" secondAttribute="bottom" constant="26" id="cUM-C8-GbR"/>
                                     <constraint firstItem="KVc-aT-Cg0" firstAttribute="top" secondItem="eLy-vL-zJX" secondAttribute="top" id="fNe-9v-1WG"/>
                                     <constraint firstItem="C5e-RA-LAZ" firstAttribute="top" secondItem="KVc-aT-Cg0" secondAttribute="bottom" constant="20" id="lK6-xF-ttm"/>
-                                    <constraint firstItem="jza-cA-YjX" firstAttribute="top" secondItem="C5e-RA-LAZ" secondAttribute="bottom" constant="15" id="zJM-Tn-5dm"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -191,6 +201,7 @@
                     </view>
                     <connections>
                         <outlet property="lblEnterYou" destination="VGr-Mz-DDE" id="IUV-kn-SoA"/>
+                        <outlet property="lblIncorrectPIN" destination="Gjz-jy-zXu" id="nZf-tJ-Lrq"/>
                         <outlet property="lblYouwillbe" destination="jza-cA-YjX" id="cgy-OQ-zi2"/>
                         <outlet property="mainView" destination="eLy-vL-zJX" id="4xR-ER-UcZ"/>
                         <outlet property="otpView" destination="C5e-RA-LAZ" id="RHL-eO-aYx"/>
@@ -203,6 +214,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="RedColor_D62323">
+            <color red="0.83921568627450982" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

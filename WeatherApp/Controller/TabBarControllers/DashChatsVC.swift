@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate & UITableViewDataSource & UITableViewDelegate{
 
     @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var toptableHeightLayout: NSLayoutConstraint!
@@ -34,26 +34,39 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         setupUI()
         navigationController?.navigationBar.isHidden = true
         topTableView.isHidden = true
-//            let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-//            bgView.addGestureRecognizer(tap)
+
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+//        self.view.addGestureRecognizer(tapGesture)
+
+        
     }
     override func viewDidDisappear(_ animated: Bool) {
         self.isTopTableHide = false
         self.topTableView.isHidden = true
     }
-//    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
-//        // handling code
-//        self.topTableView.isHidden = true
-//    }
+//    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+//               // Get the tap location
+//               let tapLocation = sender.location(in: self.view)
+//
+//               // Check if the tap is outside of myView's bounds
+//               if !bgView.frame.contains(tapLocation) {
+//                   // Dismiss myView or perform any action you want
+//    //               bgView.removeFromSuperview()
+//                   self.dismiss(animated: true)
+//                   
+//               }
+//           }
     func setupUI(){
         topTableView.register(UINib(nibName: "optionHeaderTblvCell", bundle: nil),forCellReuseIdentifier: "optionHeaderTblvCell")
         chatTableView.register(UINib(nibName: "ChatsTBlvCell", bundle: nil),forCellReuseIdentifier: "ChatsTBlvCell")
-        topTableView.dataSource = self
+         topTableView.dataSource = self
+        topTableView.delegate = self
         chatTableView.dataSource = self
         chatTableView.delegate = self
         chatTableView.separatorStyle = .none
         toptableHeightLayout.constant = CGFloat(CGFloat((OptionNames.count)) * (40))
         topTableView.separatorStyle = .none
+        topTableView.reloadData()
         topTableView.reloadData()
         weatherLbl.textColor = appThemeColor.text_Weather
         weatherLbl.font = Helvetica.helvetica_bold.font(size: 24)
@@ -96,30 +109,32 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
 }
 // MARK: TableView Methods
-extension DashChatsVC:UITableViewDataSource,UITableViewDelegate{
+extension DashChatsVC{
     func numberOfSections(in tableView: UITableView) -> Int {
         if tableView == chatTableView{
             return 1
-        }else{
+        }else if tableView == topTableView{
             return 1
         }
+        return 0
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == chatTableView{
-            return 20
-        }else{
+            return 5
+        }else if tableView == topTableView{
             return OptionNames.count
         }
-      
+      return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == chatTableView{
             if let cell = chatTableView .dequeueReusableCell(withIdentifier: "ChatsTBlvCell", for: indexPath) as? ChatsTBlvCell{
                 return cell
             }
-        }else{
+        }else if tableView == topTableView{
             if let cell = topTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
                 cell.nameLbl.text = OptionNames[indexPath.row]
+               
                 return cell
             }
         }
@@ -128,14 +143,58 @@ extension DashChatsVC:UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == chatTableView{
             return 70
-        }else{
-            
+        }else if tableView == topTableView{
+            return 43
         }
         return CGFloat()
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = InnerChatVC.getInstance()
-        controller.modalPresentationStyle = .overFullScreen
-        self.present(controller, animated: true)
+        if tableView == chatTableView {
+            let controller = InnerChatVC.getInstance()
+            controller.modalPresentationStyle = .overFullScreen
+            self.present(controller, animated: true)
+        }
+        
+        
+        
+        if tableView == topTableView {
+            let selectedOption = OptionNames[indexPath.row]
+            if selectedOption == "Settings" {
+                DispatchQueue.main.async {
+                    let twoStepVerificationVC = SettingsViewController.getInstance()
+                    twoStepVerificationVC.modalPresentationStyle = .overCurrentContext
+                    twoStepVerificationVC.showTabbar = {
+                        self.showTabBar(animated: true)
+                    }
+                    self.hideTabBar(animated: true)
+                    self.present(twoStepVerificationVC, animated: true)
+                }
+            }
+        }
+    }
+   
+}
+extension DashChatsVC
+{
+    func hideTabBar(animated: Bool) {
+        if let tabBar = self.tabBarController?.tabBar {
+            _ = tabBar.frame.size.height
+            let duration = animated ? 0.3 : 0.0
+            
+            UIView.animate(withDuration: duration) {
+                tabBar.frame.origin.y = self.view.frame.size.height
+            }
+        }
+    }
+    
+    func showTabBar(animated: Bool) {
+        if let tabBar = self.tabBarController?.tabBar {
+            let tabBarHeight = tabBar.frame.size.height
+            let duration = animated ? 0.3 : 0.0
+            
+            UIView.animate(withDuration: duration) {
+                tabBar.frame.origin.y = self.view.frame.size.height - tabBarHeight
+            }
+        }
     }
 }

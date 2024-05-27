@@ -95,19 +95,18 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigatio
     }
     
 }
-extension ProfileVC
-{
-    //MARK: - Image Picker
+
+extension ProfileVC {
+    // MARK: - Image Picker
     func openImagePicker() {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.mediaTypes = [UTType.image.identifier]
-            imagePicker.modalPresentationStyle = .fullScreen
-            imagePicker.allowsEditing = false
-            present(imagePicker, animated: true, completion: nil)
-        
-        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.mediaTypes = [UTType.image.identifier]
+        imagePicker.modalPresentationStyle = .fullScreen
+        imagePicker.allowsEditing = false
+        present(imagePicker, animated: true, completion: nil)
+    }
    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // Dismiss the image picker
@@ -127,6 +126,8 @@ extension ProfileVC
                     let imagePath = imageURL.path
                     // Pass the image path to your API function
                     self.imagePath = imagePath
+                    // Call the EditProfile function with the image path
+                    EditProfile(UserImage: imagePath)
                 }
             }
         }
@@ -143,31 +144,39 @@ extension ProfileVC
             return nil
         }
     }
-    
 }
-extension ProfileVC
-{
+
+extension ProfileVC {
     // MARK: - API CALL
     
     func EditProfile(UserImage: String) {
-        guard let url = URL(string: DataManager.shared.getURL(.EditProfile)) else { return }
+        guard let url = URL(string: DataManager.shared.getURL(.EditProfile)) else {
+            print("Invalid URL")
+            return
+        }
+        
         let headers: HTTPHeaders = [
             // Your additional headers, if any
         ]
-           let parameters: [String: String] = [
-                         "RegisterId":"\(Singleton.sharedInstance.RegisterId ?? 0)",
-                         "HashToken":getString(key: userDefaultsKeys.token.rawValue),
-                         "Name":self.typeyourNameTextField.text ?? "",
-                         "About":""
-                         
-           ]
+        
+        let parameters: [String: String] = [
+            "RegisterId": "\(Singleton.sharedInstance.RegisterId ?? 0)",
+            "HashToken": getString(key: userDefaultsKeys.token.rawValue),
+            "Name": self.typeyourNameTextField.text ?? "",
+            "About": ""
+        ]
+        
         AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in parameters {
-                multipartFormData.append(value.data(using: .utf8)!, withName: key)
+                if let data = value.data(using: .utf8) {
+                    multipartFormData.append(data, withName: key)
+                }
             }
-
+            
             if let imageData = try? Data(contentsOf: URL(fileURLWithPath: UserImage)) {
                 multipartFormData.append(imageData, withName: "UserImage", fileName: "image.png", mimeType: "image/png")
+            } else {
+                print("Error reading image data from file")
             }
         }, to: url, method: .post, headers: headers)
         .responseJSON { response in
@@ -177,12 +186,10 @@ extension ProfileVC
                    let statusMessage = responseDictionary["StatusMessage"] as? String {
                     print("Success: \(statusMessage)")
                     DispatchQueue.main.async {
-                        if statusMessage.lowercased() == "Profile Edit successully".lowercased()
-                        {
-                            let Two_step_verificationVC =  Two_step_verificationVC.getInstance()
-                            Two_step_verificationVC.modalPresentationStyle = .overCurrentContext
-                            self.present(Two_step_verificationVC, animated: true)
-                        
+                        if statusMessage.lowercased() == "profile edit successully" {
+                            let twoStepVerificationVC = Two_step_verificationVC.getInstance()
+                            twoStepVerificationVC.modalPresentationStyle = .overCurrentContext
+                            self.present(twoStepVerificationVC, animated: true)
                         }
                     }
                 } else {
@@ -190,9 +197,10 @@ extension ProfileVC
                 }
             case .failure(let error):
                 print("Error: \(error)")
+                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                    print("Server response: \(responseString)")
+                }
             }
         }
-
-       }
-    
     }
+}

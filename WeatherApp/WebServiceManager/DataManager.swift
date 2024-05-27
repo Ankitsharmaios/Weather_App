@@ -69,6 +69,8 @@ enum WSEndPoints: String {
     case VerifyOTP = "VerifyOTP"
     case EditProfile = "EditProfile"
     case AddTwoStepVerificationcode = "AddTwoStepVerificationcode"
+    case CheckTwoFactor = "CheckTwoFactor"
+    case Logout = "Logout"
 }
 
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */; };
+		1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */; };
 		1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */; };
 		1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */; };
 		14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C3F2BFF4256004F8894 /* RegisterModel.swift */; };
@@ -15,6 +17,12 @@
 		14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C452BFF7B8D004F8894 /* DashChatsVC.swift */; };
 		14392C492BFF7B8D004F8894 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C462BFF7B8D004F8894 /* TabBarVC.swift */; };
 		14392C4B2BFF7BE2004F8894 /* DashBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */; };
+		145750DE2C04984B0001E286 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */; };
+		145750DF2C04984B0001E286 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */; };
+		145750E22C04A7700001E286 /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750E12C04A7700001E286 /* AccountVC.swift */; };
+		145750E52C04AB960001E286 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145750E42C04AB960001E286 /* AccountTableViewCell.xib */; };
+		145750E62C04AB960001E286 /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750E32C04AB960001E286 /* AccountTableViewCell.swift */; };
+		145750E82C04B4AA0001E286 /* LogOutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750E72C04B4AA0001E286 /* LogOutModel.swift */; };
 		1463100E2C00C1DD0034896A /* AttachmentCLvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1463100C2C00C1DD0034896A /* AttachmentCLvCell.swift */; };
 		1463100F2C00C1DD0034896A /* AttachmentCLvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1463100D2C00C1DD0034896A /* AttachmentCLvCell.xib */; };
 		147366252C008B9B00419797 /* SaveLocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147366242C008B9B00419797 /* SaveLocalData.swift */; };
@@ -93,6 +101,8 @@
 
 /* Begin PBXFileReference section */
 		0B4D3880110DF7A00E159173 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckTwoFactorModel.swift; sourceTree = "<group>"; };
+		1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeToTheWeatherAppVC.swift; sourceTree = "<group>"; };
 		1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyNumberVC.swift; sourceTree = "<group>"; };
 		14392C3F2BFF4256004F8894 /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
@@ -101,6 +111,12 @@
 		14392C452BFF7B8D004F8894 /* DashChatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashChatsVC.swift; sourceTree = "<group>"; };
 		14392C462BFF7B8D004F8894 /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DashBoard.storyboard; sourceTree = "<group>"; };
+		145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		145750E12C04A7700001E286 /* AccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
+		145750E32C04AB960001E286 /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
+		145750E42C04AB960001E286 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
+		145750E72C04B4AA0001E286 /* LogOutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutModel.swift; sourceTree = "<group>"; };
 		1463100C2C00C1DD0034896A /* AttachmentCLvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCLvCell.swift; sourceTree = "<group>"; };
 		1463100D2C00C1DD0034896A /* AttachmentCLvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentCLvCell.xib; sourceTree = "<group>"; };
 		147366242C008B9B00419797 /* SaveLocalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveLocalData.swift; sourceTree = "<group>"; };
@@ -198,11 +214,32 @@
 		14392C472BFF7B8D004F8894 /* TabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
+				145750E02C04A7330001E286 /* SettingsVC */,
 				14392C452BFF7B8D004F8894 /* DashChatsVC.swift */,
 				14392C462BFF7B8D004F8894 /* TabBarVC.swift */,
 				14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */,
 			);
 			path = TabBarControllers;
+			sourceTree = "<group>";
+		};
+		145750DB2C04981E0001E286 /* SettingsCells */ = {
+			isa = PBXGroup;
+			children = (
+				145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */,
+				145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */,
+				145750E32C04AB960001E286 /* AccountTableViewCell.swift */,
+				145750E42C04AB960001E286 /* AccountTableViewCell.xib */,
+			);
+			path = SettingsCells;
+			sourceTree = "<group>";
+		};
+		145750E02C04A7330001E286 /* SettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */,
+				145750E12C04A7700001E286 /* AccountVC.swift */,
+			);
+			path = SettingsVC;
 			sourceTree = "<group>";
 		};
 		1463100B2C00C1BA0034896A /* AttachmentCells */ = {
@@ -367,6 +404,8 @@
 				14392C412BFF5D03004F8894 /* VerifyOTPModel.swift */,
 				147366262C0092D700419797 /* EditProfileModel.swift */,
 				14D950AA2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift */,
+				1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */,
+				145750E72C04B4AA0001E286 /* LogOutModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -466,6 +505,7 @@
 		14D3CE5C2BFB791300E700CB /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				145750DB2C04981E0001E286 /* SettingsCells */,
 				1463100B2C00C1BA0034896A /* AttachmentCells */,
 				14AFB2482C0073B900F0D93D /* ChatsCells */,
 				14A3E29C2C00555400417919 /* OptionHeaderCell */,
@@ -598,6 +638,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				145750E52C04AB960001E286 /* AccountTableViewCell.xib in Resources */,
 				14AFB24B2C0073D200F0D93D /* ChatsTBlvCell.xib in Resources */,
 				14D3CE2A2BFB5F0C00E700CB /* nunitosans_black.TTF in Resources */,
 				14D3CDEF2BFB5CCE00E700CB /* Assets.xcassets in Resources */,
@@ -610,6 +651,7 @@
 				14AFB24E2C00919C00F0D93D /* GoogleService-Info.plist in Resources */,
 				14AF4BC02BFC80940042CB95 /* CitysCollectionViewCell.xib in Resources */,
 				1463100F2C00C1DD0034896A /* AttachmentCLvCell.xib in Resources */,
+				145750DE2C04984B0001E286 /* SettingsTableViewCell.xib in Resources */,
 				14D3CE2B2BFB5F0C00E700CB /* nunitosans_bold.TTF in Resources */,
 				14AF4BAE2BFC6B790042CB95 /* PopUp.storyboard in Resources */,
 				14D3CE2D2BFB5F0C00E700CB /* nunitosans_regular.TTF in Resources */,
@@ -689,6 +731,7 @@
 				14AF4BBF2BFC80940042CB95 /* CitysCollectionViewCell.swift in Sources */,
 				14AF4BB42BFC72540042CB95 /* UIViewControllerExtented.swift in Sources */,
 				14D3CE232BFB5F0300E700CB /* AppResources.swift in Sources */,
+				145750DF2C04984B0001E286 /* SettingsTableViewCell.swift in Sources */,
 				14D3CE532BFB68E000E700CB /* CounterManaged.swift in Sources */,
 				14D3CE332BFB625000E700CB /* CommonFile.swift in Sources */,
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
@@ -696,6 +739,7 @@
 				14D3CE1E2BFB5D9500E700CB /* WeatherListCell.swift in Sources */,
 				14D950AB2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift in Sources */,
 				14AF4BB62BFC72EC0042CB95 /* UIColores.swift in Sources */,
+				1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */,
 				14D3CE572BFB68E000E700CB /* WebServices.swift in Sources */,
 				14392C422BFF5D03004F8894 /* VerifyOTPModel.swift in Sources */,
 				14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */,
@@ -711,14 +755,18 @@
 				14D3CE502BFB68E000E700CB /* Constant.swift in Sources */,
 				14D3CE452BFB659300E700CB /* UIImage.swift in Sources */,
 				14D3CE562BFB68E000E700CB /* Reachability.swift in Sources */,
+				145750E62C04AB960001E286 /* AccountTableViewCell.swift in Sources */,
+				145750E22C04A7700001E286 /* AccountVC.swift in Sources */,
 				14AFB24C2C0073D200F0D93D /* ChatsTBlvCell.swift in Sources */,
 				14D3CE512BFB68E000E700CB /* APILogs.swift in Sources */,
+				1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */,
 				14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */,
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
 				1463100E2C00C1DD0034896A /* AttachmentCLvCell.swift in Sources */,
 				1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */,
 				1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */,
 				14B3742E2C006D6500AC949B /* ProfileVC.swift in Sources */,
+				145750E82C04B4AA0001E286 /* LogOutModel.swift in Sources */,
 				14A3E2A22C00578500417919 /* UIView.swift in Sources */,
 				14D950A82C00B6CC00EDD4E8 /* ConfirmPinVC.swift in Sources */,
 				14D950A42C00A32C00EDD4E8 /* Two-step-verificationVC.swift in Sources */,

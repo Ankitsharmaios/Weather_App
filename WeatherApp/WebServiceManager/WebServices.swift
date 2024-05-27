@@ -127,6 +127,33 @@ extension DataManager {
         }
     }
     
+    //MARK: CheckTwoFactor
+    func CheckTwoFactor(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<CheckTwoFactorModel, APIError>) -> Void) {
+
+        // Create URL
+        let url = getURL(.CheckTwoFactor)
+
+        NetworkManager.shared.postResponse(url, parameter: params, header: getHttpHeaders(), mappingType: CheckTwoFactorModel.self) { (mappableArray, apiError) in
+            
+            guard let data = mappableArray as? CheckTwoFactorModel else {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }
+            
+            print("status \(data.status ?? false)")
+            print("message \(data.statusMessage ?? "")")
+            
+            if !(data.status ?? false) && data.statusMessage == "Token Expired" {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }else if !(data.status ?? false) && data.statusMessage == "login failed !" {
+                completion(.success(data))
+            } else{
+                completion(.success(data))
+            }
+        }
+    }
+    
     //MARK: AddTwoStepVerificationcode
     func AddTwoStepVerificationcode(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<AddTwoStepVerificationcodeModel, APIError>) -> Void) {
 
@@ -136,6 +163,34 @@ extension DataManager {
         NetworkManager.shared.postResponse(url, parameter: params, header: getHttpHeaders(), mappingType: AddTwoStepVerificationcodeModel.self) { (mappableArray, apiError) in
             
             guard let data = mappableArray as? AddTwoStepVerificationcodeModel else {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }
+            
+            print("status \(data.status ?? false)")
+            print("message \(data.statusMessage ?? "")")
+            
+            if !(data.status ?? false) && data.statusMessage == "Token Expired" {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }else if !(data.status ?? false) && data.statusMessage == "login failed !" {
+                completion(.success(data))
+            } else{
+                completion(.success(data))
+            }
+        }
+    }
+    
+    
+    //MARK: Logout
+    func Logout(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<LogOutModel, APIError>) -> Void) {
+
+        // Create URL
+        let url = getURL(.Logout)
+
+        NetworkManager.shared.postResponse(url, parameter: params, header: getHttpHeaders(), mappingType: LogOutModel.self) { (mappableArray, apiError) in
+            
+            guard let data = mappableArray as? LogOutModel else {
                 completion(.failure(apiError ?? .errorMessage("Something went wrong")))
                 return
             }

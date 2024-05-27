@@ -31,6 +31,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="7dH-OG-yFS" firstAttribute="centerX" secondItem="HYl-MM-TJX" secondAttribute="centerX" id="ATT-EO-3bX"/>
+                            <constraint firstAttribute="height" constant="43" id="Dl1-Oh-dWy"/>
                             <constraint firstAttribute="bottom" secondItem="7dH-OG-yFS" secondAttribute="bottom" constant="10" id="Q7Q-eg-8tS"/>
                             <constraint firstItem="7dH-OG-yFS" firstAttribute="top" secondItem="HYl-MM-TJX" secondAttribute="top" constant="10" id="VlR-VY-Cua"/>
                             <constraint firstAttribute="trailing" secondItem="7dH-OG-yFS" secondAttribute="trailing" constant="10" id="Yns-T3-TeD"/>

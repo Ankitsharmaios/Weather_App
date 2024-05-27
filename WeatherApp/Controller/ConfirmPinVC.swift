@@ -98,7 +98,7 @@ extension ConfirmPinVC
 {
     //MARK: Call Api
     func AddTwoStepVerificationcode(){
-        let param = ["RegisterId":"\(Singleton.sharedInstance.RegisterId ?? 0)",
+        let param = ["RegisterId":getString(key: userDefaultsKeys.RegisterId.rawValue),
                      "Hashtoken":getString(key: userDefaultsKeys.token.rawValue),
                      "Passcode":otpView.text ?? "",
                      "PasscodeEnable":"true",

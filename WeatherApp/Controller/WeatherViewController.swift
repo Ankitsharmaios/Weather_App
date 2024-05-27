@@ -22,6 +22,11 @@ class WeatherViewController: WhiteColorNoneNavigation {
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var dayTitleLbl: UILabel!
     
+    
+    class func getInstance()-> WeatherViewController {
+        return WeatherViewController.viewController(storyboard: Constants.Storyboard.Main)
+    }
+    
     var arrWeatherData: WeatherListModel?
     var hourModel = [HourModel]()
     var hourModels = [Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?[0].hour]
