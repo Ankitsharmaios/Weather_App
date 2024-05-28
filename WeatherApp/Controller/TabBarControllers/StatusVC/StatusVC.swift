@@ -8,9 +8,10 @@
 import UIKit
 import UniformTypeIdentifiers
 import AVFoundation
-
+import SDWebImage
 class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var plusStatusImgView: UIImageView!
     @IBOutlet weak var btnGreenCamera: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lblRecentUpdates: UILabel!
@@ -24,15 +25,26 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var updateView: UIView!
     @IBOutlet weak var lblUpdate: UILabel!
-     var videoPath = ""
+    var videoPath = ""
     var imagePath = ""
+    let userdata = getUserData()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setUserData()
         navigationController?.navigationBar.isHidden = true
         // Do any additional setup after loading the view.
     }
-    
+    func setUserData() {
+            
+            let imageURLString = userdata?.result?.image ?? ""
+        
+            if let imageURL = URL(string: imageURLString) {
+                imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+            } else {
+                imageView.image = UIImage(named: "placeholder")
+            }
+        }
     
     func setupUI()
     {
@@ -53,8 +65,6 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 2.5
-        imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
         
     }
     
@@ -80,7 +90,22 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     
     @IBAction func opengalleryAction(_ sender: Any)
     {
-        openCamera()
+       if imagePath == ""
+        {
+           openCamera()
+    }else{
+        
+            let StatusStoryVC = StatusStoryVC.getInstance()
+            StatusStoryVC.modalPresentationStyle = .overCurrentContext
+            StatusStoryVC.userImg = userdata?.result?.image ?? ""
+            StatusStoryVC.userName = userdata?.result?.name ?? ""
+            StatusStoryVC.showTabBar = {
+                self.showTabBar(animated: true)
+           }
+            self.hideTabBar(animated: true)
+            self.present(StatusStoryVC, animated: true)
+        
+       }
     }
     @IBAction func greenCameraAction(_ sender: Any) 
     {
@@ -98,7 +123,7 @@ extension StatusVC {
                 let imagePicker = UIImagePickerController()
                 imagePicker.sourceType = .camera
                 imagePicker.mediaTypes = ["public.image", "public.movie"]
-                imagePicker.videoMaximumDuration = 30 * 60 // 30 minutes
+                imagePicker.videoMaximumDuration = 60 // 30 minutes
                 imagePicker.allowsEditing = true
                 imagePicker.delegate = self
                 self.present(imagePicker, animated: true, completion: nil)
@@ -141,8 +166,14 @@ extension StatusVC {
                 // Handle image selection
                 if let editedImage = info[.editedImage] as? UIImage {
                     imageView.image = editedImage
+                    imageView.layer.borderWidth = 2.5
+                    imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                    plusStatusImgView.isHidden = true
                 } else if let originalImage = info[.originalImage] as? UIImage {
                     imageView.image = originalImage
+                    imageView.layer.borderWidth = 2.5
+                    imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                    plusStatusImgView.isHidden = true
                 }
                 
                 // Optionally, save the image to the documents directory and handle further
@@ -159,13 +190,18 @@ extension StatusVC {
                     // Display video thumbnail
                     let thumbnail = generateThumbnail(for: videoURL)
                     imageView.image = thumbnail
-                    
+                    imageView.layer.borderWidth = 2.5
+                    imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                    plusStatusImgView.isHidden = true
                     // Optionally, save the video to the documents directory and handle further
                     if let videoData = try? Data(contentsOf: videoURL) {
                         if let videoFileURL = saveVideoToDocumentsDirectory(data: videoData) {
                             // Use videoFileURL.path as the path to the saved video file
                             let videoPath = videoFileURL.path
                             self.videoPath = videoPath
+                            imageView.layer.borderWidth = 2.5
+                            imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                            plusStatusImgView.isHidden = true
                         }
                     }
                 }
@@ -215,6 +251,31 @@ extension StatusVC {
         } catch {
             print("Error generating thumbnail: \(error)")
             return nil
+        }
+    }
+}
+
+extension StatusVC
+{
+    func hideTabBar(animated: Bool) {
+        if let tabBar = self.tabBarController?.tabBar {
+            _ = tabBar.frame.size.height
+            let duration = animated ? 0.3 : 0.0
+            
+            UIView.animate(withDuration: duration) {
+                tabBar.frame.origin.y = self.view.frame.size.height
+            }
+        }
+    }
+    
+    func showTabBar(animated: Bool) {
+        if let tabBar = self.tabBarController?.tabBar {
+            let tabBarHeight = tabBar.frame.size.height
+            let duration = animated ? 0.3 : 0.0
+            
+            UIView.animate(withDuration: duration) {
+                tabBar.frame.origin.y = self.view.frame.size.height - tabBarHeight
+            }
         }
     }
 }
