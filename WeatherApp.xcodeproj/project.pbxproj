@@ -28,6 +28,7 @@
 		1463100F2C00C1DD0034896A /* AttachmentCLvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1463100D2C00C1DD0034896A /* AttachmentCLvCell.xib */; };
 		147366252C008B9B00419797 /* SaveLocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147366242C008B9B00419797 /* SaveLocalData.swift */; };
 		147366272C0092D700419797 /* EditProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147366262C0092D700419797 /* EditProfileModel.swift */; };
+		1488B0C62C0603E700DF7372 /* StatusStoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488B0C52C0603E700DF7372 /* StatusStoryVC.swift */; };
 		14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */; };
 		14A3E2A02C00557900417919 /* optionHeaderTblvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */; };
 		14A3E2A22C00578500417919 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3E2A12C00578500417919 /* UIView.swift */; };
@@ -128,6 +129,7 @@
 		1463100D2C00C1DD0034896A /* AttachmentCLvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentCLvCell.xib; sourceTree = "<group>"; };
 		147366242C008B9B00419797 /* SaveLocalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveLocalData.swift; sourceTree = "<group>"; };
 		147366262C0092D700419797 /* EditProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileModel.swift; sourceTree = "<group>"; };
+		1488B0C52C0603E700DF7372 /* StatusStoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusStoryVC.swift; sourceTree = "<group>"; };
 		14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = optionHeaderTblvCell.swift; sourceTree = "<group>"; };
 		14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = optionHeaderTblvCell.xib; sourceTree = "<group>"; };
 		14A3E2A12C00578500417919 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -226,11 +228,11 @@
 		14392C472BFF7B8D004F8894 /* TabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
+				1488B0C42C0603B900DF7372 /* StatusVC */,
 				145750E02C04A7330001E286 /* SettingsVC */,
 				14392C452BFF7B8D004F8894 /* DashChatsVC.swift */,
 				14392C462BFF7B8D004F8894 /* TabBarVC.swift */,
 				14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */,
-				1423389A2C05D72500328AB1 /* StatusVC.swift */,
 			);
 			path = TabBarControllers;
 			sourceTree = "<group>";
@@ -262,6 +264,15 @@
 				1463100D2C00C1DD0034896A /* AttachmentCLvCell.xib */,
 			);
 			path = AttachmentCells;
+			sourceTree = "<group>";
+		};
+		1488B0C42C0603B900DF7372 /* StatusVC */ = {
+			isa = PBXGroup;
+			children = (
+				1423389A2C05D72500328AB1 /* StatusVC.swift */,
+				1488B0C52C0603E700DF7372 /* StatusStoryVC.swift */,
+			);
+			path = StatusVC;
 			sourceTree = "<group>";
 		};
 		14A3E29C2C00555400417919 /* OptionHeaderCell */ = {
@@ -762,6 +773,7 @@
 				145750DF2C04984B0001E286 /* SettingsTableViewCell.swift in Sources */,
 				14D3CE532BFB68E000E700CB /* CounterManaged.swift in Sources */,
 				1423389B2C05D72500328AB1 /* StatusVC.swift in Sources */,
+				1488B0C62C0603E700DF7372 /* StatusStoryVC.swift in Sources */,
 				14D3CE332BFB625000E700CB /* CommonFile.swift in Sources */,
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
 				147366272C0092D700419797 /* EditProfileModel.swift in Sources */,
@@ -898,7 +910,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -962,7 +974,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
