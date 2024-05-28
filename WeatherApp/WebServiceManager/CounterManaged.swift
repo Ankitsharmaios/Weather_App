@@ -58,3 +58,14 @@
 //        }
 //    }
 //}
+
+import UIKit
+import Foundation
+struct StoreLink {
+    static var showPopupt = ""
+    static var iOSLastVersion = ""
+    static var systemVersionCheckIOS = ""
+    static let itunesAppleCom = "itms-apps://itunes.apple.com/app/6499210085" //"https://apps.apple.com/us/app/"
+    static var iOSDeleteAccout = ""
+    static let systemVersion = (UIDevice.current.systemVersion as NSString).floatValue
+}

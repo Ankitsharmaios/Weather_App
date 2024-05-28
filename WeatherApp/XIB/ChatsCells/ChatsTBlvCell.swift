@@ -9,6 +9,10 @@ import UIKit
 
 class ChatsTBlvCell: UITableViewCell {
 
+    @IBOutlet weak var msgCountLbl: UILabel!
+    @IBOutlet weak var countbgView: UIView!
+    @IBOutlet weak var statusleadingLayout: NSLayoutConstraint!
+    @IBOutlet weak var msgLeadingLayout: NSLayoutConstraint!
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var messageLbl: UILabel!
@@ -24,6 +28,9 @@ class ChatsTBlvCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     func setupUI(){
+        countbgView.layer.cornerRadius = countbgView.layer.bounds.height / 2
+        msgCountLbl.textColor = appThemeColor.white
+        countbgView.backgroundColor = appThemeColor.text_Weather
         userImageView.layer.cornerRadius = userImageView.bounds.height / 2
         usernameLbl.font = Helvetica.helvetica_bold.font(size: 16)
         messageLbl.textColor = appThemeColor.text_LightColure

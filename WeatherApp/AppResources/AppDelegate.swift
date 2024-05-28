@@ -10,12 +10,11 @@ import IQKeyboardManagerSwift
 //import GoogleMaps
 import Loaf
 import ObjectMapper
-//import Firebase
-//import FirebaseMessaging
-//import UserNotifications
-//import FirebaseFirestore
-//import FirebaseCore
-
+import Firebase
+import FirebaseCore
+import FirebaseMessaging
+import FirebaseCore
+import FirebaseDatabase
 
 let APPLICATION_DELEGATE = UIApplication.shared.delegate as! AppDelegate
 
@@ -34,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        
 //        //Get Firebase data
 //        getFirebaseData()
-//        
+        FirebaseApp.configure()
+        fetchFirebaseDataForForceUpdate()
 //        // IQKeyboardManager
 //   //     IQKeyboardManager.shared.enable = true
 //        
@@ -198,6 +198,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
     }
+      
+        func applicationDidBecomeActive(_ application: UIApplication) {
+            // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+            fetchFirebaseDataForForceUpdate()
+        }
+        
+        func applicationWillEnterForeground(_ application: UIApplication) {
+            // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+            fetchFirebaseDataForForceUpdate()
+        }
+        func fetchFirebaseDataForForceUpdate() {
+            var ref: DatabaseReference!
+            ref = Database.database().reference()
+            ref.getData { [self] error, snap in
+                if let error = error {
+                    print("Error in fetching from firebase: \(error)")
+                }else if snap!.exists() {
+                    print("Data fetched from firebase")
+                    if let detail = snap?.value as? [String: Any] {
+                        print("UserData, \(detail["User"] ?? "")")
+                        print("LastChat, \(detail["LastChat"] ?? "")")
+                        print("Chat, \(detail["Chat"] ?? "")")
+                        print("iOSLastVersion, \(detail["iOSLastVersion"] ?? "")")
+                        print("iOSMaintenance, \(detail["iOSMaintenance"] ?? "")")
+                        print("iOSsystemVersionCheck, \(detail["iOSsystemVersionCheck"] ?? "")")
+                        print("iOSShowPopupForForceUpdate, \(detail["iOSShowPopupForForceUpdate"] ?? "")")
+                        
+                        StoreLink.iOSLastVersion = "\(detail["iOSLastVersion"] ?? "")"
+                        StoreLink.iOSDeleteAccout = "\(detail["isDeleteAccount"] ?? "")".lowercased()
+                        
+                        if "\(detail["iOSMaintenance"] ?? "")".lowercased() == "yes".lowercased(){
+                          //  maintenancePopup()
+                        }
+                        
+                      //  self.systemVersionCheck(Float("\(detail["iOSsystemVersionCheck"] ?? "")") ?? 14.3)
+                        
+                        if "\(detail["iOSShowPopupForForceUpdate"] ?? "")".lowercased() == "yes".lowercased(){
+                           // forceUpdate()
+                        }
+                        
+                    }
+                }else {
+                    //                print("No data available")
+                }
+            }
+        }
     /*
     //MARK: - Get firebase
     func getFirebaseData(){

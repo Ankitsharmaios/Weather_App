@@ -10,6 +10,8 @@ import IQKeyboardManagerSwift
 
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var maintableView: UITableView!
+    @IBOutlet weak var emojiTxt: EmojiTextField!
     @IBOutlet weak var bottomCollectionView: UICollectionView!
     @IBOutlet weak var topTableHeightLayout: NSLayoutConstraint!
     @IBOutlet weak var optionTableView: UITableView!
@@ -33,6 +35,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     @IBOutlet weak var bgView: UIView!
     var isTableViewHide = false
     var isCollectionHide = false
+    var UserName = ""
     var AttachmentNames:[String] = ["Document","Camera","Gallery","Audio","Location","Contact"]
     var optionNames:[String] = ["View Contact","Media, links, and docs","Search","Mute notifications","Disappearing messages","Wallpaper","More"]
     let placeholderText = "Message"
@@ -86,14 +89,16 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             }
         }
         
-//        func textViewDidChange(_ textView: UITextView) {
-//            // Check if the text view is empty and show the camera button accordingly
-//            if textView.text.isEmpty {
-//                cameraBtn.isHidden = false
-//            } else {
-//                cameraBtn.isHidden = true
-//            }
-//        }
+        func textViewDidChange(_ textView: UITextView) {
+            // Check if the text view is empty and show the camera button accordingly
+            if textView.text.isEmpty {
+                micBtn.setImage(UIImage(named: "Mic"), for: .normal)
+             //   cameraBtn.isHidden = false
+            } else {
+                micBtn.setImage(UIImage(named: "Send"), for: .normal)
+            //    cameraBtn.isHidden = true
+            }
+        }
     @IBAction func backBtn(_ sender: Any) {
         self.dismiss(animated: true)
     }
@@ -117,6 +122,10 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             self.optionTableView.isHidden = true
         }
     }
+    
+    @IBAction func emojiBtn(_ sender: Any) {
+        emojiTxt.becomeFirstResponder()
+    }
     func openCamera() {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
             let imagePicker = UIImagePickerController()
@@ -132,6 +141,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
 }
 // MARK: Tableview Methods
 extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{

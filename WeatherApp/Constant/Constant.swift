@@ -78,3 +78,8 @@ enum APILogMessage {
     static var UnAuthorizeStatus = false
     static var PassVC = "UnAuthorise"
 }
+enum firebaseTableName: String{
+    case Chat = "Chat"
+    case LastChat = "LastChat"
+    case User = "User"
+}

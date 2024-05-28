@@ -60,17 +60,39 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qj4-WP-v8m">
+                                <rect key="frame" x="289" y="41" width="16" height="16"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMZ-lX-r8h">
+                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="16" id="AAu-Ud-lNg"/>
+                                    <constraint firstItem="OMZ-lX-r8h" firstAttribute="leading" secondItem="Qj4-WP-v8m" secondAttribute="leading" id="FlQ-be-j5K"/>
+                                    <constraint firstItem="OMZ-lX-r8h" firstAttribute="top" secondItem="Qj4-WP-v8m" secondAttribute="top" id="GUr-W3-qpj"/>
+                                    <constraint firstAttribute="trailing" secondItem="OMZ-lX-r8h" secondAttribute="trailing" id="He4-di-4x0"/>
+                                    <constraint firstAttribute="height" constant="16" id="WiL-ZH-N6V"/>
+                                    <constraint firstAttribute="bottom" secondItem="OMZ-lX-r8h" secondAttribute="bottom" id="dKw-wp-e0e"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="JwJ-OS-vrt" firstAttribute="leading" secondItem="ln3-Ie-cwM" secondAttribute="leading" id="40r-Y6-8VK"/>
+                            <constraint firstItem="JwJ-OS-vrt" firstAttribute="leading" secondItem="HOf-8i-JOA" secondAttribute="trailing" constant="10" id="DAr-Ol-Anp"/>
                             <constraint firstItem="ln3-Ie-cwM" firstAttribute="top" secondItem="HOf-8i-JOA" secondAttribute="top" constant="2" id="EL7-cb-dme"/>
+                            <constraint firstItem="Qj4-WP-v8m" firstAttribute="top" secondItem="QD0-Ft-CMd" secondAttribute="bottom" constant="5.3333333333333286" id="F5r-tV-Qcz"/>
                             <constraint firstAttribute="trailing" secondItem="QD0-Ft-CMd" secondAttribute="trailing" constant="15" id="FRg-0J-oWS"/>
                             <constraint firstItem="QD0-Ft-CMd" firstAttribute="centerY" secondItem="ln3-Ie-cwM" secondAttribute="centerY" id="KRd-ex-0Oe"/>
                             <constraint firstItem="HOf-8i-JOA" firstAttribute="leading" secondItem="GtI-P7-Lr9" secondAttribute="leading" constant="15" id="XEC-GV-pf8"/>
                             <constraint firstItem="ln3-Ie-cwM" firstAttribute="leading" secondItem="HOf-8i-JOA" secondAttribute="trailing" constant="10" id="YYN-YO-Sjk"/>
                             <constraint firstItem="Npx-Vs-PbX" firstAttribute="leading" secondItem="JwJ-OS-vrt" secondAttribute="trailing" constant="8" symbolic="YES" id="d9E-O9-8bH"/>
                             <constraint firstItem="JwJ-OS-vrt" firstAttribute="bottom" secondItem="HOf-8i-JOA" secondAttribute="bottom" constant="-4" id="kaY-nx-vQ9"/>
+                            <constraint firstItem="Qj4-WP-v8m" firstAttribute="trailing" secondItem="QD0-Ft-CMd" secondAttribute="trailing" id="o1U-Td-l4E"/>
                             <constraint firstItem="Npx-Vs-PbX" firstAttribute="centerY" secondItem="JwJ-OS-vrt" secondAttribute="centerY" id="vlF-aL-frc"/>
                             <constraint firstItem="HOf-8i-JOA" firstAttribute="centerY" secondItem="GtI-P7-Lr9" secondAttribute="centerY" id="yNr-Yh-sUw"/>
                         </constraints>
@@ -87,7 +109,11 @@
             <connections>
                 <outlet property="ViewStatusImage" destination="JwJ-OS-vrt" id="GIb-4l-8wq"/>
                 <outlet property="bgView" destination="GtI-P7-Lr9" id="2h3-Fg-2lx"/>
+                <outlet property="countbgView" destination="Qj4-WP-v8m" id="wFZ-sY-dXV"/>
                 <outlet property="messageLbl" destination="Npx-Vs-PbX" id="fUf-AA-ehz"/>
+                <outlet property="msgCountLbl" destination="OMZ-lX-r8h" id="NpC-jH-16n"/>
+                <outlet property="msgLeadingLayout" destination="d9E-O9-8bH" id="ebW-8B-deT"/>
+                <outlet property="statusleadingLayout" destination="DAr-Ol-Anp" id="YN6-Gb-enc"/>
                 <outlet property="timeLbl" destination="QD0-Ft-CMd" id="jiT-CG-9zh"/>
                 <outlet property="userImageView" destination="HOf-8i-JOA" id="CLP-r8-CVD"/>
                 <outlet property="usernameLbl" destination="ln3-Ie-cwM" id="qv8-pQ-4Sq"/>
@@ -99,6 +125,9 @@
         <image name="Status2" width="43.666667938232422" height="26.666666030883789"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

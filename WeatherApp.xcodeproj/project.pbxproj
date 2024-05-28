@@ -42,6 +42,10 @@
 		14AFB24E2C00919C00F0D93D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14AFB24D2C00919C00F0D93D /* GoogleService-Info.plist */; };
 		14AFB2502C0092CA00F0D93D /* InnerChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */; };
 		14B3742E2C006D6500AC949B /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B3742D2C006D6500AC949B /* ProfileVC.swift */; };
+		14BD6B512C05AF0F00D76C36 /* LiveChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD6B502C05AF0F00D76C36 /* LiveChatModel.swift */; };
+		14BD6B542C05D1A100D76C36 /* TimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD6B532C05D1A100D76C36 /* TimeConverter.swift */; };
+		14BD6B572C05DD4200D76C36 /* InnerChatTblvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14BD6B562C05DD4200D76C36 /* InnerChatTblvCell.xib */; };
+		14BD6B582C05DD4200D76C36 /* InnerChatTblvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD6B552C05DD4200D76C36 /* InnerChatTblvCell.swift */; };
 		14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CDE52BFB5CCD00E700CB /* AppDelegate.swift */; };
 		14D3CDE82BFB5CCD00E700CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CDE72BFB5CCD00E700CB /* SceneDelegate.swift */; };
 		14D3CDED2BFB5CCD00E700CB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 14D3CDEC2BFB5CCD00E700CB /* Base */; };
@@ -79,6 +83,7 @@
 		14D950A62C00AC1900EDD4E8 /* PinSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D950A52C00AC1900EDD4E8 /* PinSetVC.swift */; };
 		14D950A82C00B6CC00EDD4E8 /* ConfirmPinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D950A72C00B6CC00EDD4E8 /* ConfirmPinVC.swift */; };
 		14D950AB2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D950AA2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift */; };
+		14DB818D2C05A2E8000BB7FB /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DB818C2C05A2E8000BB7FB /* UITextField.swift */; };
 		70D810CB3A22DB2EF280F369 /* Pods_WeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4D3880110DF7A00E159173 /* Pods_WeatherApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +145,10 @@
 		14AFB24D2C00919C00F0D93D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerChatVC.swift; sourceTree = "<group>"; };
 		14B3742D2C006D6500AC949B /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		14BD6B502C05AF0F00D76C36 /* LiveChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatModel.swift; sourceTree = "<group>"; };
+		14BD6B532C05D1A100D76C36 /* TimeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConverter.swift; sourceTree = "<group>"; };
+		14BD6B552C05DD4200D76C36 /* InnerChatTblvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerChatTblvCell.swift; sourceTree = "<group>"; };
+		14BD6B562C05DD4200D76C36 /* InnerChatTblvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InnerChatTblvCell.xib; sourceTree = "<group>"; };
 		14D3CDE22BFB5CCD00E700CB /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D3CDE52BFB5CCD00E700CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14D3CDE72BFB5CCD00E700CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -181,6 +190,7 @@
 		14D950A52C00AC1900EDD4E8 /* PinSetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinSetVC.swift; sourceTree = "<group>"; };
 		14D950A72C00B6CC00EDD4E8 /* ConfirmPinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPinVC.swift; sourceTree = "<group>"; };
 		14D950AA2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTwoStepVerificationcodeModel.swift; sourceTree = "<group>"; };
+		14DB818C2C05A2E8000BB7FB /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		73CF1AFA498B569ECB9CC7FB /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		7AE7CD4A886247067C92030F /* Pods-WeatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.debug.xcconfig"; path = "Target Support Files/Pods-WeatherApp/Pods-WeatherApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,8 +302,18 @@
 			children = (
 				14AFB2492C0073D200F0D93D /* ChatsTBlvCell.swift */,
 				14AFB24A2C0073D200F0D93D /* ChatsTBlvCell.xib */,
+				14BD6B552C05DD4200D76C36 /* InnerChatTblvCell.swift */,
+				14BD6B562C05DD4200D76C36 /* InnerChatTblvCell.xib */,
 			);
 			path = ChatsCells;
+			sourceTree = "<group>";
+		};
+		14BD6B522C05D18800D76C36 /* CommonConverters */ = {
+			isa = PBXGroup;
+			children = (
+				14BD6B532C05D1A100D76C36 /* TimeConverter.swift */,
+			);
+			path = CommonConverters;
 			sourceTree = "<group>";
 		};
 		14D3CDD92BFB5CCD00E700CB = {
@@ -321,6 +341,7 @@
 		14D3CDE42BFB5CCD00E700CB /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				14BD6B522C05D18800D76C36 /* CommonConverters */,
 				14AF4BB22BFC71F70042CB95 /* HelperFiles */,
 				14D3CE5C2BFB791300E700CB /* XIB */,
 				14D3CE582BFB6A8200E700CB /* Validation */,
@@ -392,6 +413,7 @@
 				14D3CE402BFB652300E700CB /* UITableViewCell.swift */,
 				14D3CE322BFB625000E700CB /* CommonFile.swift */,
 				14A3E2A12C00578500417919 /* UIView.swift */,
+				14DB818C2C05A2E8000BB7FB /* UITextField.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -406,6 +428,7 @@
 				14D950AA2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift */,
 				1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */,
 				145750E72C04B4AA0001E286 /* LogOutModel.swift */,
+				14BD6B502C05AF0F00D76C36 /* LiveChatModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -648,6 +671,7 @@
 				14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */,
 				14D3CE2E2BFB5F0C00E700CB /* nunitosans_semibold.TTF in Resources */,
 				14D3CE1D2BFB5D9500E700CB /* WeatherDayListCollectionCell.xib in Resources */,
+				14BD6B572C05DD4200D76C36 /* InnerChatTblvCell.xib in Resources */,
 				14AFB24E2C00919C00F0D93D /* GoogleService-Info.plist in Resources */,
 				14AF4BC02BFC80940042CB95 /* CitysCollectionViewCell.xib in Resources */,
 				1463100F2C00C1DD0034896A /* AttachmentCLvCell.xib in Resources */,
@@ -726,6 +750,7 @@
 				14D3CE212BFB5E8000E700CB /* WhiteColorNoneNavigation.swift in Sources */,
 				14AF4BB12BFC6DA00042CB95 /* CitysPopUPVC.swift in Sources */,
 				147366252C008B9B00419797 /* SaveLocalData.swift in Sources */,
+				14BD6B512C05AF0F00D76C36 /* LiveChatModel.swift in Sources */,
 				14D950A62C00AC1900EDD4E8 /* PinSetVC.swift in Sources */,
 				14D3CE542BFB68E000E700CB /* DataManager.swift in Sources */,
 				14AF4BBF2BFC80940042CB95 /* CitysCollectionViewCell.swift in Sources */,
@@ -754,7 +779,10 @@
 				14D3CE1C2BFB5D9500E700CB /* WeatherDayListCollectionCell.swift in Sources */,
 				14D3CE502BFB68E000E700CB /* Constant.swift in Sources */,
 				14D3CE452BFB659300E700CB /* UIImage.swift in Sources */,
+				14BD6B582C05DD4200D76C36 /* InnerChatTblvCell.swift in Sources */,
 				14D3CE562BFB68E000E700CB /* Reachability.swift in Sources */,
+				14DB818D2C05A2E8000BB7FB /* UITextField.swift in Sources */,
+				14BD6B542C05D1A100D76C36 /* TimeConverter.swift in Sources */,
 				145750E62C04AB960001E286 /* AccountTableViewCell.swift in Sources */,
 				145750E22C04A7700001E286 /* AccountVC.swift in Sources */,
 				14AFB24C2C0073D200F0D93D /* ChatsTBlvCell.swift in Sources */,
@@ -866,6 +894,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -929,6 +958,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

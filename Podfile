@@ -19,4 +19,10 @@ target 'WeatherApp' do
   pod 'IQKeyboardManagerSwift'
   pod 'DPOTPView'
   pod 'EFCountingLabel'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/DynamicLinks'
+  pod 'FirebaseDatabase'
 end
