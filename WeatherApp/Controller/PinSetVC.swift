@@ -9,7 +9,7 @@ import UIKit
 import DPOTPView
 import Toast_Swift
 
-class PinSetVC: UIViewController {
+class PinSetVC: UIViewController & DPOTPViewDelegate{
 
     
     @IBOutlet weak var otpView: DPOTPView!
@@ -20,7 +20,7 @@ class PinSetVC: UIViewController {
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var lblCreateA: UILabel!
     
-    
+    var isFrom = ""
     
     class func getInstance()-> PinSetVC {
         return PinSetVC.viewController(storyboard: Constants.Storyboard.Main)
@@ -61,8 +61,41 @@ class PinSetVC: UIViewController {
         otpView.borderWidthTextField = 0.7
         otpView.textColorTextField = appThemeColor.CommonBlack
         otpView.isBottomLineTextField = true
+        otpView.dpOTPViewDelegate = self
     }
-    @IBAction func backAction(_ sender: Any) 
+    
+    // DPOTPViewDelegate methods
+    func dpOTPViewAddText(_ text: String, at position: Int) {
+        print("Added text \(text) at position \(position)")
+        if position == 5 {
+            btnNext.layer.backgroundColor = appThemeColor.text_Weather.cgColor
+            btnNext.setTitleColor(appThemeColor.white, for: .normal)
+        }
+    }
+
+    func dpOTPViewRemoveText(_ text: String, at position: Int) {
+        print("Removed text \(text) at position \(position)")
+        btnNext.layer.backgroundColor = appThemeColor.btnLightGrey_BackGround.cgColor
+        btnNext.setTitleColor(appThemeColor.text_LightColure, for: .normal)
+    }
+
+    func dpOTPViewBecomeFirstResponder() {
+        print("Become first responder")
+    }
+
+    func dpOTPViewResignFirstResponder() {
+        print("Resign first responder")
+    }
+
+    func getCurrentOTP() -> String {
+        // Concatenate the text from all the text fields in otpView
+        return otpView.text ?? ""
+    }
+    func dpOTPViewChangePositionAt(_ position: Int) {
+        print("")
+    }
+
+    @IBAction func backAction(_ sender: Any)
     {
         self.dismiss(animated: false)
     }
@@ -94,6 +127,7 @@ class PinSetVC: UIViewController {
                     let ConfirmPinVC = ConfirmPinVC.getInstance()
                     ConfirmPinVC.modalPresentationStyle = .overCurrentContext
                     ConfirmPinVC.pin = self.otpView.text ?? ""
+                    ConfirmPinVC.isFrom = self.isFrom ?? ""
                     self.present(ConfirmPinVC, animated: false)
         }
     }

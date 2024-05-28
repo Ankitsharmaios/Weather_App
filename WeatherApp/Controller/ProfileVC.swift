@@ -68,7 +68,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigatio
     {
         
     }
-    @IBAction func NextAction(_ sender: Any)
+    @IBAction func nextAction(_ sender: Any) 
     {
         // Configure the toast style
         var toastStyle = ToastStyle()
@@ -85,8 +85,10 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigatio
         
         self.view.endEditing(true)
         EditProfile(UserImage: imagePath)
-        
     }
+    
+    
+    
     
    
     @IBAction func gelleryAction(_ sender: Any)
@@ -127,7 +129,7 @@ extension ProfileVC {
                     // Pass the image path to your API function
                     self.imagePath = imagePath
                     // Call the EditProfile function with the image path
-                    EditProfile(UserImage: imagePath)
+                //    EditProfile(UserImage: imagePath)
                 }
             }
         }
@@ -148,31 +150,30 @@ extension ProfileVC {
 
 extension ProfileVC {
     // MARK: - API CALL
-    
     func EditProfile(UserImage: String) {
         guard let url = URL(string: DataManager.shared.getURL(.EditProfile)) else {
             print("Invalid URL")
             return
         }
-        
+
         let headers: HTTPHeaders = [
             // Your additional headers, if any
         ]
-        
+
         let parameters: [String: String] = [
             "RegisterId": "\(Singleton.sharedInstance.RegisterId ?? 0)",
             "HashToken": getString(key: userDefaultsKeys.token.rawValue),
             "Name": self.typeyourNameTextField.text ?? "",
             "About": ""
         ]
-        
+
         AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in parameters {
                 if let data = value.data(using: .utf8) {
                     multipartFormData.append(data, withName: key)
                 }
             }
-            
+
             if let imageData = try? Data(contentsOf: URL(fileURLWithPath: UserImage)) {
                 multipartFormData.append(imageData, withName: "UserImage", fileName: "image.png", mimeType: "image/png")
             } else {
@@ -183,17 +184,24 @@ extension ProfileVC {
             switch response.result {
             case .success(let value):
                 if let responseDictionary = value as? [String: Any],
-                   let statusMessage = responseDictionary["StatusMessage"] as? String {
-                    print("Success: \(statusMessage)")
-                    DispatchQueue.main.async {
-                        if statusMessage.lowercased() == "profile edit successully" {
-                            let twoStepVerificationVC = Two_step_verificationVC.getInstance()
-                            twoStepVerificationVC.modalPresentationStyle = .overCurrentContext
-                            self.present(twoStepVerificationVC, animated: true)
+                   let editProfileModel = EditProfileModel(JSON: responseDictionary) {
+                    Singleton.sharedInstance.EditProfileData = editProfileModel
+                    print("Success: \(editProfileModel)")
+                    
+                    if let statusMessage = responseDictionary["StatusMessage"] as? String {
+                        print("Success: \(statusMessage)")
+                        DispatchQueue.main.async {
+                            if statusMessage.lowercased() == "profile edit successully" {
+                                let twoStepVerificationVC = Two_step_verificationVC.getInstance()
+                                twoStepVerificationVC.modalPresentationStyle = .overCurrentContext
+                                self.present(twoStepVerificationVC, animated: true)
+                            }
                         }
+                    } else {
+                        print("StatusMessage not found in response")
                     }
                 } else {
-                    print("Failed to access StatusMessage from response")
+                    print("Failed to map response to EditProfileModel")
                 }
             case .failure(let error):
                 print("Error: \(error)")
@@ -203,4 +211,5 @@ extension ProfileVC {
             }
         }
     }
+
 }

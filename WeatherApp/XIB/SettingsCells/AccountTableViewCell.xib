@@ -29,7 +29,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AsO-OW-rII">
-                                <rect key="frame" x="50" y="14.666666666666664" width="289" height="21"/>
+                                <rect key="frame" x="55" y="14.666666666666664" width="284" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -42,7 +42,7 @@
                             <constraint firstItem="fwe-9R-O4i" firstAttribute="leading" secondItem="R76-AF-6Sd" secondAttribute="leading" constant="15" id="CCF-bR-95T"/>
                             <constraint firstAttribute="height" constant="50" id="RTU-Zc-Nz7"/>
                             <constraint firstItem="fwe-9R-O4i" firstAttribute="centerY" secondItem="R76-AF-6Sd" secondAttribute="centerY" id="ewr-80-J28"/>
-                            <constraint firstItem="AsO-OW-rII" firstAttribute="leading" secondItem="fwe-9R-O4i" secondAttribute="trailing" constant="15" id="mHK-hL-6dk"/>
+                            <constraint firstItem="AsO-OW-rII" firstAttribute="leading" secondItem="fwe-9R-O4i" secondAttribute="trailing" constant="20" id="mHK-hL-6dk"/>
                         </constraints>
                     </view>
                 </subviews>
