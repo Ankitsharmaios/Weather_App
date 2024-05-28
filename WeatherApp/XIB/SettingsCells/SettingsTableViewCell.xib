@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h7d-B0-mN9">
-                                <rect key="frame" x="10" y="20" width="20" height="20"/>
+                                <rect key="frame" x="5" y="20" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="n1R-gM-NSI"/>
                                     <constraint firstAttribute="height" constant="20" id="vDd-jO-Dqu"/>
@@ -45,12 +45,12 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="Nie-Ai-W8B"/>
                             <constraint firstItem="4Rb-Qp-vjg" firstAttribute="trailing" secondItem="qbr-AP-eXR" secondAttribute="trailing" id="Ted-Y2-b7x"/>
-                            <constraint firstItem="qbr-AP-eXR" firstAttribute="leading" secondItem="h7d-B0-mN9" secondAttribute="trailing" constant="15" id="ZsK-76-Tzw"/>
+                            <constraint firstItem="qbr-AP-eXR" firstAttribute="leading" secondItem="h7d-B0-mN9" secondAttribute="trailing" constant="20" id="ZsK-76-Tzw"/>
                             <constraint firstItem="h7d-B0-mN9" firstAttribute="centerY" secondItem="395-eX-Gl3" secondAttribute="centerY" id="aNk-58-XZw"/>
                             <constraint firstAttribute="trailing" secondItem="qbr-AP-eXR" secondAttribute="trailing" constant="15" id="d52-Ri-dDP"/>
                             <constraint firstItem="4Rb-Qp-vjg" firstAttribute="top" secondItem="qbr-AP-eXR" secondAttribute="bottom" constant="5" id="f2a-Jj-mog"/>
                             <constraint firstItem="4Rb-Qp-vjg" firstAttribute="leading" secondItem="qbr-AP-eXR" secondAttribute="leading" id="mrT-6M-cEw"/>
-                            <constraint firstItem="h7d-B0-mN9" firstAttribute="leading" secondItem="395-eX-Gl3" secondAttribute="leading" constant="10" id="w3I-Ax-mqK"/>
+                            <constraint firstItem="h7d-B0-mN9" firstAttribute="leading" secondItem="395-eX-Gl3" secondAttribute="leading" constant="5" id="w3I-Ax-mqK"/>
                             <constraint firstItem="qbr-AP-eXR" firstAttribute="top" secondItem="395-eX-Gl3" secondAttribute="top" constant="11" id="zsA-JN-aSl"/>
                         </constraints>
                     </view>

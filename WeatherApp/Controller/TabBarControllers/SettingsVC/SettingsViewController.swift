@@ -33,6 +33,7 @@ class SettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
+        edituserData()
         setUserData()
     }
     func setUserData() {
@@ -48,6 +49,23 @@ class SettingsViewController: UIViewController {
                 userImage.image = UIImage(named: "placeholder")
             }
         }
+    func edituserData()
+    {
+        if Singleton.sharedInstance.EditProfileData?.result?.name?.count ?? 0 > 0
+        {
+            let userdata = Singleton.sharedInstance.EditProfileData?.result
+            let name = userdata?.name ?? ""
+            let imageURLString = userdata?.userImage ?? ""
+            
+            lblUserName.text = name
+            
+            if let imageURL = URL(string: imageURLString) {
+                userImage.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+            } else {
+                userImage.image = UIImage(named: "placeholder")
+            }
+        }
+    }
     
     func setUpUi()
     {
@@ -102,7 +120,9 @@ extension SettingsViewController:UITableViewDataSource & UITableViewDelegate
 
             let selectedOption = settingTitles[indexPath.row]
             if selectedOption == "Account" {
+                
                 DispatchQueue.main.async {
+                    
                     let AccountVC = AccountVC.getInstance()
                     AccountVC.modalPresentationStyle = .overCurrentContext
                     self.present(AccountVC, animated: true)

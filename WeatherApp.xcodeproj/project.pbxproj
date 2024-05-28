@@ -11,6 +11,7 @@
 		1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */; };
 		1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */; };
 		1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */; };
+		1423389B2C05D72500328AB1 /* StatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1423389A2C05D72500328AB1 /* StatusVC.swift */; };
 		14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C3F2BFF4256004F8894 /* RegisterModel.swift */; };
 		14392C422BFF5D03004F8894 /* VerifyOTPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C412BFF5D03004F8894 /* VerifyOTPModel.swift */; };
 		14392C442BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C432BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift */; };
@@ -110,6 +111,7 @@
 		1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeToTheWeatherAppVC.swift; sourceTree = "<group>"; };
 		1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyNumberVC.swift; sourceTree = "<group>"; };
+		1423389A2C05D72500328AB1 /* StatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusVC.swift; sourceTree = "<group>"; };
 		14392C3F2BFF4256004F8894 /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		14392C412BFF5D03004F8894 /* VerifyOTPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPModel.swift; sourceTree = "<group>"; };
 		14392C432BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Two-step-verificationPopUpVC.swift"; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				14392C452BFF7B8D004F8894 /* DashChatsVC.swift */,
 				14392C462BFF7B8D004F8894 /* TabBarVC.swift */,
 				14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */,
+				1423389A2C05D72500328AB1 /* StatusVC.swift */,
 			);
 			path = TabBarControllers;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				14D3CE232BFB5F0300E700CB /* AppResources.swift in Sources */,
 				145750DF2C04984B0001E286 /* SettingsTableViewCell.swift in Sources */,
 				14D3CE532BFB68E000E700CB /* CounterManaged.swift in Sources */,
+				1423389B2C05D72500328AB1 /* StatusVC.swift in Sources */,
 				14D3CE332BFB625000E700CB /* CommonFile.swift in Sources */,
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
 				147366272C0092D700419797 /* EditProfileModel.swift in Sources */,

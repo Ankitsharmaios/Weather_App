@@ -81,7 +81,7 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         searchbgView.layer.cornerRadius = 20
         searchbgView.backgroundColor = appThemeColor.searchbgView
         addbtnbgView.backgroundColor = appThemeColor.text_Weather
-        addbtnbgView.layer.cornerRadius = 10
+        addbtnbgView.layer.cornerRadius = 13
         topTableView.layer.cornerRadius = 8
         topTableView.layer.masksToBounds = false
         topTableView.addShadowToTableView(view: topTableView, value: 2)
@@ -178,6 +178,7 @@ extension DashChatsVC{
         return CGFloat()
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
         if tableView == chatTableView {
             let controller = InnerChatVC.getInstance()
             controller.modalPresentationStyle = .overFullScreen
@@ -190,14 +191,16 @@ extension DashChatsVC{
         if tableView == topTableView {
             let selectedOption = OptionNames[indexPath.row]
             if selectedOption == "Settings" {
+                
                 DispatchQueue.main.async {
-                    let twoStepVerificationVC = SettingsViewController.getInstance()
-                    twoStepVerificationVC.modalPresentationStyle = .overCurrentContext
-                    twoStepVerificationVC.showTabbar = {
+                    let settingVC = SettingsViewController.getInstance()
+                    settingVC.modalPresentationStyle = .overCurrentContext
+                    settingVC.showTabbar = {
                         self.showTabBar(animated: true)
                     }
+                    self.topTableView.isHidden = true
                     self.hideTabBar(animated: true)
-                    self.present(twoStepVerificationVC, animated: true)
+                    self.present(settingVC, animated: true)
                 }
             }
         }
