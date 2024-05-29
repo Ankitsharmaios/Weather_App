@@ -65,7 +65,9 @@ class AppColor {
     var btnLightGrey_BackGround : UIColor = {
             return  #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1)  //  #ececec
     }()
-    
+    var TextView_BackGround : UIColor = {
+            return  #colorLiteral(red: 0.1254901961, green: 0.1725490196, blue: 0.2, alpha: 1)  //  #202c33
+    }()
     
     //================================ ==========================================
  /*

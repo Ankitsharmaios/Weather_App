@@ -25,15 +25,22 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var updateView: UIView!
     @IBOutlet weak var lblUpdate: UILabel!
+  
+    var StoryListData:StoryListModel?
     var videoPath = ""
     var imagePath = ""
     let userdata = getUserData()
+    var statusTime = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        registerNIb()
         setUserData()
         navigationController?.navigationBar.isHidden = true
         // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        StoryList()
     }
     func setUserData() {
             
@@ -46,6 +53,13 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             }
         }
     
+    func registerNIb()
+    {
+        tableView.register(UINib(nibName: "StoryTableViewCell", bundle: nil), forCellReuseIdentifier: "StoryTableViewCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
     func setupUI()
     {
         lblUpdate.textColor = appThemeColor.CommonBlack
@@ -55,10 +69,10 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         lblStatus.font = Helvetica.helvetica_bold.font(size: 18)
         
         lblMyStatus.textColor = appThemeColor.CommonBlack
-        lblMyStatus.font = Helvetica.helvetica_semibold.font(size: 18)
+        lblMyStatus.font = Helvetica.helvetica_semibold.font(size: 16)
         
         lblTapToadd.textColor = appThemeColor.text_LightColure
-        lblTapToadd.font = Helvetica.helvetica_regular.font(size: 16)
+        lblTapToadd.font = Helvetica.helvetica_regular.font(size: 15)
 
         lblRecentUpdates.textColor = appThemeColor.CommonBlack
         lblRecentUpdates.font = Helvetica.helvetica_medium.font(size: 18)
@@ -66,6 +80,11 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
         
+        plusStatusImgView.layer.cornerRadius = plusStatusImgView.frame.size.width / 2
+        plusStatusImgView.clipsToBounds = true
+        
+        plusStatusImgView.layer.borderWidth = 2
+        plusStatusImgView.layer.borderColor = appThemeColor.white.cgColor
     }
     
     
@@ -90,22 +109,22 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     
     @IBAction func opengalleryAction(_ sender: Any)
     {
-       if imagePath == ""
-        {
-           openCamera()
-    }else{
-        
-            let StatusStoryVC = StatusStoryVC.getInstance()
-            StatusStoryVC.modalPresentationStyle = .overCurrentContext
-            StatusStoryVC.userImg = userdata?.result?.image ?? ""
-            StatusStoryVC.userName = userdata?.result?.name ?? ""
-            StatusStoryVC.showTabBar = {
-                self.showTabBar(animated: true)
-           }
-            self.hideTabBar(animated: true)
-            self.present(StatusStoryVC, animated: true)
-        
-       }
+        if !imagePath.isEmpty || !videoPath.isEmpty {
+                let statusStoryVC = StatusStoryVC.getInstance()
+                statusStoryVC.modalPresentationStyle = .overCurrentContext
+                statusStoryVC.userImg = userdata?.result?.image ?? ""
+                statusStoryVC.userName = userdata?.result?.name ?? ""
+                statusStoryVC.userImgStory = imagePath
+                statusStoryVC.userVideoStory = videoPath
+                statusStoryVC.userStoryTime = statusTime
+                statusStoryVC.showTabBar = {
+                    self.showTabBar(animated: true)
+                }
+                self.hideTabBar(animated: true)
+                self.present(statusStoryVC, animated: true)
+            } else {
+                openCamera()
+            }
     }
     @IBAction func greenCameraAction(_ sender: Any) 
     {
@@ -160,7 +179,14 @@ extension StatusVC {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
-        
+        picker.dismiss(animated: true, completion: nil)
+            let currentTime = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "hh:mm a" // Use 12-hour format with "hh:mm a"
+            dateFormatter.timeZone = TimeZone.current // Set to current time zone
+            let localTime = dateFormatter.string(from: currentTime)
+            self.statusTime = localTime
+        print("========data========", localTime)
         if let mediaType = info[.mediaType] as? String {
             if mediaType == "public.image" {
                 // Handle image selection
@@ -278,4 +304,55 @@ extension StatusVC
             }
         }
     }
+}
+extension StatusVC
+{
+    //MARK: Call Api
+    func StoryList(){
+        let param = ["RegisterId":"\(getString(key: userDefaultsKeys.RegisterId.rawValue))"
+                     ] as [String : Any]
+        
+        DataManager.shared.StoryList(params: param,isLoader: false, view: view) { [weak self] (result) in
+            switch result {
+            case .success(let StoryList):
+                print("StoryList ", StoryList)
+                self?.StoryListData = StoryList
+                self?.tableView.reloadData()
+            case .failure(let apiError):
+                print("Error ", apiError.localizedDescription)
+                
+            }
+        }
+    }
+    
+}
+extension StatusVC:UITableViewDataSource & UITableViewDelegate
+{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return StoryListData?.result?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StoryTableViewCell") as! StoryTableViewCell
+        cell.storyData = StoryListData?.result?[indexPath.row]
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            // Deselect the row to remove the highlight
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            // Retrieve the selected data
+            if let selectedData = StoryListData?.result?[indexPath.row] {
+                let StatusStoryVC = StatusStoryVC.getInstance()
+                StatusStoryVC.modalPresentationStyle = .overCurrentContext
+                StatusStoryVC.showTabBar = {
+                    self.showTabBar(animated: true)
+               }
+                self.hideTabBar(animated: true)
+                self.present(StatusStoryVC, animated: false)
+            }
+        }
 }
