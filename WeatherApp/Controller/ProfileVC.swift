@@ -186,6 +186,7 @@ extension ProfileVC {
                 if let responseDictionary = value as? [String: Any],
                    let editProfileModel = EditProfileModel(JSON: responseDictionary) {
                     Singleton.sharedInstance.EditProfileData = editProfileModel
+                    
                     print("Success: \(editProfileModel)")
                     
                     if let statusMessage = responseDictionary["StatusMessage"] as? String {

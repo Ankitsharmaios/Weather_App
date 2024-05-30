@@ -100,32 +100,32 @@ extension DataManager {
         }
     }
     
-    //MARK: EditProfile
-    func EditProfile(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<EditProfileModel, APIError>) -> Void) {
-
-        // Create URL
-        let url = getURL(.EditProfile)
-
-        NetworkManager.shared.postResponse(url, parameter: params, header: getHttpHeaders(), mappingType: EditProfileModel.self) { (mappableArray, apiError) in
-            
-            guard let data = mappableArray as? EditProfileModel else {
-                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
-                return
-            }
-            
-            print("status \(data.status ?? false)")
-            print("message \(data.statusMessage ?? "")")
-            
-            if !(data.status ?? false) && data.statusMessage == "Token Expired" {
-                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
-                return
-            }else if !(data.status ?? false) && data.statusMessage == "login failed !" {
-                completion(.success(data))
-            } else{
-                completion(.success(data))
-            }
-        }
-    }
+//    //MARK: EditProfile
+//    func EditProfile(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<EditProfileModel, APIError>) -> Void) {
+//
+//        // Create URL
+//        let url = getURL(.EditProfile)
+//
+//        NetworkManager.shared.postResponse(url, parameter: params, header: getHttpHeaders(), mappingType: EditProfileModel.self) { (mappableArray, apiError) in
+//            
+//            guard let data = mappableArray as? EditProfileModel else {
+//                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+//                return
+//            }
+//            
+//            print("status \(data.status ?? false)")
+//            print("message \(data.statusMessage ?? "")")
+//            
+//            if !(data.status ?? false) && data.statusMessage == "Token Expired" {
+//                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+//                return
+//            }else if !(data.status ?? false) && data.statusMessage == "login failed !" {
+//                completion(.success(data))
+//            } else{
+//                completion(.success(data))
+//            }
+//        }
+//    }
     
     //MARK: CheckTwoFactor
     func CheckTwoFactor(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<CheckTwoFactorModel, APIError>) -> Void) {

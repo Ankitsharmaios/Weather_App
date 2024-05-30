@@ -37,7 +37,7 @@ class StatusStoryVC: UIViewController {
     var userVideoStory = ""
     var userStoryTime = ""
     
-    
+    var oldstory:[StoryResultModel]?
     
     
     var player: AVPlayer?
@@ -59,6 +59,7 @@ class StatusStoryVC: UIViewController {
         super.viewDidLoad()
        
         setUpUI()
+        oldStoryset()
         setUserData()
         // Do any additional setup after loading the view.
 //        if userImgStory == ""
@@ -70,6 +71,8 @@ class StatusStoryVC: UIViewController {
 //            storyImageView.isHidden = false
 //            videoImageView.isHidden = true
 //        }
+        
+        print("=============oldstory============",oldstory as Any)
     }
     override func viewWillDisappear(_ animated: Bool) {
         self.showTabBar?()
@@ -161,6 +164,49 @@ class StatusStoryVC: UIViewController {
         storyImageView.image = image
     }
 
+    func oldStoryset() {
+        guard let oldStory = oldstory else { return } // Ensure oldstory is not nil
+        
+        // Assuming oldStory is an array of StoryResult objects
+        if let lastStory = oldStory.last {
+            // Handle user video story
+            if let userVideoURLString = lastStory.media?.first?.uRL,
+                let videoURL = URL(string: userVideoURLString) {
+                player = AVPlayer(url: videoURL)
+                playerLayer = AVPlayerLayer(player: player)
+                playerLayer?.frame = view.bounds
+                playerLayer?.videoGravity = .resizeAspectFill
+                if let playerLayer = playerLayer {
+                    videoImageView.layer.addSublayer(playerLayer)
+                }
+                player?.play()
+            }
+            
+            // Handle user image story
+            if let userImageURLString = lastStory.media?.first?.uRL,
+                let imageURL = URL(string: userImageURLString) {
+                let placeholderImage = UIImage(named: "placeholder")
+                let fileManager = FileManager.default
+                if fileManager.fileExists(atPath: userImageURLString) {
+                    let localImageURL = URL(fileURLWithPath: userImageURLString)
+                    storyImageView.sd_setImage(with: localImageURL, placeholderImage: placeholderImage, options: .highPriority) { [weak self] image, error, cacheType, url in
+                        guard let image = image else { return }
+                        self?.adjustImageView(image: image)
+                    }
+                } else {
+                    storyImageView.sd_setImage(with: imageURL, placeholderImage: placeholderImage, options: .highPriority) { [weak self] image, error, cacheType, url in
+                        guard let image = image else { return }
+                        self?.adjustImageView(image: image)
+                    }
+                }
+            }
+            
+           
+        }
+    }
+
+    
+    
     func setUserData() {
      
         if userImgStory == ""

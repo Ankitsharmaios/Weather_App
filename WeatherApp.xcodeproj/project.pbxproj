@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */; };
 		1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */; };
+		140B20DD2C08517200BDCFAC /* addStoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B20DC2C08517200BDCFAC /* addStoryModel.swift */; };
+		140B20DF2C08AA2900BDCFAC /* PUWAppStatusProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B20DE2C08AA2900BDCFAC /* PUWAppStatusProgressIndicator.swift */; };
 		1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */; };
 		1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */; };
 		1423389B2C05D72500328AB1 /* StatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1423389A2C05D72500328AB1 /* StatusVC.swift */; };
@@ -113,6 +115,8 @@
 		0B4D3880110DF7A00E159173 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckTwoFactorModel.swift; sourceTree = "<group>"; };
 		1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		140B20DC2C08517200BDCFAC /* addStoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addStoryModel.swift; sourceTree = "<group>"; };
+		140B20DE2C08AA2900BDCFAC /* PUWAppStatusProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PUWAppStatusProgressIndicator.swift; sourceTree = "<group>"; };
 		1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeToTheWeatherAppVC.swift; sourceTree = "<group>"; };
 		1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyNumberVC.swift; sourceTree = "<group>"; };
 		1423389A2C05D72500328AB1 /* StatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusVC.swift; sourceTree = "<group>"; };
@@ -311,6 +315,7 @@
 		14AF4BB22BFC71F70042CB95 /* HelperFiles */ = {
 			isa = PBXGroup;
 			children = (
+				140B20DE2C08AA2900BDCFAC /* PUWAppStatusProgressIndicator.swift */,
 				14AF4BB32BFC72540042CB95 /* UIViewControllerExtented.swift */,
 				14AF4BE22BFCC1B60042CB95 /* Singleton.swift */,
 			);
@@ -459,6 +464,7 @@
 				145750E72C04B4AA0001E286 /* LogOutModel.swift */,
 				14BD6B502C05AF0F00D76C36 /* LiveChatModel.swift */,
 				14939D572C07230D001E6A44 /* StoryListModel.swift */,
+				140B20DC2C08517200BDCFAC /* addStoryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -803,6 +809,7 @@
 				14D3CE1E2BFB5D9500E700CB /* WeatherListCell.swift in Sources */,
 				14D950AB2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift in Sources */,
 				14AF4BB62BFC72EC0042CB95 /* UIColores.swift in Sources */,
+				140B20DF2C08AA2900BDCFAC /* PUWAppStatusProgressIndicator.swift in Sources */,
 				1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */,
 				14D3CE572BFB68E000E700CB /* WebServices.swift in Sources */,
 				14392C422BFF5D03004F8894 /* VerifyOTPModel.swift in Sources */,
@@ -825,6 +832,7 @@
 				145750E62C04AB960001E286 /* AccountTableViewCell.swift in Sources */,
 				145750E22C04A7700001E286 /* AccountVC.swift in Sources */,
 				14AFB24C2C0073D200F0D93D /* ChatsTBlvCell.swift in Sources */,
+				140B20DD2C08517200BDCFAC /* addStoryModel.swift in Sources */,
 				14D3CE512BFB68E000E700CB /* APILogs.swift in Sources */,
 				1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */,
 				14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */,

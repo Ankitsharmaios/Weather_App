@@ -9,8 +9,11 @@ import UIKit
 import UniformTypeIdentifiers
 import AVFoundation
 import SDWebImage
+import Alamofire
 class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var toptableView: UITableView!
+    @IBOutlet weak var imageInnerView: UIView!
     @IBOutlet weak var plusStatusImgView: UIImageView!
     @IBOutlet weak var btnGreenCamera: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -25,7 +28,15 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var updateView: UIView!
     @IBOutlet weak var lblUpdate: UILabel!
-  
+    var OptionNames = ["Settings"]
+    
+    var contactStoryCount = 0
+    var myStoryCount = 0
+    
+    var myStories: [StoryResultModel] = []
+    var contactStories: [StoryResultModel] = []
+    var isTopTableHide = false
+    var indicators: [PUWAppStatusProgressIndicator] = []
     var StoryListData:StoryListModel?
     var videoPath = ""
     var imagePath = ""
@@ -35,31 +46,97 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         super.viewDidLoad()
         setupUI()
         registerNIb()
-        setUserData()
+        toptableView.isHidden = true
+        self.isTopTableHide = false
         navigationController?.navigationBar.isHidden = true
+        
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         StoryList()
     }
-    func setUserData() {
-            
-            let imageURLString = userdata?.result?.image ?? ""
+    override func viewDidDisappear(_ animated: Bool) {
+        self.isTopTableHide = false
+        self.toptableView.isHidden = true
+    }
+    
+    
+    func setupADStausProgressBar() {
+        var settings = PUWAppStatusProgressIndicatorSettings()
+        settings.isStaticSegmentsVisible = true
+        settings.startPointPadding = -1
+        settings.defaultSegmentColor = appThemeColor.text_Weather
         
-            if let imageURL = URL(string: imageURLString) {
-                imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
-            } else {
-                imageView.image = UIImage(named: "placeholder")
-            }
+        settings.targetSegementNumber = 2 // total 13 DAYS TARGET allocated so value = total - 1
+        settings.segmentBorderType = .round
+        settings.segmentsCount = contactStoryCount
+        settings.colorSegementCount = 2 // your actual days count here
+        settings.spaceBetweenSegments = 10
+        settings.segmentWidth = 3
+        let segment = PUWAppStatusProgressIndicator(frame: CGRect(x: 20, y: 200, width: 60.0, height: 60.0))
+        segment.settings = settings
+        indicators.append(segment)
+        self.tableView.addSubview(segment)
+    }
+    
+    
+    func setUserData() {
+          if myStoryCount > 0
+        {
+             
+              
+              let statusTimes = myStories.flatMap { $0.media?.compactMap { $0.time } ?? [] }
+                     if let lastStatusTimeString = statusTimes.last {
+                         // Calculate time difference and set it to the label
+                         let elapsedTimeString = Converter.timeAgo(from: lastStatusTimeString)
+                         lblTapToadd.text = elapsedTimeString
+                     }
+              
+              
+              // Assuming `myStories` is an array of `StoryResult` objects
+              let imageURLStrings = myStories.flatMap { $0.media?.compactMap { $0.uRL } ?? [] }
+
+              // Safely get the last URL string if it exists
+              if let lastImageURLString = imageURLStrings.last, let imageURL = URL(string: lastImageURLString) {
+                  imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+              } else {
+                  imageView.image = UIImage(named: "placeholder")
+              }
+              
+              
+              imageView.layer.borderWidth = 1.5
+              imageView.layer.borderColor = appThemeColor.white.cgColor
+              imageInnerView.layer.borderWidth = 2.5
+              imageInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
+              plusStatusImgView.isHidden = true
+              
+
+          }else{
+              let imageURLString = userdata?.result?.image ?? ""
+              
+              if let imageURL = URL(string: imageURLString) {
+                  imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+              } else {
+                  imageView.image = UIImage(named: "placeholder")
+              }
+          }
         }
+
     
     func registerNIb()
     {
+        toptableView.register(UINib(nibName: "optionHeaderTblvCell", bundle: nil), forCellReuseIdentifier: "optionHeaderTblvCell")
         tableView.register(UINib(nibName: "StoryTableViewCell", bundle: nil), forCellReuseIdentifier: "StoryTableViewCell")
         tableView.dataSource = self
         tableView.delegate = self
+        toptableView.dataSource = self
+        toptableView.delegate = self
+        toptableView.separatorStyle = .none
+        toptableView.layer.cornerRadius = 8
+        toptableView.layer.masksToBounds = false
+        toptableView.addShadowToTableView(view: toptableView, value: 2)
     }
-    
+     
     func setupUI()
     {
         lblUpdate.textColor = appThemeColor.CommonBlack
@@ -80,11 +157,17 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
         
+        imageInnerView.layer.cornerRadius = imageInnerView.frame.size.width / 2
+        imageInnerView.clipsToBounds = true
+        
         plusStatusImgView.layer.cornerRadius = plusStatusImgView.frame.size.width / 2
         plusStatusImgView.clipsToBounds = true
         
         plusStatusImgView.layer.borderWidth = 2
         plusStatusImgView.layer.borderColor = appThemeColor.white.cgColor
+        
+        
+        
     }
     
     
@@ -104,17 +187,23 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     
     @IBAction func moreOptionAction(_ sender: Any) 
     {
-        
+        isTopTableHide.toggle()
+        if isTopTableHide == true{
+            self.toptableView.isHidden = false
+        }else{
+            self.toptableView.isHidden = true
+        }
     }
     
     @IBAction func opengalleryAction(_ sender: Any)
     {
-        if !imagePath.isEmpty || !videoPath.isEmpty {
+        if !imagePath.isEmpty || !videoPath.isEmpty || !myStories.isEmpty {
                 let statusStoryVC = StatusStoryVC.getInstance()
                 statusStoryVC.modalPresentationStyle = .overCurrentContext
                 statusStoryVC.userImg = userdata?.result?.image ?? ""
                 statusStoryVC.userName = userdata?.result?.name ?? ""
                 statusStoryVC.userImgStory = imagePath
+                statusStoryVC.oldstory = myStories
                 statusStoryVC.userVideoStory = videoPath
                 statusStoryVC.userStoryTime = statusTime
                 statusStoryVC.showTabBar = {
@@ -179,7 +268,6 @@ extension StatusVC {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
-        picker.dismiss(animated: true, completion: nil)
             let currentTime = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "hh:mm a" // Use 12-hour format with "hh:mm a"
@@ -192,13 +280,17 @@ extension StatusVC {
                 // Handle image selection
                 if let editedImage = info[.editedImage] as? UIImage {
                     imageView.image = editedImage
-                    imageView.layer.borderWidth = 2.5
-                    imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                    imageView.layer.borderWidth = 1.5
+                    imageView.layer.borderColor = appThemeColor.white.cgColor
+                    imageInnerView.layer.borderWidth = 2.5
+                    imageInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
                     plusStatusImgView.isHidden = true
                 } else if let originalImage = info[.originalImage] as? UIImage {
                     imageView.image = originalImage
-                    imageView.layer.borderWidth = 2.5
-                    imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                    imageView.layer.borderWidth = 1.5
+                    imageView.layer.borderColor = appThemeColor.white.cgColor
+                    imageInnerView.layer.borderWidth = 2.5
+                    imageInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
                     plusStatusImgView.isHidden = true
                 }
                 
@@ -208,6 +300,7 @@ extension StatusVC {
                         // Use imageURL.path as the path to the saved image file
                         let imagePath = imageURL.path
                         self.imagePath = imagePath
+                        self.addStory(UserImage: self.imagePath, storyType: story_type.media.rawValue, Text: "", TextBackground: "", Textstyle: "")
                     }
                 }
             } else if mediaType == "public.movie" {
@@ -216,8 +309,10 @@ extension StatusVC {
                     // Display video thumbnail
                     let thumbnail = generateThumbnail(for: videoURL)
                     imageView.image = thumbnail
-                    imageView.layer.borderWidth = 2.5
-                    imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                    imageView.layer.borderWidth = 1.5
+                    imageView.layer.borderColor = appThemeColor.white.cgColor
+                    imageInnerView.layer.borderWidth = 2.5
+                    imageInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
                     plusStatusImgView.isHidden = true
                     // Optionally, save the video to the documents directory and handle further
                     if let videoData = try? Data(contentsOf: videoURL) {
@@ -225,6 +320,7 @@ extension StatusVC {
                             // Use videoFileURL.path as the path to the saved video file
                             let videoPath = videoFileURL.path
                             self.videoPath = videoPath
+                            self.addStory(UserImage: self.videoPath, storyType: story_type.media.rawValue, Text: "", TextBackground: "", Textstyle: "")
                             imageView.layer.borderWidth = 2.5
                             imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
                             plusStatusImgView.isHidden = true
@@ -317,30 +413,102 @@ extension StatusVC
             case .success(let StoryList):
                 print("StoryList ", StoryList)
                 self?.StoryListData = StoryList
+                self?.processStories(storyList: StoryList)
+                self?.setUserData()
                 self?.tableView.reloadData()
-            case .failure(let apiError):
+                self?.setupADStausProgressBar()
+                self?.toptableView.reloadData()
+             case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
                 
             }
         }
     }
-    
+    func processStories(storyList: StoryListModel) {
+        var myStories: [StoryResultModel] = []
+        var contactStories: [StoryResultModel] = []
+        let id = Int(getString(key: userDefaultsKeys.RegisterId.rawValue))
+        guard let result = storyList.result else { return }
+        
+        for story in result {
+            if let userId = story.userId, userId == id {
+                myStories.append(story)
+            } else {
+                contactStories.append(story)
+            }
+        }
+        
+        let myStoryCount = myStories.count
+        let contactStoryCount = contactStories.count
+        
+        self.myStoryCount = myStoryCount
+        self.contactStoryCount = contactStoryCount
+        self.myStories = myStories
+        self.contactStories = contactStories
+        
+        
+        print("========myStoryCount==========",myStoryCount, "========myStories=========",myStories)
+        print("========contactStoryCount==========",contactStoryCount, "========contactStories=========",contactStories)
+        
+        
+        
+    }
+
 }
 extension StatusVC:UITableViewDataSource & UITableViewDelegate
 {
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if tableView == self.tableView{
+            return 1
+        }else if tableView == toptableView{
+            return 1
+        }
+        return 0
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StoryListData?.result?.count ?? 0
+        if tableView == self.tableView{
+            if contactStoryCount > 0 {
+                return contactStoryCount
+            }else{
+                return 0
+            }
+        }else if tableView == toptableView{
+            return OptionNames.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "StoryTableViewCell") as! StoryTableViewCell
-        cell.storyData = StoryListData?.result?[indexPath.row]
-        return cell
+        if tableView == self.tableView{
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "StoryTableViewCell") as! StoryTableViewCell
+            cell.storyData = contactStories[indexPath.row]
+            return cell
+        }else if tableView == toptableView {
+            if let cell = toptableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
+                cell.nameLbl.text = OptionNames[indexPath.row]
+                return cell
+                
+            }
+            
+        }
+        return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == self.tableView{
+            return UITableView.automaticDimension
+        }else if tableView == toptableView
+        {
+            return 35
+        }
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == self.tableView{
+            
+            
             // Deselect the row to remove the highlight
             tableView.deselectRow(at: indexPath, animated: true)
             
@@ -350,9 +518,90 @@ extension StatusVC:UITableViewDataSource & UITableViewDelegate
                 StatusStoryVC.modalPresentationStyle = .overCurrentContext
                 StatusStoryVC.showTabBar = {
                     self.showTabBar(animated: true)
-               }
+                }
                 self.hideTabBar(animated: true)
                 self.present(StatusStoryVC, animated: false)
             }
         }
+        if tableView == toptableView {
+            print("========================================")
+            let selectedOption = OptionNames[indexPath.row]
+            if selectedOption == "Settings" {
+                
+                DispatchQueue.main.async {
+                    let settingVC = SettingsViewController.getInstance()
+                    settingVC.modalPresentationStyle = .overCurrentContext
+                    settingVC.showTabbar = {
+                        self.showTabBar(animated: true)
+                    }
+                    self.toptableView.isHidden = true
+                    self.hideTabBar(animated: true)
+                    self.present(settingVC, animated: true)
+                }
+            }
+        }
+        
+    }
+}
+
+extension StatusVC {
+    // MARK: - API CALL
+    func addStory(UserImage: String,storyType:String,Text:String,TextBackground:String,Textstyle:String) {
+        guard let url = URL(string: DataManager.shared.getURL(.addStory)) else {
+            print("Invalid URL")
+            return
+        }
+
+        let headers: HTTPHeaders = [
+            // Your additional headers, if any
+        ]
+
+        let parameters: [String: String] = [
+            "RegisterId": getString(key: userDefaultsKeys.RegisterId.rawValue),
+            "StoryType": storyType ,
+            "Text":Text,
+            "TextBackground":TextBackground,
+            "Textstyle":Textstyle
+       ]
+
+        AF.upload(multipartFormData: { multipartFormData in
+            for (key, value) in parameters {
+                if let data = value.data(using: .utf8) {
+                    multipartFormData.append(data, withName: key)
+                }
+            }
+
+            if let imageData = try? Data(contentsOf: URL(fileURLWithPath: UserImage)) {
+                multipartFormData.append(imageData, withName: "Media", fileName: "image.png", mimeType: "image/png")
+            } else {
+                print("Error reading image data from file")
+            }
+        }, to: url, method: .post, headers: headers)
+        .responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                if let responseDictionary = value as? [String: Any],
+                   let addStory = addStoryModel(JSON: responseDictionary) {
+                    
+                    print("Success: \(addStory)")
+                    
+                } else {
+                    print("Failed to map response to EditProfileModel")
+                }
+               
+            case .failure(let error):
+                print("Error: \(error)")
+                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                    print("Server response: \(responseString)")
+                }
+            }
+        }
+    }
+
+}
+enum story_type : String {
+                
+            case media = "media"
+            case text = "text"
+            case media_text = "media_text"
 }
