@@ -25,4 +25,5 @@ target 'WeatherApp' do
   pod 'Firebase/Messaging'
   pod 'Firebase/DynamicLinks'
   pod 'FirebaseDatabase'
+  pod 'WhatsappStatusRingBar'
 end

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class WeatherViewController: WhiteColorNoneNavigation {
     
@@ -39,10 +40,16 @@ class WeatherViewController: WhiteColorNoneNavigation {
         // Do any additional setup after loading the view.
         
         print(getCurrentDate(format: "HH"))
+//        if Singleton.sharedInstance.networkStatus.lowercased() == "offline"
+//         {
+//            var toastStyle = ToastStyle()
+//            toastStyle.backgroundColor = appThemeColor.text_Weather
+//            self.view.makeToast("Please Check Internet Connection", duration: 5.0, position: .bottom, style: toastStyle)
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-     //   setNavigationBar(navigateTitle: ScreenlableTitle.Weather_WeatherlableTitle)
+      
     }
     
     //MARK:- Cell nib
@@ -267,7 +274,7 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDeleg
 extension WeatherViewController {
     // Get weather data
     func getWeatherData(){
-        DataManager.shared.getWeatherDetail() { [weak self] (result) in
+        DataManager.shared.getWeatherDetail(view: self.view) { [weak self] (result) in
             switch result {
             case .success(let appWeatherModel):
                     print("appWeatherModel ", appWeatherModel)
@@ -276,6 +283,9 @@ extension WeatherViewController {
                 
             case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
+                    var toastStyle = ToastStyle()
+                    toastStyle.backgroundColor = appThemeColor.text_Weather
+                    self?.view.makeToast("Please Check Internet Connection", duration: 5.0, position: .bottom, style: toastStyle)
             }
         }
     }

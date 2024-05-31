@@ -33,7 +33,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I0P-hq-zjV">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I0P-hq-zjV" customClass="WhatsappStatusRingBar" customModule="WhatsappStatusRingBar">
                                 <rect key="frame" x="15" y="10" width="60" height="60"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rBs-tg-Zf7">
@@ -77,7 +77,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="imgInnerView" destination="I0P-hq-zjV" id="Hvw-GY-cqa"/>
+                <outlet property="imgInnerView" destination="I0P-hq-zjV" id="JNq-sk-Rra"/>
                 <outlet property="lblName" destination="Rv2-Np-3ra" id="Otm-l7-n16"/>
                 <outlet property="lblTime" destination="NxF-US-av9" id="Xup-vS-GBz"/>
                 <outlet property="mainView" destination="3mp-9B-zBb" id="Rw6-AW-L3Q"/>

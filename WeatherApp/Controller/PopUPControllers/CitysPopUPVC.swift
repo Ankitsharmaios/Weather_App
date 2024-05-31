@@ -106,44 +106,6 @@ class CitysPopUPVC: UIViewController {
             }
         }
     }
-
-//    // Long press gesture action
-//    @objc func long(gesture: UILongPressGestureRecognizer) {
-//        let userData = getUserData()
-//        print("UserData",userData!)
-//        
-//        if gesture.state == .began || userData != nil  {
-//            print("Long press began")
-//            DispatchQueue.main.async {
-//                self.dismiss(animated: true) { [self] in
-//                    
-//                    let storyboard = UIStoryboard(name: "PopUp", bundle: nil)
-//                    if let destinationVC = storyboard.instantiateViewController(withIdentifier: "Two_step_verificationPopUpVC") as? Two_step_verificationPopUpVC {
-//                        destinationVC.modalPresentationStyle = .overCurrentContext
-//                        if let viewController = UIViewController.currentViewc() {
-//                            // Present the new view controller after the dismissal animation completes
-//                            viewController.present(destinationVC, animated: true, completion: nil)
-//                        }
-//                    }
-//                    
-//                }
-//            }
-//        }else{
-//            DispatchQueue.main.async {
-//                self.dismiss(animated: true) { [self] in
-//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    if let destinationVC = storyboard.instantiateViewController(withIdentifier: "WelcomeToTheWeatherAppVC") as? WelcomeToTheWeatherAppVC {
-//                        destinationVC.modalPresentationStyle = .overCurrentContext
-//                        if let viewController = UIViewController.currentViewcc() {
-//                            // Present the new view controller after the dismissal animation completes
-//                            viewController.present(destinationVC, animated: true, completion: nil)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
     
     @IBAction func dissmissAction(_ sender: Any)
     {
@@ -214,7 +176,7 @@ extension CitysPopUPVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLa
 extension CitysPopUPVC
 {
     func getCityWeatherData(cityname:String){
-        DataManager.shared.getCityWeatherDetail(city: cityname) { [weak self] (result) in
+        DataManager.shared.getCityWeatherDetail(city: cityname, view: self.view) { [weak self] (result) in
             switch result {
             case .success(let getCityWeatherDetail):
                     print("getCityWeatherDetail ", getCityWeatherDetail)

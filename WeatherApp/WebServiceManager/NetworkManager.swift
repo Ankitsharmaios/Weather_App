@@ -11,6 +11,7 @@ import Alamofire
 import AlamofireObjectMapper
 import SVProgressHUD
 import Photos
+import Toast_Swift
 
 enum HUDFlag: Int {
     case show = 1
@@ -66,23 +67,45 @@ class NetworkManager: Session {
     // MARK: Post Request Method
     // ----------------------------------------------------------------
     
-    func postResponse<T: Mappable>(_ url: String, parameter: Parameters? = nil, encoding: ParameterEncoding = JSONEncoding.default, header: HTTPHeaders? = nil, showHUD: HUDFlag = .show, mappingType: T.Type, completion: @escaping (Mappable?, APIError?) -> Void) {
+//    func postResponse<T: Mappable>(_ url: String, parameter: Parameters? = nil, encoding: ParameterEncoding = JSONEncoding.default, header: HTTPHeaders? = nil, showHUD: HUDFlag = .show, mappingType: T.Type, completion: @escaping (Mappable?, APIError?) -> Void) {
+//        
+//        self.objectRequest(url, method: .post, parameter: parameter, encoding: encoding, header: header, mappingType: mappingType, showHUD: showHUD) { (mappableResponse) in
+//            
+//            switch mappableResponse.result {
+//                
+//            case .success(let data):
+//                completion(data, nil)
+//                break
+//                
+//            case .failure(let error):
+//                completion(nil, .errorMessage(error.localizedDescription))
+//                break
+//            }
+//        }
+//    }
+    func postResponse<T: Mappable>(_ url: String, parameter: Parameters? = nil, encoding: ParameterEncoding = JSONEncoding.default, header: HTTPHeaders? = nil, showHUD: HUDFlag = .show, mappingType: T.Type, view: UIView, completion: @escaping (Mappable?, APIError?) -> Void) {
+        
+        // Check network status
+        if Singleton.sharedInstance.networkStatus.lowercased() == "offline" {
+            var toastStyle = ToastStyle()
+            toastStyle.backgroundColor = appThemeColor.text_Weather
+            view.makeToast("Please Check Internet Connection", duration: 5.0, position: .bottom, style: toastStyle)
+            completion(nil, .errorMessage("No internet connection"))
+            return
+        }
         
         self.objectRequest(url, method: .post, parameter: parameter, encoding: encoding, header: header, mappingType: mappingType, showHUD: showHUD) { (mappableResponse) in
             
             switch mappableResponse.result {
-                
             case .success(let data):
                 completion(data, nil)
-                break
-                
             case .failure(let error):
                 completion(nil, .errorMessage(error.localizedDescription))
-                break
             }
         }
     }
-    
+
+
     
     // ----------------------------------------------------------------
     // MARK: Object Request Method

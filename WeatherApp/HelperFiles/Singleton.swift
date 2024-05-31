@@ -14,5 +14,6 @@ class Singleton {
     var arrCityWeatherData: WeatherListModel?
     var RegisterId: Int?
     var EditProfileData:EditProfileModel?
+    var networkStatus = ""
 }
 

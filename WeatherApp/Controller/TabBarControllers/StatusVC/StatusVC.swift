@@ -10,10 +10,12 @@ import UniformTypeIdentifiers
 import AVFoundation
 import SDWebImage
 import Alamofire
+import WhatsappStatusRingBar
+
 class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var imageInnerView: WhatsappStatusRingBar!
     @IBOutlet weak var toptableView: UITableView!
-    @IBOutlet weak var imageInnerView: UIView!
     @IBOutlet weak var plusStatusImgView: UIImageView!
     @IBOutlet weak var btnGreenCamera: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -36,7 +38,7 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var myStories: [StoryResultModel] = []
     var contactStories: [StoryResultModel] = []
     var isTopTableHide = false
-    var indicators: [PUWAppStatusProgressIndicator] = []
+
     var StoryListData:StoryListModel?
     var videoPath = ""
     var imagePath = ""
@@ -61,24 +63,6 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     }
     
     
-    func setupADStausProgressBar() {
-        var settings = PUWAppStatusProgressIndicatorSettings()
-        settings.isStaticSegmentsVisible = true
-        settings.startPointPadding = -1
-        settings.defaultSegmentColor = appThemeColor.text_Weather
-        
-        settings.targetSegementNumber = 2 // total 13 DAYS TARGET allocated so value = total - 1
-        settings.segmentBorderType = .round
-        settings.segmentsCount = contactStoryCount
-        settings.colorSegementCount = 2 // your actual days count here
-        settings.spaceBetweenSegments = 10
-        settings.segmentWidth = 3
-        let segment = PUWAppStatusProgressIndicator(frame: CGRect(x: 20, y: 200, width: 60.0, height: 60.0))
-        segment.settings = settings
-        indicators.append(segment)
-        self.tableView.addSubview(segment)
-    }
-    
     
     func setUserData() {
           if myStoryCount > 0
@@ -86,9 +70,10 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
              
               
               let statusTimes = myStories.flatMap { $0.media?.compactMap { $0.time } ?? [] }
-                     if let lastStatusTimeString = statusTimes.last {
+              let statusDate = myStories.flatMap { $0.media?.compactMap { $0.date } ?? [] }
+                  if let lastStatusTimeString = statusTimes.last,let statusDate = statusDate.last {
                          // Calculate time difference and set it to the label
-                         let elapsedTimeString = Converter.timeAgo(from: lastStatusTimeString)
+                         let elapsedTimeString = Converter.timeAgo(Date: statusDate, Time: lastStatusTimeString)
                          lblTapToadd.text = elapsedTimeString
                      }
               
@@ -106,8 +91,7 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
               
               imageView.layer.borderWidth = 1.5
               imageView.layer.borderColor = appThemeColor.white.cgColor
-              imageInnerView.layer.borderWidth = 2.5
-              imageInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
+             
               plusStatusImgView.isHidden = true
               
 
@@ -121,6 +105,9 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
               }
           }
         }
+
+    
+    
 
     
     func registerNIb()
@@ -282,15 +269,13 @@ extension StatusVC {
                     imageView.image = editedImage
                     imageView.layer.borderWidth = 1.5
                     imageView.layer.borderColor = appThemeColor.white.cgColor
-                    imageInnerView.layer.borderWidth = 2.5
-                    imageInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                  
                     plusStatusImgView.isHidden = true
                 } else if let originalImage = info[.originalImage] as? UIImage {
                     imageView.image = originalImage
                     imageView.layer.borderWidth = 1.5
                     imageView.layer.borderColor = appThemeColor.white.cgColor
-                    imageInnerView.layer.borderWidth = 2.5
-                    imageInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                   
                     plusStatusImgView.isHidden = true
                 }
                 
@@ -311,8 +296,7 @@ extension StatusVC {
                     imageView.image = thumbnail
                     imageView.layer.borderWidth = 1.5
                     imageView.layer.borderColor = appThemeColor.white.cgColor
-                    imageInnerView.layer.borderWidth = 2.5
-                    imageInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
+                   
                     plusStatusImgView.isHidden = true
                     // Optionally, save the video to the documents directory and handle further
                     if let videoData = try? Data(contentsOf: videoURL) {
@@ -412,11 +396,14 @@ extension StatusVC
             switch result {
             case .success(let StoryList):
                 print("StoryList ", StoryList)
+               
                 self?.StoryListData = StoryList
+                self?.setupProgressView()
                 self?.processStories(storyList: StoryList)
                 self?.setUserData()
+                
                 self?.tableView.reloadData()
-                self?.setupADStausProgressBar()
+                
                 self?.toptableView.reloadData()
              case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
@@ -453,6 +440,20 @@ extension StatusVC
         
         
     }
+    func setupProgressView() {
+        
+        if let media = self.StoryListData?.result?.compactMap({ $0.media?.compactMap{ $0.uRL}}) {
+            let totalURLs = media.count
+            self.imageInnerView.total = totalURLs
+        } else {
+            self.imageInnerView.total = 0
+        }
+        self.imageInnerView.unseenProgressColor = appThemeColor.text_Weather
+        self.imageInnerView.seenProgressColor = appThemeColor.btnLightGrey_BackGround
+        //self.imgInnerView.setProgress(progress: 1)
+        self.imageInnerView.lineWidth = 2.5
+    }
+
 
 }
 extension StatusVC:UITableViewDataSource & UITableViewDelegate
@@ -507,14 +508,12 @@ extension StatusVC:UITableViewDataSource & UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.tableView{
-            
-            
             // Deselect the row to remove the highlight
             tableView.deselectRow(at: indexPath, animated: true)
-            
             // Retrieve the selected data
             if let selectedData = StoryListData?.result?[indexPath.row] {
-                let StatusStoryVC = StatusStoryVC.getInstance()
+                let StatusStoryVC = StoryViewController.GetInstance()
+                StatusStoryVC.imageCollection = contactStories.compactMap{ $0.media?.compactMap{ $0.uRL}}
                 StatusStoryVC.modalPresentationStyle = .overCurrentContext
                 StatusStoryVC.showTabBar = {
                     self.showTabBar(animated: true)

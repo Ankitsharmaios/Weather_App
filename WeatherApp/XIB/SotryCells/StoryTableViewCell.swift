@@ -7,9 +7,10 @@
 
 import UIKit
 import SDWebImage
+import WhatsappStatusRingBar
 class StoryTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var imgInnerView: UIView!
+    @IBOutlet weak var imgInnerView: WhatsappStatusRingBar!
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet var userimageView: UIImageView!
@@ -18,11 +19,13 @@ class StoryTableViewCell: UITableViewCell {
     var storyData : StoryResultModel? {
         didSet{
             setData()
+            setupProgressView()
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         setUpUI()
         // Initialization code
     }
@@ -42,8 +45,8 @@ class StoryTableViewCell: UITableViewCell {
         
         imgInnerView.layer.cornerRadius = imgInnerView.frame.size.width / 2
         imgInnerView.clipsToBounds = true
-        imgInnerView.layer.borderWidth = 2.5
-        imgInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
+//        imgInnerView.layer.borderWidth = 2.5
+//        imgInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
         userimageView.layer.cornerRadius = userimageView.frame.size.width / 2
         userimageView.clipsToBounds = true
     
@@ -51,6 +54,21 @@ class StoryTableViewCell: UITableViewCell {
         userimageView.layer.borderColor = appThemeColor.white.cgColor
         
     }
+    
+    func setupProgressView() {
+        
+        if let media = storyData?.media {
+            let totalURLs = media.compactMap { $0.uRL }.count
+            self.imgInnerView.total = totalURLs
+        } else {
+            self.imgInnerView.total = 0
+        }
+        self.imgInnerView.unseenProgressColor = appThemeColor.text_Weather
+        self.imgInnerView.seenProgressColor = appThemeColor.btnLightGrey_BackGround
+        //self.imgInnerView.setProgress(progress: 1)
+        self.imgInnerView.lineWidth = 2.5
+    }
+    
     func setData()
     {
         guard let detail = storyData else {

@@ -88,6 +88,7 @@ public class Reachability {
             NotificationCenter.default.post(name: Notification.Name(rawValue: ReachabilityStatusChangedNotification),
                                             object: nil,
                                             userInfo: ["Status": status.description])
+            Singleton.sharedInstance.networkStatus = status.description
             
             }, &context)
         

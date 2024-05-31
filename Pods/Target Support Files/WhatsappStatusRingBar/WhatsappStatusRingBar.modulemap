@@ -1,0 +1,6 @@
+framework module WhatsappStatusRingBar {
+  umbrella header "WhatsappStatusRingBar-umbrella.h"
+
+  export *
+  module * { export * }
+}
