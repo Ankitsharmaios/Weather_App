@@ -69,35 +69,36 @@ class StoryTableViewCell: UITableViewCell {
         self.imgInnerView.lineWidth = 2.5
     }
     
-    func setData()
-    {
+    func setData() {
         guard let detail = storyData else {
             return
         }
         
-      
-        if let imageURLStrings = detail.media?.compactMap({ $0.uRL }), let firstImageURLString = imageURLStrings.first, let imageURL = URL(string: firstImageURLString) {
+        // Set user image
+        if let imageURLStrings = detail.media?.compactMap({ $0.uRL }),
+           let firstImageURLString = imageURLStrings.first,
+           let imageURL = URL(string: firstImageURLString) {
             userimageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
         } else {
             userimageView.image = UIImage(named: "placeholder")
         }
-
-
-        if let timeString = detail.media?[0].time {
-                   lblTime.text = formatTimeString(timeString)
-               } else {
-                   lblTime.text = ""
-               }
-
+        
+        // Get the latest status date and time
+        if let media = detail.media, let latestMedia = media.last,
+           let statusDate = latestMedia.date,
+           let statusTime = latestMedia.time {
+            
+            // Calculate time difference and set it to the label
+            let elapsedTimeString = Converter.timeAgo(Date: statusDate, Time: statusTime)
+            lblTime.text = elapsedTimeString
+        } else {
+            lblTime.text = ""
+        }
+        
+        // Set user name
         lblName.text = detail.userName
     }
+
     
-    func formatTimeString(_ timeString: String) -> String {
-            let components = timeString.split(separator: ":")
-            if components.count >= 2 {
-                // Join the first two components (hours and minutes)
-                return "\(components[0]):\(components[1])"
-            }
-            return timeString // Return original string if it's not in the expected format
-        }
+  
 }

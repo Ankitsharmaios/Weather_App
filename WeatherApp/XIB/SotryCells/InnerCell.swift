@@ -8,7 +8,8 @@
 
 import UIKit
 import SDWebImage
-protocol ImageZoomDelegate: class {
+import AVKit
+protocol ImageZoomDelegate: AnyObject {
     func imageZoomStart()
     func imageZoomEnd()
 }
@@ -16,7 +17,8 @@ protocol ImageZoomDelegate: class {
 class InnerCell: UICollectionViewCell {
     
     weak var delegate: ImageZoomDelegate?
-    
+    private var player: AVPlayer?
+    private var playerLayer: AVPlayerLayer?
     @IBOutlet weak var scrollV: UIScrollView!
     @IBOutlet weak var imgStory: UIImageView!
     
@@ -31,49 +33,76 @@ class InnerCell: UICollectionViewCell {
         scrollV.delegate = self
         scrollV.addSubview(imgStory)
     }
+
+func setImageOrVideo(_ mediaString: String, isVideo: Bool) {
+     if isVideo {
+         playVideo(mediaString)
+     } else {
+         setImage(mediaString)
+     }
+ }
+ 
+ private func playVideo(_ videoString: String) {
+     guard let url = URL(string: videoString) else { return }
+     
+     player = AVPlayer(url: url)
+     playerLayer?.removeFromSuperlayer()
+     
+     playerLayer = AVPlayerLayer(player: player)
+     playerLayer?.frame = imgStory.bounds
+     playerLayer?.videoGravity = .resizeAspect
+     
+     if let playerLayer = playerLayer {
+         imgStory.layer.addSublayer(playerLayer)
+     }
+     
+     player?.play()
+ }
+ 
+ private func setImage(_ imageString: String) {
+     if let url = URL(string: imageString) {
+         self.imgStory.sd_setImage(with: url, completed: { [weak self] (image, error, cacheType, imageURL) in
+             guard let self = self else { return }
+             if let _ = error {
+                 self.imgStory.image = nil
+             }
+             self.isImageDragged = false
+             self.setContentMode()
+         })
+     } else {
+         let bundleImage = UIImage(named: imageString)
+         self.imgStory.image = bundleImage
+         self.isImageDragged = false
+         self.setContentMode()
+     }
+ }
+
+ private func setContentMode() {
+     guard let image = imgStory.image else { return }
+     
+     switch image.imageOrientation {
+     case .up:
+         imgStory.contentMode = .scaleAspectFit
+     case .left, .right:
+         imgStory.contentMode = .scaleAspectFill
+     default:
+         imgStory.contentMode = .scaleAspectFit
+     }
+ }
+
+ private func resetImage() {
+     UIView.animate(withDuration: 0.3, animations: {
+         self.scrollV.zoomScale = 1.0
+     }) { [weak self] (isAnimationDone) in
+         if isAnimationDone {
+             self?.delegate?.imageZoomEnd()
+             self?.isImageDragged = false
+         }
+     }
+ }
 }
 
-// MARK:- Helper Methods
-extension InnerCell {
-    
-    func setImage(_ imageString: String) {
-        if let url = URL(string: imageString) {
-            // Use SDWebImage to load the image
-            self.imgStory.sd_setImage(with: url, completed: { [weak self] (image, error, cacheType, imageURL) in
-                guard let self = self else { return }
-                self.isImageDragged = false
-                self.setContentMode()
-            })
-        } else {
-            // Load image from the app bundle
-            let bundleImage = UIImage(named: imageString)
-            self.imgStory.image = bundleImage
-            self.isImageDragged = false
-            self.setContentMode()
-        }
-    }
-
-    private func setContentMode() {
-        if imgStory.image!.imageOrientation == .up {
-            imgStory.contentMode = .scaleAspectFit
-        } else if imgStory.image!.imageOrientation == .left || imgStory.image!.imageOrientation == .right {
-            imgStory.contentMode = .scaleAspectFill
-        }
-    }
-
-    private func resetImage() {
-        UIView.animate(withDuration: 0.3, animations: { 
-            self.scrollV.zoomScale = 1.0
-        }) { [weak self] (isAnimationDone) in
-            if isAnimationDone {
-                self?.delegate?.imageZoomEnd()
-                self?.isImageDragged = false
-            }
-        }
-    }
-}
-
-// MARK:- Scroll View Data Source and Delegate
+// MARK: - Scroll View Data Source and Delegate
 extension InnerCell: UIScrollViewDelegate {
     
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
@@ -83,7 +112,7 @@ extension InnerCell: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isImageDragged = true
     }
-
+    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imgStory
     }

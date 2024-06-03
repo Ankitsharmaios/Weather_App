@@ -150,7 +150,7 @@ open class WhatsappStatusRingBar: UIView {
             progressShape.strokeEnd = end
             layer.addSublayer(progressShape)
             self.progressShapes.append(progressShape)
-            for _ in 1..<self._total {
+            for _ in 0..<self._total {
                 start = CGFloat(end +  CGFloat(pading))
                 end = CGFloat(Double(start + size))
                 print("------------------------")

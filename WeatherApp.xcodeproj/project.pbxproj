@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14036C9C2C0DA0CC00CA5BFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14036C9B2C0DA0CC00CA5BFC /* GoogleService-Info.plist */; };
 		1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */; };
 		1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */; };
 		140B20DD2C08517200BDCFAC /* addStoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B20DC2C08517200BDCFAC /* addStoryModel.swift */; };
@@ -30,7 +31,6 @@
 		147366252C008B9B00419797 /* SaveLocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147366242C008B9B00419797 /* SaveLocalData.swift */; };
 		147366272C0092D700419797 /* EditProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147366262C0092D700419797 /* EditProfileModel.swift */; };
 		1488B0C62C0603E700DF7372 /* StatusStoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488B0C52C0603E700DF7372 /* StatusStoryVC.swift */; };
-		14939D552C06ECFD001E6A44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14939D542C06ECFD001E6A44 /* GoogleService-Info.plist */; };
 		14939D582C07230D001E6A44 /* StoryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14939D572C07230D001E6A44 /* StoryListModel.swift */; };
 		14939D5C2C07269F001E6A44 /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14939D5A2C07269F001E6A44 /* StoryTableViewCell.swift */; };
 		14939D5D2C0726A0001E6A44 /* StoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14939D5B2C07269F001E6A44 /* StoryTableViewCell.xib */; };
@@ -117,6 +117,7 @@
 
 /* Begin PBXFileReference section */
 		0B4D3880110DF7A00E159173 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		14036C9B2C0DA0CC00CA5BFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckTwoFactorModel.swift; sourceTree = "<group>"; };
 		1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		140B20DC2C08517200BDCFAC /* addStoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addStoryModel.swift; sourceTree = "<group>"; };
@@ -140,7 +141,6 @@
 		147366242C008B9B00419797 /* SaveLocalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveLocalData.swift; sourceTree = "<group>"; };
 		147366262C0092D700419797 /* EditProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileModel.swift; sourceTree = "<group>"; };
 		1488B0C52C0603E700DF7372 /* StatusStoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusStoryVC.swift; sourceTree = "<group>"; };
-		14939D542C06ECFD001E6A44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14939D572C07230D001E6A44 /* StoryListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListModel.swift; sourceTree = "<group>"; };
 		14939D5A2C07269F001E6A44 /* StoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
 		14939D5B2C07269F001E6A44 /* StoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryTableViewCell.xib; sourceTree = "<group>"; };
@@ -401,7 +401,7 @@
 				14D3CE362BFB62B300E700CB /* Model */,
 				14D3CE312BFB621300E700CB /* extension */,
 				14D3CDF32BFB5CCE00E700CB /* Info.plist */,
-				14939D542C06ECFD001E6A44 /* GoogleService-Info.plist */,
+				14036C9B2C0DA0CC00CA5BFC /* GoogleService-Info.plist */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -729,7 +729,6 @@
 				14D3CE2C2BFB5F0C00E700CB /* nunitosans_extrabold.TTF in Resources */,
 				14D3CDF22BFB5CCE00E700CB /* Base in Resources */,
 				14D3CE1F2BFB5D9500E700CB /* WeatherListCell.xib in Resources */,
-				14939D552C06ECFD001E6A44 /* GoogleService-Info.plist in Resources */,
 				14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */,
 				14D3CE2E2BFB5F0C00E700CB /* nunitosans_semibold.TTF in Resources */,
 				14D3CE1D2BFB5D9500E700CB /* WeatherDayListCollectionCell.xib in Resources */,
@@ -742,6 +741,7 @@
 				14D3CE2D2BFB5F0C00E700CB /* nunitosans_regular.TTF in Resources */,
 				14392C4B2BFF7BE2004F8894 /* DashBoard.storyboard in Resources */,
 				14D3CDED2BFB5CCD00E700CB /* Base in Resources */,
+				14036C9C2C0DA0CC00CA5BFC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

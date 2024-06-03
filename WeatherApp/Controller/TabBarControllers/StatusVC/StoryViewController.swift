@@ -7,16 +7,22 @@
 //
 
 import UIKit
-
+import SDWebImage
 class StoryViewController: UIViewController {
 
+
+    @IBOutlet weak var btnMoreOption: UIButton!
+    @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var timeLbl: UILabel!
+    @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var outerCollection: UICollectionView!
     @IBOutlet weak var cancelBtn: UIButton!
-    
+
     var rowIndex:Int = 0
     var arrUser = [StoryHandler]()
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
     var imageCollection: [[String]]!
+    var contactStoriesData: StoryResultModel?
     
     var tapGest: UITapGestureRecognizer!
     var longPressGest: UILongPressGestureRecognizer!
@@ -37,8 +43,42 @@ class StoryViewController: UIViewController {
         self.view.layoutIfNeeded()
         cancelBtn.addTarget(self, action: #selector(cancelBtnTouched), for: .touchUpInside)
         setupModel()
+        setUpUI()
         addGesture()
     }
+    
+    func setUpUI()
+    {
+        userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
+        userImageView.layer.borderWidth = 1.5
+        userImageView.layer.borderColor  = appThemeColor.white.cgColor
+        userImageView.clipsToBounds = true
+        
+        nameLbl.text = contactStoriesData?.userName ?? ""
+        updateTimeLabel(for: 0)
+        let imageURLString = contactStoriesData?.userImage
+        
+        if let imageURL = URL(string: imageURLString ?? "") {
+            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+        } else {
+            userImageView.image = UIImage(named: "placeholder")
+        }
+    }
+    
+    func updateTimeLabel(for storyIndex: Int) {
+        guard let mediaArray = contactStoriesData?.media, storyIndex < mediaArray.count else {
+            timeLbl.text = ""
+            return
+        }
+
+        let media = mediaArray[storyIndex]
+        if let date = media.date, let time = media.time, let formattedTime = Converter.convertApiDateTime(apiDate: date, apiTime: time) {
+            timeLbl.text = formattedTime
+        } else {
+            timeLbl.text = ""
+        }
+    }
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -47,6 +87,9 @@ class StoryViewController: UIViewController {
         }
     }
 
+    @IBAction func moreOptionAction(_ sender: Any) {
+    }
+    
     @IBAction func cancelBtnTouched() {
         self.dismiss(animated: true)
         {
@@ -71,6 +114,7 @@ extension StoryViewController {
     
     func currentStoryIndexChanged(index: Int) {
         arrUser[StoryHandler.userIndex].storyIndex = index
+        updateTimeLabel(for: index) // Update time label when story index changes
     }
     
     func showNextUserStory() {
@@ -98,7 +142,7 @@ extension StoryViewController {
         let indexPath = IndexPath(item: StoryHandler.userIndex, section: 0)
         outerCollection.reloadItems(at: [indexPath])
         outerCollection.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { 
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if let storyBar = self.getCurrentStory() {
                 storyBar.animate(animationIndex: self.arrUser[StoryHandler.userIndex].storyIndex)
                 self.addGesture()
@@ -118,8 +162,6 @@ extension StoryViewController {
 extension StoryViewController {
     
     func addGesture() {
-        
-        // for previous and next navigation
         tapGest = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.view.addGestureRecognizer(tapGest)
         
@@ -128,10 +170,6 @@ extension StoryViewController {
         longPressGest.minimumPressDuration = 0.2
         self.view.addGestureRecognizer(longPressGest)
         
-        /*
-         swipe down to dismiss
-         NOTE: Self's presentation style should be "Over Current Context"
-         */
         panGest = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerHandler))
         self.view.addGestureRecognizer(panGest)
     }
@@ -144,7 +182,7 @@ extension StoryViewController {
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         let touchLocation: CGPoint = gesture.location(in: gesture.view)
-        let maxLeftSide = ((view.bounds.maxX * 40) / 100) // Get 40% of Left side
+        let maxLeftSide = ((view.bounds.maxX * 40) / 100)
         if let storyBar = getCurrentStory() {
             if touchLocation.x < maxLeftSide {
                 storyBar.previous()
@@ -154,6 +192,22 @@ extension StoryViewController {
         }
     }
     
+    func hideItemsForHold() {
+        cancelBtn.isHidden = true
+        userImageView.isHidden = true
+        nameLbl.isHidden = true
+        timeLbl.isHidden = true
+        btnMoreOption.isHidden = true
+    }
+    
+    func showItemsForHold() {
+        cancelBtn.isHidden = false
+        userImageView.isHidden = false
+        nameLbl.isHidden = false
+        timeLbl.isHidden = false
+        btnMoreOption.isHidden = false
+    }
+    
     @objc func panGestureRecognizerHandler(_ sender: UIPanGestureRecognizer) {
         guard let storyBar = getCurrentStory() else { return }
 
@@ -161,6 +215,7 @@ extension StoryViewController {
         if sender.state == .began {
             storyBar.pause()
             initialTouchPoint = touchPoint
+            hideItemsForHold()
         } else if sender.state == .changed {
             if touchPoint.y - initialTouchPoint.y > 0 {
                 self.view.frame = CGRect(x: 0, y: max(0, touchPoint.y - initialTouchPoint.y),
@@ -178,13 +233,14 @@ extension StoryViewController {
                                              width: self.view.frame.size.width,
                                              height: self.view.frame.size.height)
                 })
+                showItemsForHold()
             }
         }
     }
 }
 
 // MARK:- Collection View Data Source and Delegate
-extension StoryViewController: UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension StoryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return arrUser.count
@@ -218,6 +274,7 @@ extension StoryViewController {
 
         if lastIndex != pageNo {
             StoryHandler.userIndex = pageNo
+            updateTimeLabel(for: arrUser[StoryHandler.userIndex].storyIndex) // Update time label when user index changes
             showUpcomingUserStory()
         } else {
             if let storyBar = getCurrentStory() {

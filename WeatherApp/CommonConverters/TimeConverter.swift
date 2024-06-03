@@ -18,6 +18,60 @@ struct Converter{
             return nil
         }
     }
+    
+//    static func convertApiDateTime(apiDate: String, apiTime: String) -> String? {
+//            let dateTimeString = "\(apiDate) \(apiTime)"
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "dd MMM yyyy HH:mm:ss" // Adjust this format based on your API response format
+//
+//            // Parse the combined date and time string
+//            guard let date = dateFormatter.date(from: dateTimeString) else { return nil }
+//
+//            let calendar = Calendar.current
+//
+//            // Check if the date is today or yesterday
+//            if calendar.isDateInToday(date) {
+//                return "Today, " + Converter.formatDateToAMPM(date: date)
+//            } else if calendar.isDateInYesterday(date) {
+//                return "Yesterday, " + Converter.formatDateToAMPM(date: date)
+//            } else {
+//                dateFormatter.dateFormat = "MMM d, h:mm"
+//                return dateFormatter.string(from: date)
+//            }
+//        }
+//
+//        private static func formatDateToAMPM(date: Date) -> String {
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "h:mm"
+//            return dateFormatter.string(from: date)
+//        }
+    static func convertApiDateTime(apiDate: String, apiTime: String) -> String? {
+            let dateTimeString = "\(apiDate) \(apiTime)"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMM yyyy HH:mm:ss" // Adjust this format based on your API response format
+
+            // Parse the combined date and time string
+            guard let date = dateFormatter.date(from: dateTimeString) else { return nil }
+
+            let calendar = Calendar.current
+
+            // Check if the date is today or yesterday
+            if calendar.isDateInToday(date) {
+                return "Today, " + Converter.formatDateToAMPM(date: date)
+            } else if calendar.isDateInYesterday(date) {
+                return "Yesterday, " + Converter.formatDateToAMPM(date: date)
+            } else {
+                dateFormatter.dateFormat = "MMM d, h:mm a"
+                return dateFormatter.string(from: date)
+            }
+        }
+
+        private static func formatDateToAMPM(date: Date) -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "h:mm a"
+            return dateFormatter.string(from: date)
+        }
+    
     static func timeAgo(Date dateString: String, Time timeString: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy HH:mm:ss" // Adjust the format based on your date and time string
@@ -62,6 +116,10 @@ struct Converter{
         } else {
             return "Just now"
         }
+        
+      
+        
+        
     }
 
 //    static func timeAgo(Date dateString: String, Time timeString: String) -> String? {

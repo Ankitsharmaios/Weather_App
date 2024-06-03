@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1052346217834-e1lr8gaa4qth8tsk7a1u0m287cnbe4v6.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCmZ9AHG99abWWTAViav8eNBEq4xFcy-4o</string>
 	<key>GCM_SENDER_ID</key>
@@ -9,7 +11,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>WeatherApp</string>
+	<string>com.WeatherApp</string>
 	<key>PROJECT_ID</key>
 	<string>wheatherapp-7f044</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,7 +27,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1052346217834:ios:f513e2b1abf65e12d56113</string>
+	<string>1:1052346217834:ios:9842542b4f35579dd56113</string>
 	<key>DATABASE_URL</key>
 	<string>https://wheatherapp-7f044-default-rtdb.firebaseio.com</string>
 </dict>

@@ -44,6 +44,7 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var imagePath = ""
     let userdata = getUserData()
     var statusTime = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -56,10 +57,17 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     }
     override func viewWillAppear(_ animated: Bool) {
         StoryList()
+        let timer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
+            self.removeExpiredStories()
+        }
+
+        timer.invalidate()
+
     }
     override func viewDidDisappear(_ animated: Bool) {
         self.isTopTableHide = false
         self.toptableView.isHidden = true
+        
     }
     
     
@@ -106,8 +114,30 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
           }
         }
 
-    
-    
+    func removeExpiredStories() {
+        let currentTime = Date()
+        let twentyFourHoursAgo = Calendar.current.date(byAdding: .hour, value: -24, to: currentTime)!
+        
+        myStories = myStories.filter { story in
+            // Check if date and time are not nil
+            guard let date = story.media?.first?.date,
+                  let time = story.media?.first?.time else {
+                return false // Skip if date or time is nil
+            }
+            
+            // Combine the date and time strings into a single string in a format like "dd-MM-yyyy,HH:mm"
+            let dateTimeString = "\(date),\(time)"
+            
+            // Convert the combined date and time string to Date
+            guard let storyDateTime = dateTimeString.toDate(format: "dd MMM yyyy,HH:mm") else {
+                return false // Skip if unable to convert to Date
+            }
+            
+            // Return true if the story is not older than 24 hours
+            return storyDateTime > twentyFourHoursAgo
+        }
+    }
+
 
     
     func registerNIb()
@@ -185,14 +215,13 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBAction func opengalleryAction(_ sender: Any)
     {
         if !imagePath.isEmpty || !videoPath.isEmpty || !myStories.isEmpty {
-                let statusStoryVC = StatusStoryVC.getInstance()
+                let statusStoryVC = StoryViewController.GetInstance()
                 statusStoryVC.modalPresentationStyle = .overCurrentContext
-                statusStoryVC.userImg = userdata?.result?.image ?? ""
-                statusStoryVC.userName = userdata?.result?.name ?? ""
-                statusStoryVC.userImgStory = imagePath
-                statusStoryVC.oldstory = myStories
-                statusStoryVC.userVideoStory = videoPath
-                statusStoryVC.userStoryTime = statusTime
+            
+            if let selectedData = myStories.first {
+                statusStoryVC.contactStoriesData = selectedData
+            }
+                statusStoryVC.imageCollection = myStories.compactMap{ $0.media?.compactMap{ $0.uRL}}
                 statusStoryVC.showTabBar = {
                     self.showTabBar(animated: true)
                 }
@@ -254,14 +283,25 @@ extension StatusVC {
 extension StatusVC {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true, completion: nil)
-            let currentTime = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "hh:mm a" // Use 12-hour format with "hh:mm a"
-            dateFormatter.timeZone = TimeZone.current // Set to current time zone
-            let localTime = dateFormatter.string(from: currentTime)
-            self.statusTime = localTime
-        print("========data========", localTime)
+        picker.dismiss(animated: true)
+        let currentTime = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MMM-yyyy,hh:mm"
+        dateFormatter.timeZone = TimeZone.current
+        let localDateTime = dateFormatter.string(from: currentTime)
+        print("Local Date and Time:", localDateTime)
+
+        // Extracting Date and Time separately if needed
+        let components = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: currentTime)
+        if let day = components.day, let month = components.month, let year = components.year,
+           let hour = components.hour, let minute = components.minute, let second = components.second {
+            let localDate = "\(day) \(month) \(year)"
+            let localTime = "\(hour):\(minute):\(second)"
+            print("Local Date:", localDate)
+            print("Local Time:", localTime)
+        }
+
+       
         if let mediaType = info[.mediaType] as? String {
             if mediaType == "public.image" {
                 // Handle image selection
@@ -285,7 +325,14 @@ extension StatusVC {
                         // Use imageURL.path as the path to the saved image file
                         let imagePath = imageURL.path
                         self.imagePath = imagePath
-                        self.addStory(UserImage: self.imagePath, storyType: story_type.media.rawValue, Text: "", TextBackground: "", Textstyle: "")
+                     
+                        self.addStory(UserImage: self.imagePath, storyType: story_type.media.rawValue, Text: "", TextBackground: "", Textstyle: "") { success in
+                                                   if success {
+                                                       self.StoryList()
+                                                   } else {
+                                                       // Handle error
+                                                   }
+                                               }
                     }
                 }
             } else if mediaType == "public.movie" {
@@ -304,7 +351,17 @@ extension StatusVC {
                             // Use videoFileURL.path as the path to the saved video file
                             let videoPath = videoFileURL.path
                             self.videoPath = videoPath
-                            self.addStory(UserImage: self.videoPath, storyType: story_type.media.rawValue, Text: "", TextBackground: "", Textstyle: "")
+                           
+                            
+                            self.addStory(UserImage: self.videoPath, storyType: story_type.media.rawValue, Text: "", TextBackground: "", Textstyle: "") { success in
+                                                       if success {
+                                                           self.StoryList()
+                                                       } else {
+                                                           // Handle error
+                                                       }
+                                                   }
+                            
+                            
                             imageView.layer.borderWidth = 2.5
                             imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
                             plusStatusImgView.isHidden = true
@@ -316,7 +373,8 @@ extension StatusVC {
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true)
+        
     }
     
     // Existing saveImageToDocumentsDirectory method
@@ -398,12 +456,10 @@ extension StatusVC
                 print("StoryList ", StoryList)
                
                 self?.StoryListData = StoryList
-                self?.setupProgressView()
                 self?.processStories(storyList: StoryList)
                 self?.setUserData()
-                
+                self?.setupProgressView()
                 self?.tableView.reloadData()
-                
                 self?.toptableView.reloadData()
              case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
@@ -441,18 +497,25 @@ extension StatusVC
         
     }
     func setupProgressView() {
-        
-        if let media = self.StoryListData?.result?.compactMap({ $0.media?.compactMap{ $0.uRL}}) {
-            let totalURLs = media.count
+        if let firstStory = self.myStories.first,
+           let media = firstStory.media {
+            
+            let mediaURLs = media.compactMap { $0.uRL }
+            let totalURLs = mediaURLs.count
             self.imageInnerView.total = totalURLs
+            
+            
         } else {
             self.imageInnerView.total = 0
         }
+        
         self.imageInnerView.unseenProgressColor = appThemeColor.text_Weather
         self.imageInnerView.seenProgressColor = appThemeColor.btnLightGrey_BackGround
         //self.imgInnerView.setProgress(progress: 1)
         self.imageInnerView.lineWidth = 2.5
     }
+
+
 
 
 }
@@ -507,45 +570,48 @@ extension StatusVC:UITableViewDataSource & UITableViewDelegate
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == self.tableView{
+        if tableView == self.tableView {
             // Deselect the row to remove the highlight
             tableView.deselectRow(at: indexPath, animated: true)
             // Retrieve the selected data
-            if let selectedData = StoryListData?.result?[indexPath.row] {
-                let StatusStoryVC = StoryViewController.GetInstance()
-                StatusStoryVC.imageCollection = contactStories.compactMap{ $0.media?.compactMap{ $0.uRL}}
-                StatusStoryVC.modalPresentationStyle = .overCurrentContext
-                StatusStoryVC.showTabBar = {
-                    self.showTabBar(animated: true)
-                }
-                self.hideTabBar(animated: true)
-                self.present(StatusStoryVC, animated: false)
+            let selectedData = contactStories[indexPath.row]
+            
+            let selectedMediaURLs = selectedData.media?.compactMap { $0.uRL } ?? []
+            
+            let statusStoryVC = StoryViewController.GetInstance()
+            statusStoryVC.contactStoriesData = selectedData
+            statusStoryVC.imageCollection = [selectedMediaURLs]
+            statusStoryVC.modalPresentationStyle = .overCurrentContext
+            
+            statusStoryVC.showTabBar = {
+                self.showTabBar(animated: true)
             }
+            self.hideTabBar(animated: true)
+            self.present(statusStoryVC, animated: false)
         }
         if tableView == toptableView {
-            print("========================================")
-            let selectedOption = OptionNames[indexPath.row]
-            if selectedOption == "Settings" {
-                
-                DispatchQueue.main.async {
-                    let settingVC = SettingsViewController.getInstance()
-                    settingVC.modalPresentationStyle = .overCurrentContext
-                    settingVC.showTabbar = {
-                        self.showTabBar(animated: true)
-                    }
-                    self.toptableView.isHidden = true
-                    self.hideTabBar(animated: true)
-                    self.present(settingVC, animated: true)
-                }
-            }
-        }
-        
+                   let selectedOption = OptionNames[indexPath.row]
+                   if selectedOption == "Settings" {
+                       DispatchQueue.main.async {
+                           let settingVC = SettingsViewController.getInstance()
+                           settingVC.modalPresentationStyle = .overCurrentContext
+                           settingVC.showTabbar = {
+                               self.showTabBar(animated: true)
+                           }
+                           self.toptableView.isHidden = true
+                           self.hideTabBar(animated: true)
+                           self.present(settingVC, animated: true)
+                       }
+                   }
+               }
     }
+
+
 }
 
 extension StatusVC {
     // MARK: - API CALL
-    func addStory(UserImage: String,storyType:String,Text:String,TextBackground:String,Textstyle:String) {
+    func addStory(UserImage: String,storyType:String,Text:String,TextBackground:String,Textstyle:String,completion: @escaping (Bool) -> Void) {
         guard let url = URL(string: DataManager.shared.getURL(.addStory)) else {
             print("Invalid URL")
             return
@@ -579,6 +645,7 @@ extension StatusVC {
         .responseJSON { response in
             switch response.result {
             case .success(let value):
+                completion(true)
                 if let responseDictionary = value as? [String: Any],
                    let addStory = addStoryModel(JSON: responseDictionary) {
                     
@@ -590,6 +657,7 @@ extension StatusVC {
                
             case .failure(let error):
                 print("Error: \(error)")
+                completion(false)
                 if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
                     print("Server response: \(responseString)")
                 }
@@ -603,4 +671,21 @@ enum story_type : String {
             case media = "media"
             case text = "text"
             case media_text = "media_text"
+}
+extension String {
+    // Convert a string to a Date object using a specified format
+    func toDate(format: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.date(from: self)
+    }
+}
+
+extension Date {
+    // Convert a Date object to a string using a specified format
+    func toString(format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
 }

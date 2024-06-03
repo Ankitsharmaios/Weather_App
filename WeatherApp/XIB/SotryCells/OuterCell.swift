@@ -31,10 +31,10 @@ class OuterCell: UICollectionViewCell {
             storyBar = nil
         }
         storyBar = StoryBar(numberOfSegments: story.images.count)
-        storyBar.frame = CGRect(x: 15, y: 15, width: weakParent!.view.frame.width - 30, height: 4)
+        storyBar.frame = CGRect(x: 0, y: 30, width: weakParent!.view.frame.width, height: 3)
         storyBar.delegate = self
-        storyBar.animatingBarColor = UIColor.black
-        storyBar.nonAnimatingBarColor = UIColor.black.withAlphaComponent(0.25)
+        storyBar.animatingBarColor = UIColor.white
+        storyBar.nonAnimatingBarColor = UIColor.greybgColorF9F9F9.withAlphaComponent(0.25)
         storyBar.padding = 2
         storyBar.resetSegmentsTill(index: story.storyIndex)
         self.contentView.addSubview(storyBar)
@@ -81,11 +81,15 @@ extension OuterCell: UICollectionViewDelegate, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return UIScreen.main.bounds.size
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "storyCell", for: indexPath) as! InnerCell
-        cell.setImage(story.images[indexPath.row])
-        cell.delegate = self
-        return cell
-    }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "storyCell", for: indexPath) as! InnerCell
+            
+            let mediaString = story.images[indexPath.row]
+            let isVideo = mediaString.hasSuffix(".mp4") // Example check for video
+            
+            cell.setImageOrVideo(mediaString, isVideo: isVideo)
+            cell.delegate = self
+            
+            return cell
+        }
 }
