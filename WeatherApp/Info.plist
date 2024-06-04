@@ -13,6 +13,13 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>font7.otf</string>
+		<string>font6.ttf</string>
+		<string>font5.ttf</string>
+		<string>font4.ttf</string>
+		<string>font3.ttf</string>
+		<string>font2.ttf</string>
+		<string>font1.otf</string>
 		<string>helvetica_bold.ttf</string>
 		<string>helvetica_medium.ttf</string>
 		<string>helvetica_regular.ttf</string>

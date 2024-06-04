@@ -28,18 +28,7 @@ enum Nunitonsans: String {
         return UIFont(name: "NunitoSans-\(rawValue)", size: size)!
     }
 }
-//enum Helveticas: String {
-//  
-//    case helvetica_bold = "Bold"
-//    case helvetica_medium = "medium"
-//    case helvetica_regular = "Regular"
-//    case helvetica_semibold = "SemiBold"
-//  
-//    
-//    func font(size: CGFloat) -> UIFont {
-//        return UIFont(name: "Helveticas-\(rawValue)", size: size)!
-//    }
-//}
+
 enum Helvetica: String {
   
     case helvetica_bold = "Helvetica-Bold"
@@ -51,4 +40,16 @@ enum Helvetica: String {
         return UIFont(name: rawValue, size: size)
     }
 }
-
+enum FontStyle: String {
+    case font1 = "font1"
+    case font2 = "font2"
+    case font3 = "font3"
+    case font4 = "font4"
+    case font5 = "font5"
+    case font6 = "font6"
+    case font7 = "font7"
+    
+    func font(size: CGFloat) -> UIFont {
+        return UIFont(name: "FontStyle-\(rawValue)", size: size)!
+    }
+}

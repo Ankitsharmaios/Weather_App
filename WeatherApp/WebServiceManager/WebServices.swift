@@ -210,4 +210,31 @@ extension DataManager {
         }
     }
     
+    //MARK: addStory
+    func addStory(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<addStoryModel, APIError>) -> Void) {
+
+        // Create URL
+        let url = getURL(.addStory)
+
+        NetworkManager.shared.postResponse(url, parameter: params, header: getHttpHeaders(), mappingType: addStoryModel.self,view:view) { (mappableArray, apiError) in
+            
+            guard let data = mappableArray as? addStoryModel else {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }
+            
+            print("status \(data.status ?? false)")
+            print("message \(data.statusMessage ?? "")")
+            
+            if !(data.status ?? false) && data.statusMessage == "Token Expired" {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }else if !(data.status ?? false) && data.statusMessage == "login failed !" {
+                completion(.success(data))
+            } else{
+                completion(.success(data))
+            }
+        }
+    }
+    
 }

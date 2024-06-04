@@ -11,6 +11,8 @@ import SDWebImage
 class StoryViewController: UIViewController {
 
 
+    @IBOutlet weak var textDataShowLbl: UILabel!
+    @IBOutlet weak var textStoryView: UIView!
     @IBOutlet weak var btnMoreOption: UIButton!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
@@ -49,6 +51,10 @@ class StoryViewController: UIViewController {
     
     func setUpUI()
     {
+        
+    
+        textStoryView.isHidden = true
+        textDataShowLbl.isHidden = true
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
         userImageView.layer.borderWidth = 1.5
         userImageView.layer.borderColor  = appThemeColor.white.cgColor
@@ -63,6 +69,23 @@ class StoryViewController: UIViewController {
         } else {
             userImageView.image = UIImage(named: "placeholder")
         }
+        
+        if let firstMedia = contactStoriesData?.media?.first {
+                if let textBackground = firstMedia.textBackground,
+                   let color = UIColor(hex: textBackground) {
+                    textStoryView.isHidden = false
+                    textStoryView.backgroundColor = color
+                }
+                
+                if let textData = firstMedia.text {
+                    textDataShowLbl.font = Helvetica.helvetica_bold.font(size: 15)
+                    textDataShowLbl.textColor = appThemeColor.white
+                    textDataShowLbl.isHidden = false
+                    textDataShowLbl.text = textData
+                }
+            }
+        
+        
     }
     
     func updateTimeLabel(for storyIndex: Int) {
@@ -114,8 +137,25 @@ extension StoryViewController {
     
     func currentStoryIndexChanged(index: Int) {
         arrUser[StoryHandler.userIndex].storyIndex = index
-        updateTimeLabel(for: index) // Update time label when story index changes
+        updateTimeLabel(for: index)
+        
+        if let textBackground = contactStoriesData?.media?[index].textBackground,
+           let color = UIColor(hex: textBackground) {
+            textStoryView.isHidden = false
+            textStoryView.backgroundColor = color
+        } else {
+            textStoryView.isHidden = true
+        }
+        
+        if let textData = contactStoriesData?.media?[index].text {
+            textDataShowLbl.isHidden = false
+            textDataShowLbl.text = textData
+        } else {
+            textDataShowLbl.isHidden = true
+        }
     }
+
+
     
     func showNextUserStory() {
         let newUserIndex = StoryHandler.userIndex + 1
@@ -137,18 +177,36 @@ extension StoryViewController {
         }
     }
     
+
     func showUpcomingUserStory() {
         removeGestures()
         let indexPath = IndexPath(item: StoryHandler.userIndex, section: 0)
         outerCollection.reloadItems(at: [indexPath])
         outerCollection.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if let storyBar = self.getCurrentStory() {
                 storyBar.animate(animationIndex: self.arrUser[StoryHandler.userIndex].storyIndex)
                 self.addGesture()
             }
         }
+        
+        if let textBackground = contactStoriesData?.media?[StoryHandler.userIndex].textBackground,
+           let color = UIColor(hex: textBackground) {
+            textStoryView.isHidden = false
+            textStoryView.backgroundColor = color
+        } else {
+            textStoryView.isHidden = true
+        }
+        
+        if let textData = contactStoriesData?.media?[StoryHandler.userIndex].text {
+            textDataShowLbl.isHidden = false
+            textDataShowLbl.text = textData
+        } else {
+            textDataShowLbl.isHidden = true
+        }
     }
+
     
     func getCurrentStory() -> StoryBar? {
         if let cell = outerCollection.cellForItem(at: IndexPath(item: StoryHandler.userIndex, section: 0)) as? OuterCell {
@@ -214,6 +272,7 @@ extension StoryViewController {
         let touchPoint = sender.location(in: self.view?.window)
         if sender.state == .began {
             storyBar.pause()
+            pauseCurrentVideo()
             initialTouchPoint = touchPoint
             hideItemsForHold()
         } else if sender.state == .changed {
@@ -228,6 +287,7 @@ extension StoryViewController {
                 self.showTabBar?()
             } else {
                 storyBar.resume()
+                resumeCurrentVideo()
                 UIView.animate(withDuration: 0.3, animations: {
                     self.view.frame = CGRect(x: 0, y: 0,
                                              width: self.view.frame.size.width,
@@ -237,6 +297,24 @@ extension StoryViewController {
             }
         }
     }
+    
+    func pauseCurrentVideo() {
+            if let cell = outerCollection.cellForItem(at: IndexPath(item: StoryHandler.userIndex, section: 0)) as? OuterCell {
+                if let innerCell = cell.innerCollection.cellForItem(at: IndexPath(item: arrUser[StoryHandler.userIndex].storyIndex, section: 0)) as? InnerCell {
+                    innerCell.pauseVideo()
+                }
+            }
+        }
+        
+        func resumeCurrentVideo() {
+            if let cell = outerCollection.cellForItem(at: IndexPath(item: StoryHandler.userIndex, section: 0)) as? OuterCell {
+                if let innerCell = cell.innerCollection.cellForItem(at: IndexPath(item: arrUser[StoryHandler.userIndex].storyIndex, section: 0)) as? InnerCell {
+                    innerCell.resumeVideo()
+                }
+            }
+        }
+    
+    
 }
 
 // MARK:- Collection View Data Source and Delegate
@@ -284,3 +362,4 @@ extension StoryViewController {
         }
     }
 }
+

@@ -50,14 +50,22 @@ func setImageOrVideo(_ mediaString: String, isVideo: Bool) {
      
      playerLayer = AVPlayerLayer(player: player)
      playerLayer?.frame = imgStory.bounds
-     playerLayer?.videoGravity = .resizeAspect
-     
+     playerLayer?.videoGravity = .resizeAspectFill
+     playerLayer?.contentsGravity = .center
      if let playerLayer = playerLayer {
          imgStory.layer.addSublayer(playerLayer)
      }
      
      player?.play()
  }
+    
+    func pauseVideo() {
+           player?.pause()
+       }
+       
+       func resumeVideo() {
+           player?.play()
+       }
  
  private func setImage(_ imageString: String) {
      if let url = URL(string: imageString) {

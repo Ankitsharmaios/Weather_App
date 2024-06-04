@@ -14,6 +14,7 @@ import WhatsappStatusRingBar
 
 class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var btnTextStatus: UIButton!
     @IBOutlet weak var imageInnerView: WhatsappStatusRingBar!
     @IBOutlet weak var toptableView: UITableView!
     @IBOutlet weak var plusStatusImgView: UIImageView!
@@ -44,6 +45,8 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var imagePath = ""
     let userdata = getUserData()
     var statusTime = ""
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,6 +194,21 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     
     @IBAction func addWriteStatuswithNoteAction(_ sender: Any) 
     {
+        
+        let TextStatusVC = TextStatusVC.GetInstance()
+        TextStatusVC.modalPresentationStyle = .overCurrentContext
+    
+        TextStatusVC.showTabBar = {
+            self.showTabBar(animated: true)
+        }
+        TextStatusVC.callback = {
+            self.StoryList()
+        }
+        
+        self.hideTabBar(animated: true)
+        self.present(TextStatusVC, animated: true)
+        
+        
         
     }
     @IBAction func cameraStackAction(_ sender: Any)

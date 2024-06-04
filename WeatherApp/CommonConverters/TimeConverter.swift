@@ -19,32 +19,6 @@ struct Converter{
         }
     }
     
-//    static func convertApiDateTime(apiDate: String, apiTime: String) -> String? {
-//            let dateTimeString = "\(apiDate) \(apiTime)"
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "dd MMM yyyy HH:mm:ss" // Adjust this format based on your API response format
-//
-//            // Parse the combined date and time string
-//            guard let date = dateFormatter.date(from: dateTimeString) else { return nil }
-//
-//            let calendar = Calendar.current
-//
-//            // Check if the date is today or yesterday
-//            if calendar.isDateInToday(date) {
-//                return "Today, " + Converter.formatDateToAMPM(date: date)
-//            } else if calendar.isDateInYesterday(date) {
-//                return "Yesterday, " + Converter.formatDateToAMPM(date: date)
-//            } else {
-//                dateFormatter.dateFormat = "MMM d, h:mm"
-//                return dateFormatter.string(from: date)
-//            }
-//        }
-//
-//        private static func formatDateToAMPM(date: Date) -> String {
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "h:mm"
-//            return dateFormatter.string(from: date)
-//        }
     static func convertApiDateTime(apiDate: String, apiTime: String) -> String? {
             let dateTimeString = "\(apiDate) \(apiTime)"
             let dateFormatter = DateFormatter()
@@ -87,12 +61,7 @@ struct Converter{
 
         // Calculate the time difference
         let components = calendar.dateComponents([.day, .hour, .minute, .second], from: date, to: currentDate)
-        let timeInterval = currentDate.timeIntervalSince(date)
 
-        // Check if 24 hours have passed
-        if timeInterval >= 24 * 60 * 60 {
-            return "Story time over"
-        }
 
         // Determine the appropriate time ago string
         if let days = components.day, days >= 1 {
