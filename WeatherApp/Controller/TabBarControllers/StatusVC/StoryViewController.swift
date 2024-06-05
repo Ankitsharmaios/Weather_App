@@ -8,9 +8,10 @@
 
 import UIKit
 import SDWebImage
-class StoryViewController: UIViewController {
+class StoryViewController: UIViewController & UITextViewDelegate {
 
 
+    @IBOutlet weak var replyTextView: UITextView!
     @IBOutlet weak var textDataShowLbl: UILabel!
     @IBOutlet weak var textStoryView: UIView!
     @IBOutlet weak var btnMoreOption: UIButton!
@@ -19,7 +20,9 @@ class StoryViewController: UIViewController {
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var outerCollection: UICollectionView!
     @IBOutlet weak var cancelBtn: UIButton!
-
+    
+    var seenStoriesCount: Int = 0
+    
     var rowIndex:Int = 0
     var arrUser = [StoryHandler]()
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
@@ -29,9 +32,16 @@ class StoryViewController: UIViewController {
     var tapGest: UITapGestureRecognizer!
     var longPressGest: UILongPressGestureRecognizer!
     var panGest: UIPanGestureRecognizer!
-
-    var showTabBar: (() -> Void)?
+    private let placeholderLabel: UILabel = {
+            let label = UILabel()
+            label.text = "Reply"
+            label.textColor = .white
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
     
+    var showTabBar: (() -> Void)?
+    var callback : (() -> Void)?
     class func GetInstance()-> StoryViewController {
         return StoryViewController.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
@@ -47,12 +57,21 @@ class StoryViewController: UIViewController {
         setupModel()
         setUpUI()
         addGesture()
+        setupPlaceholder()
     }
     
     func setUpUI()
     {
         
-    
+        replyTextView.delegate = self
+        
+        replyTextView.layer.cornerRadius = 20
+        replyTextView.clipsToBounds = true
+        replyTextView.backgroundColor = appThemeColor.TextView_BackGround
+        replyTextView.font = Helvetica.helvetica_regular.font(size: 15)
+        replyTextView.textColor = appThemeColor.white
+        
+      
         textStoryView.isHidden = true
         textDataShowLbl.isHidden = true
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
@@ -87,6 +106,53 @@ class StoryViewController: UIViewController {
         
         
     }
+    private func setupPlaceholder() {
+           replyTextView.addSubview(placeholderLabel)
+           
+           NSLayoutConstraint.activate([
+               placeholderLabel.leadingAnchor.constraint(equalTo: replyTextView.leadingAnchor, constant: 5),
+               placeholderLabel.topAnchor.constraint(equalTo: replyTextView.topAnchor, constant: 8),
+               placeholderLabel.widthAnchor.constraint(equalTo: replyTextView.widthAnchor, multiplier: 0.8)
+           ])
+           
+           placeholderLabel.isHidden = !replyTextView.text.isEmpty
+       }
+       
+       func textViewDidChange(_ textView: UITextView) {
+           placeholderLabel.isHidden = !replyTextView.text.isEmpty
+          // adjustTextViewHeight()
+       }
+
+//    private func adjustTextViewHeight() {
+//        let size = CGSize(width: replyTextView.frame.width, height: .infinity)
+//        let estimatedSize = replyTextView.sizeThatFits(size)
+//
+//        // Calculate the height of one line of text
+//        let oneLineHeight = replyTextView.font?.lineHeight ?? 0
+//
+//        // Check if the height exceeds the height of one line of text
+//        if estimatedSize.height > oneLineHeight {
+//            // Disable animations
+//            UIView.setAnimationsEnabled(false)
+//            
+//            // Preserve the current content offset
+//            let originalOffset = replyTextView.contentOffset
+//            
+//            // Adjust the height constraint
+//            replyTextView.constraints.forEach { (constraint) in
+//                if constraint.firstAttribute == .height {
+//                    constraint.constant = estimatedSize.height
+//                }
+//            }
+//            
+//            // Set the content offset back to its original position
+//            replyTextView.setContentOffset(originalOffset, animated: false)
+//            
+//            // Re-enable animations
+//            UIView.setAnimationsEnabled(true)
+//        }
+//    }
+
     
     func updateTimeLabel(for storyIndex: Int) {
         guard let mediaArray = contactStoriesData?.media, storyIndex < mediaArray.count else {
@@ -126,18 +192,30 @@ class StoryViewController: UIViewController {
 extension StoryViewController {
     
     func setupModel() {
+        
         for collection in imageCollection {
             arrUser.append(StoryHandler(imgs: collection))
         }
         StoryHandler.userIndex = rowIndex
+        if rowIndex == 0
+        {
+            
+            Singleton.sharedInstance.seenStoryCount = 1
+        }
         outerCollection.reloadData()
         outerCollection.scrollToItem(at: IndexPath(item: StoryHandler.userIndex, section: 0),
                                      at: .centeredHorizontally, animated: false)
     }
     
     func currentStoryIndexChanged(index: Int) {
+        
         arrUser[StoryHandler.userIndex].storyIndex = index
         updateTimeLabel(for: index)
+        if index > 0
+        {
+            
+            Singleton.sharedInstance.seenStoryCount = index + 1
+        }
         
         if let textBackground = contactStoriesData?.media?[index].textBackground,
            let color = UIColor(hex: textBackground) {

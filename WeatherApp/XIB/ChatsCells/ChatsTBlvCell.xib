@@ -88,6 +88,7 @@
                             <constraint firstItem="Qj4-WP-v8m" firstAttribute="top" secondItem="QD0-Ft-CMd" secondAttribute="bottom" constant="5.3333333333333286" id="F5r-tV-Qcz"/>
                             <constraint firstAttribute="trailing" secondItem="QD0-Ft-CMd" secondAttribute="trailing" constant="15" id="FRg-0J-oWS"/>
                             <constraint firstItem="QD0-Ft-CMd" firstAttribute="centerY" secondItem="ln3-Ie-cwM" secondAttribute="centerY" id="KRd-ex-0Oe"/>
+                            <constraint firstAttribute="width" constant="320" id="Prj-Wb-QM9"/>
                             <constraint firstItem="HOf-8i-JOA" firstAttribute="leading" secondItem="GtI-P7-Lr9" secondAttribute="leading" constant="15" id="XEC-GV-pf8"/>
                             <constraint firstItem="ln3-Ie-cwM" firstAttribute="leading" secondItem="HOf-8i-JOA" secondAttribute="trailing" constant="10" id="YYN-YO-Sjk"/>
                             <constraint firstItem="Npx-Vs-PbX" firstAttribute="leading" secondItem="JwJ-OS-vrt" secondAttribute="trailing" constant="8" symbolic="YES" id="d9E-O9-8bH"/>

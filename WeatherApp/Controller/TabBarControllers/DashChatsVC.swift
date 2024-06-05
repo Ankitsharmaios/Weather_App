@@ -73,8 +73,6 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         chatTableView.separatorStyle = .none
         toptableHeightLayout.constant = CGFloat(CGFloat((OptionNames.count)) * (40))
         topTableView.separatorStyle = .none
-        topTableView.reloadData()
-        topTableView.reloadData()
         weatherLbl.textColor = appThemeColor.text_Weather
         weatherLbl.font = Helvetica.helvetica_bold.font(size: 24)
         
@@ -247,7 +245,7 @@ extension DashChatsVC
                     //                        _ = userSnap.key //the uid of each user
                     //                        let userDict = userSnap.value as! [String:AnyObject] //child data
                     
-                    let uid = snapshot.key //the uid of each user
+                    _ = snapshot.key //the uid of each user
                    // let userDict = snapshot.value as! [String:AnyObject] //child data
                     for child in snapshot.children{
                         
@@ -277,12 +275,13 @@ extension DashChatsVC
                             if let chatData = LiveChatDataModel(JSON: userDict) {
                                 self.LastChatData?.append(chatData)
                                 print("LastChat",LastChatData ?? [])
+                                self.chatTableView.reloadData()
                             }
                         }
                     }
                         
                     }
-                    self.chatTableView.reloadData()
+                    
                 })
             }else {
                 print("No data available")

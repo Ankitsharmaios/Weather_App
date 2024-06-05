@@ -15,11 +15,12 @@ class StoryTableViewCell: UITableViewCell {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet var userimageView: UIImageView!
     @IBOutlet weak var mainView: UIView!
-    
+    var callback : (() -> Void )?
     var storyData : StoryResultModel? {
         didSet{
             setData()
-            setupProgressView()
+      
+            setupProgressView(progress: Singleton.sharedInstance.seenStoryCount)
         }
     }
     
@@ -55,7 +56,7 @@ class StoryTableViewCell: UITableViewCell {
         
     }
     
-    func setupProgressView() {
+    func setupProgressView(progress:Int) {
         
         if let media = storyData?.media {
             let totalURLs = media.compactMap { $0.uRL }.count
@@ -65,7 +66,7 @@ class StoryTableViewCell: UITableViewCell {
         }
         self.imgInnerView.unseenProgressColor = appThemeColor.text_Weather
         self.imgInnerView.seenProgressColor = appThemeColor.btnLightGrey_BackGround
-        //self.imgInnerView.setProgress(progress: 1)
+        self.imgInnerView.setProgress(progress: CGFloat(progress))
         self.imgInnerView.lineWidth = 2.5
     }
     

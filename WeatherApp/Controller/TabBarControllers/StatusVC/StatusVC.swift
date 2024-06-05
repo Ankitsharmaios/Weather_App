@@ -14,6 +14,8 @@ import WhatsappStatusRingBar
 
 class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var topTableViewWidthLayout: NSLayoutConstraint!
+    @IBOutlet weak var btnStatusprivacy: UIButton!
     @IBOutlet weak var btnTextStatus: UIButton!
     @IBOutlet weak var imageInnerView: WhatsappStatusRingBar!
     @IBOutlet weak var toptableView: UITableView!
@@ -31,11 +33,11 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var updateView: UIView!
     @IBOutlet weak var lblUpdate: UILabel!
-    var OptionNames = ["Settings"]
-    
+    var OptionNames = [["Settings"], ["Status Privacy"]]
+    var istab = false
     var contactStoryCount = 0
     var myStoryCount = 0
-    
+    var isseen = false
     var myStories: [StoryResultModel] = []
     var contactStories: [StoryResultModel] = []
     var isTopTableHide = false
@@ -46,7 +48,7 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     let userdata = getUserData()
     var statusTime = ""
     
-    
+    var callback:(() -> Void )?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,6 +193,15 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     }
     
     
+    @IBAction func statusprivacyAction(_ sender: Any)
+    {
+        
+           istab = true
+           isTopTableHide.toggle()
+           toptableView.isHidden = !isTopTableHide
+           topTableViewWidthLayout.constant = 140
+           toptableView.reloadData()
+    }
     
     @IBAction func addWriteStatuswithNoteAction(_ sender: Any) 
     {
@@ -222,12 +233,11 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     
     @IBAction func moreOptionAction(_ sender: Any) 
     {
+        istab = false
         isTopTableHide.toggle()
-        if isTopTableHide == true{
-            self.toptableView.isHidden = false
-        }else{
-            self.toptableView.isHidden = true
-        }
+        toptableView.isHidden = !isTopTableHide
+        topTableViewWidthLayout.constant = 90
+        toptableView.reloadData()
     }
     
     @IBAction func opengalleryAction(_ sender: Any)
@@ -242,7 +252,9 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                 statusStoryVC.imageCollection = myStories.compactMap{ $0.media?.compactMap{ $0.uRL}}
                 statusStoryVC.showTabBar = {
                     self.showTabBar(animated: true)
+                    self.setupProgressView()
                 }
+            
                 self.hideTabBar(animated: true)
                 self.present(statusStoryVC, animated: true)
             } else {
@@ -529,7 +541,7 @@ extension StatusVC
         
         self.imageInnerView.unseenProgressColor = appThemeColor.text_Weather
         self.imageInnerView.seenProgressColor = appThemeColor.btnLightGrey_BackGround
-        //self.imgInnerView.setProgress(progress: 1)
+        self.imageInnerView.setProgress(progress: CGFloat(Singleton.sharedInstance.seenStoryCount))
         self.imageInnerView.lineWidth = 2.5
     }
 
@@ -551,14 +563,10 @@ extension StatusVC:UITableViewDataSource & UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == self.tableView{
-            if contactStoryCount > 0 {
-                return contactStoryCount
-            }else{
-                return 0
-            }
-        }else if tableView == toptableView{
-            return OptionNames.count
+        if tableView == self.tableView {
+            return contactStoryCount > 0 ? contactStoryCount : 0
+        } else if tableView == toptableView {
+            return istab ? OptionNames[1].count : OptionNames[0].count
         }
         return 0
     }
@@ -567,15 +575,18 @@ extension StatusVC:UITableViewDataSource & UITableViewDelegate
         if tableView == self.tableView{
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "StoryTableViewCell") as! StoryTableViewCell
             cell.storyData = contactStories[indexPath.row]
+            self.callback = {
+                cell.setupProgressView(progress: Singleton.sharedInstance.seenStoryCount)
+            }
             return cell
         }else if tableView == toptableView {
-            if let cell = toptableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
-                cell.nameLbl.text = OptionNames[indexPath.row]
-                return cell
-                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell
+           
+          
+                let options = istab ? OptionNames[1] : OptionNames[0]
+                cell?.nameLbl.text = options[indexPath.row]
+            return cell!
             }
-            
-        }
         return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -603,25 +614,28 @@ extension StatusVC:UITableViewDataSource & UITableViewDelegate
             
             statusStoryVC.showTabBar = {
                 self.showTabBar(animated: true)
+                self.callback?()
             }
             self.hideTabBar(animated: true)
             self.present(statusStoryVC, animated: false)
         }
         if tableView == toptableView {
-                   let selectedOption = OptionNames[indexPath.row]
-                   if selectedOption == "Settings" {
-                       DispatchQueue.main.async {
-                           let settingVC = SettingsViewController.getInstance()
-                           settingVC.modalPresentationStyle = .overCurrentContext
-                           settingVC.showTabbar = {
-                               self.showTabBar(animated: true)
-                           }
-                           self.toptableView.isHidden = true
-                           self.hideTabBar(animated: true)
-                           self.present(settingVC, animated: true)
-                       }
-                   }
-               }
+                let options = istab ? OptionNames[1] : OptionNames[0]
+                let selectedOption = options[indexPath.row]
+                
+                if selectedOption == "Settings" {
+                    DispatchQueue.main.async {
+                        let settingVC = SettingsViewController.getInstance()
+                        settingVC.modalPresentationStyle = .overCurrentContext
+                        settingVC.showTabbar = {
+                            self.showTabBar(animated: true)
+                        }
+                        self.toptableView.isHidden = true
+                        self.hideTabBar(animated: true)
+                        self.present(settingVC, animated: true)
+                    }
+                }
+            }
     }
 
 

@@ -105,6 +105,9 @@ extension StoryBar {
     
     func resetSegmentsTill(index: Int) {
         var resetTillIndex = index
+       
+           
+       
         stop()
 
         if resetTillIndex > segments.count - 1 {
@@ -127,6 +130,7 @@ extension StoryBar {
     func previous() {
         removeOldAnimation()
         let newIndex = currentAnimationIndex - 1
+       
         if newIndex < 0 {
             delegate?.segmentedProgressBarReachPrevious()
         } else {
@@ -139,6 +143,7 @@ extension StoryBar {
 
     func next() {
         let newIndex = currentAnimationIndex + 1
+        
         if newIndex < segments.count {
             let oldSegment = segments[currentAnimationIndex]
             removeOldAnimation(newWidth: oldSegment.nonAnimatingBar.frame.width)

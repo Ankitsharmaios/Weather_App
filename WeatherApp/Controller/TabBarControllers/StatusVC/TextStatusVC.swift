@@ -24,7 +24,7 @@ class TextStatusVC: UIViewController , UITextViewDelegate{
     
     var callback:(() -> Void )?
     
-    let placeholderText = "Type a status"
+    
     var showTabBar: (() -> Void)?
     let colorCodes = [
             "#ae8774", "#243640", "#f0b330", "#b6b327", "#c69fcc",
@@ -33,15 +33,15 @@ class TextStatusVC: UIViewController , UITextViewDelegate{
             "#7acba5", "#243640", "#8294ca", "#a62c71", "#90a841"
         ]
    
-//    let fonts = [
-//            "font1", // Font names without extensions
-//            "font2",
-//            "font3",
-//            "font4",
-//            "font5",
-//            "font6",
-//            "font7",
-//        ]
+    let fonts = [
+            "Helvetica",
+            "Arial",
+            "Times New Roman",
+            "Courier New",
+            "Georgia",
+            "Verdana",
+            "Arial Rounded MT Bold"
+        ]
 
         var currentFontIndex = 0
         var selectedColorCode: String?
@@ -188,13 +188,13 @@ class TextStatusVC: UIViewController , UITextViewDelegate{
     }
     @IBAction func textStyleAction(_ sender: Any)
     {
-//        currentFontIndex = (currentFontIndex + 1) % fonts.count
-//                print("Applying font: \(fonts[currentFontIndex])") // Log the font name
-//                if let font = UIFont(name: fonts[currentFontIndex], size: 17) {
-//                    statusTextView.font = font
-//                } else {
-//                    print("Error: Font not found: \(fonts[currentFontIndex])")
-//                }
+        currentFontIndex = (currentFontIndex + 1) % fonts.count
+               print("Applying font: \(fonts[currentFontIndex])") // Log the font name
+               if let font = UIFont(name: fonts[currentFontIndex], size: 20) {
+                   statusTextView.font = font
+               } else {
+                   print("Error: Font not found: \(fonts[currentFontIndex])")
+               }
         
         }
     
@@ -212,7 +212,7 @@ extension TextStatusVC
             "StoryType": "text" ,
             "Text":statusTextView.text ?? "",
             "TextBackground":selectedColorCode ?? "",
-            "Textstyle":""
+            "Textstyle":"\(fonts[currentFontIndex])"
        ]
       
         
@@ -235,27 +235,6 @@ extension TextStatusVC
     
 }
 
-
-//
-//extension UIColor {
-//    convenience init(hex: String) {
-//        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-//        var int = UInt64()
-//        Scanner(string: hex).scanHexInt64(&int)
-//        let a, r, g, b: UInt64
-//        switch hex.count {
-//        case 3: // RGB (12-bit)
-//            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-//        case 6: // RGB (24-bit)
-//            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-//        case 8: // ARGB (32-bit)
-//            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
-//        default:
-//            (a, r, g, b) = (255, 0, 0, 0)
-//        }
-//        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
-//    }
-//}
 
 extension UIColor {
     convenience init?(hex: String) {

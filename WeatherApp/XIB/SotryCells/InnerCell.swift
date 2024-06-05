@@ -26,7 +26,7 @@ class InnerCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        scrollV.isScrollEnabled = false
         scrollV.maximumZoomScale = 3.0;
         scrollV.minimumZoomScale = 1.0;
         scrollV.clipsToBounds = true;
