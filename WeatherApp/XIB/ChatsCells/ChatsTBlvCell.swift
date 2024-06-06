@@ -11,7 +11,6 @@ class ChatsTBlvCell: UITableViewCell {
 
     @IBOutlet weak var msgCountLbl: UILabel!
     @IBOutlet weak var countbgView: UIView!
-    @IBOutlet weak var statusleadingLayout: NSLayoutConstraint!
     @IBOutlet weak var msgLeadingLayout: NSLayoutConstraint!
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!

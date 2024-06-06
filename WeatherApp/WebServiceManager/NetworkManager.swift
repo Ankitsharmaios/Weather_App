@@ -67,22 +67,7 @@ class NetworkManager: Session {
     // MARK: Post Request Method
     // ----------------------------------------------------------------
     
-//    func postResponse<T: Mappable>(_ url: String, parameter: Parameters? = nil, encoding: ParameterEncoding = JSONEncoding.default, header: HTTPHeaders? = nil, showHUD: HUDFlag = .show, mappingType: T.Type, completion: @escaping (Mappable?, APIError?) -> Void) {
-//        
-//        self.objectRequest(url, method: .post, parameter: parameter, encoding: encoding, header: header, mappingType: mappingType, showHUD: showHUD) { (mappableResponse) in
-//            
-//            switch mappableResponse.result {
-//                
-//            case .success(let data):
-//                completion(data, nil)
-//                break
-//                
-//            case .failure(let error):
-//                completion(nil, .errorMessage(error.localizedDescription))
-//                break
-//            }
-//        }
-//    }
+
     func postResponse<T: Mappable>(_ url: String, parameter: Parameters? = nil, encoding: ParameterEncoding = JSONEncoding.default, header: HTTPHeaders? = nil, showHUD: HUDFlag = .show, mappingType: T.Type, view: UIView, completion: @escaping (Mappable?, APIError?) -> Void) {
         
         // Check network status
@@ -112,11 +97,7 @@ class NetworkManager: Session {
     // ----------------------------------------------------------------
     
     func objectRequest<T: BaseMappable>(_ url: String, method: Alamofire.HTTPMethod, parameter: Parameters? = nil, encoding: ParameterEncoding, header: HTTPHeaders? = nil, mappingType: T.Type, showHUD: HUDFlag = .show, completionHandler: @escaping (DataResponse<T, AFError>) -> Void) -> Void {
-        
-//        if !APPLICATION_DELEGATE.checkInternetConnection(){
-//           APPLICATION_DELEGATE.toastMessage(message: Validation.internetConnection)
-//            return
-//        }
+
         
         if showHUD == .show {
             SVProgressHUD.show()
@@ -154,23 +135,17 @@ class NetworkManager: Session {
     }
     
     func objectFormDataRequest<T: BaseMappable>(_ url: String, method: Alamofire.HTTPMethod, parameter: Parameters? = nil, encoding: ParameterEncoding, header: HTTPHeaders? = nil, mappingType: T.Type, showHUD: HUDFlag = .show, completionHandler: @escaping (DataResponse<T, AFError>) -> Void) -> Void {
-        
-//        if !APPLICATION_DELEGATE.checkInternetConnection(){
-//            APPLICATION_DELEGATE.toastMessage(message: Validation.internetConnection)
-//            return
-//        }
-//        
+
         if showHUD == .show {
             SVProgressHUD.show()
         }
         
         self.upload(multipartFormData: { (multipartFormData) in
-//            multipartFormData.append("App".data(using: String.Encoding.utf8)!, withName: AppSetting.AppName)
             
         }, to: URL.init(string: url)!, usingThreshold: UInt64.init(), method: method, headers: header).responseObject { (response: DataResponse<T, AFError>) in
             SVProgressHUD.dismiss()
             
-            //Logs print
+          
             APILogs().printAPILogs(url: url, parmas: parameter ?? [:], method: method.rawValue, header: header ?? HTTPHeaders(), response: response)
             
             completionHandler(response as DataResponse<T, AFError>)

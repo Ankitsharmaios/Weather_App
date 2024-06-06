@@ -12,6 +12,8 @@ import Toast_Swift
 class VerifyNumberVC: UIViewController {
 
   
+    @IBOutlet var mainView: UIView!
+    @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var lblcode: UILabel!
     @IBOutlet weak var btnVerify: UIButton!
     @IBOutlet weak var lblYouMay: UILabel!
@@ -29,7 +31,7 @@ class VerifyNumberVC: UIViewController {
     var counter = 60
     var userStatusMessage = ""
     var verifyOTPDATA:verifyOTPModel?
-    
+    var isTopTableHide = false
     
     class func getInstance()-> VerifyNumberVC {
         return VerifyNumberVC.viewController(storyboard: Constants.Storyboard.Main)
@@ -40,9 +42,15 @@ class VerifyNumberVC: UIViewController {
         setupOTPView()
         // Do any additional setup after loading the view.
     print("userStatusMessage",userStatusMessage)
+        // Add tap gesture recognizer to the superview of mainView
+       
     }
     override func viewWillAppear(_ animated: Bool) {
         Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        self.isTopTableHide = false
+        self.helpView.isHidden = true
     }
     
     @objc func updateCounter() {
@@ -60,7 +68,7 @@ class VerifyNumberVC: UIViewController {
 //        lblUseYour.font = Helvetica.helvetica_semibold.font(size: 14)
 //        lblUseYour.textColor = appThemeColor.CommonBlack
         
-        
+         helpView.isHidden = true
   //      lblOpenWhatsapp.font = Helvetica.helvetica_medium.font(size: 10)
         lblOpenWhatsapp.textColor = appThemeColor.text_LightColure
         lblcode.textColor = appThemeColor.text_LightColure
@@ -71,7 +79,7 @@ class VerifyNumberVC: UIViewController {
         lblEnter6digit.textColor = appThemeColor.text_LightColure
         
         lblNeedHelp.font = Helvetica.helvetica_bold.font(size: 15)
-        lblNeedHelp.textColor = appThemeColor.CommonBlack
+        lblNeedHelp.textColor = appThemeColor.Gray_Colure
         
       //  lblYouMay.font = Helvetica.helvetica_medium.font(size: 10)
         lblYouMay.textColor = appThemeColor.text_LightColure
@@ -88,7 +96,12 @@ class VerifyNumberVC: UIViewController {
     }
     
 
-    
+    func setHelpView()
+    {
+        helpView.layer.cornerRadius = 5
+        helpView.addShadowToView(view: helpView, value: 3.0)
+        
+    }
     
     
     func setupOTPView()
@@ -107,9 +120,13 @@ class VerifyNumberVC: UIViewController {
     
     @IBAction func btnMoreoptionAction(_ sender: Any)
     {
-        let controller =  TabBarVC.getInstance()
-               controller.modalPresentationStyle = .fullScreen
-               self.present(controller, animated: true)
+        isTopTableHide.toggle()
+        if isTopTableHide == true{
+            self.helpView.isHidden = false
+            self.setHelpView()
+        }else{
+            self.helpView.isHidden = true
+        }
     }
     @IBAction func backAction(_ sender: Any) 
     {

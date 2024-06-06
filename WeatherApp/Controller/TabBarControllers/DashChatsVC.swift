@@ -41,6 +41,8 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         fetchFirebaseData()
         navigationController?.navigationBar.isHidden = true
         topTableView.isHidden = true
+        tabBarController?.tabBar.barTintColor = appThemeColor.CommonBlack
+        
 
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
 //        self.view.addGestureRecognizer(tapGesture)
@@ -142,19 +144,13 @@ extension DashChatsVC{
                 cell.messageLbl.text = LastChatData?[indexPath.row].message ?? ""
                 cell.timeLbl.text =  Converter.convertApiTimeToAMPM(apiTime: LastChatData?[indexPath.row].time ?? "")
                 cell.timeLbl.textColor = appThemeColor.text_Weather
-                cell.msgLeadingLayout.constant = 0
-                cell.statusleadingLayout.constant = -2
-                cell.ViewStatusImage.isHidden = true
+                cell.msgLeadingLayout.constant = -13
                 cell.msgCountLbl.text = LastChatData?[indexPath.row].unReadMessageCount ?? ""
-//                let images = LastChatData?[indexPath.row]
-//                cell.userImageView.sd_setImage(with: images?.receiverImage, placeholderImage: UIImage(named: "Place_Holder"))
+                cell.ViewStatusImage.isHidden = true
+                
                 if let imageUrl2 = URL(string: LastChatData?[indexPath.row].senderImage ?? "") {
                     cell.userImageView?.sd_setImage(with: imageUrl2, placeholderImage: UIImage(named: "Place_Holder"))
-//                    if userData.city == ""{
-//                        locationImg.isHidden = true
-//                    }else{
-//                        locationImg.isHidden = false
-//                    }
+
                 }
                 return cell
             }
@@ -181,6 +177,12 @@ extension DashChatsVC{
             let controller = InnerChatVC.getInstance()
             controller.modalPresentationStyle = .overFullScreen
             controller.UserName = LastChatData?[indexPath.row].senderName ?? ""
+            if let selectedChat = LastChatData?[indexPath.row] {
+                     
+                controller.LastChatData = selectedChat
+        
+            }
+
             self.present(controller, animated: true)
         }
         

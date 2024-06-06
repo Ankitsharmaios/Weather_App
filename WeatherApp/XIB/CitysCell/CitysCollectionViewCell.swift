@@ -9,6 +9,10 @@ import UIKit
 
 class CitysCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var rightView: UIView!
+    @IBOutlet weak var leftView: UIView!
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cityLbl: UILabel!
     
@@ -16,6 +20,7 @@ class CitysCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         setupCell()
         // Initialization code
+
     }
 
     func setupCell()

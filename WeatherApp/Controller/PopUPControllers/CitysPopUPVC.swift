@@ -136,7 +136,40 @@ extension CitysPopUPVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLa
             let textColor = (indexPath == selectedIndexPath) ? selectedLabelColor : appThemeColor.citynameColure
             
             cell.configure(with: image!, text: cityName, textColor: textColor)
-            
+                    
+        if indexPath.item == 0
+        {
+            cell.rightView.isHidden = true
+            cell.bottomView.isHidden = true
+        }else if indexPath.item == 1
+        {
+            cell.bottomView.isHidden = true
+        }else if indexPath.item == 2
+        {
+            cell.bottomView.isHidden = true
+            cell.leftView.isHidden = true
+        }else if indexPath.item == 3
+        {
+            cell.rightView.isHidden = true
+        }else if indexPath.item == 4
+        {
+        
+        }else if indexPath.item == 5
+        {
+            cell.leftView.isHidden = true
+        }else if indexPath.item == 6
+        {
+            cell.topView.isHidden = true
+            cell.rightView.isHidden = true
+        }else if indexPath.item == 7
+        {
+            cell.topView.isHidden = true
+        }
+        
+        
+        
+        
+        
             return cell
         }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -139,7 +139,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next 7 Days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBG-ci-gob">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next 2 Days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBG-ci-gob">
                                             <rect key="frame" x="16" y="405" width="361" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -250,14 +250,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeatherApp will need to verify your phone number. Carrier changes may apply" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZf-bI-iZq">
-                                <rect key="frame" x="10" y="465.33333333333331" width="373" height="36"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeatherApp will need to verify your phone number Carrier changes may apply" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZf-bI-iZq">
+                                <rect key="frame" x="10" y="465.33333333333331" width="373" height="35"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" name="TextColor_141414"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALQ-01-wf2">
-                                <rect key="frame" x="20" y="541.33333333333337" width="353" height="40"/>
+                                <rect key="frame" x="20" y="540.33333333333337" width="353" height="40"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlY-qp-eg6">
                                         <rect key="frame" x="0.0" y="39" width="50" height="1"/>
@@ -386,7 +386,7 @@
                                     <constraint firstAttribute="width" constant="15" id="wiv-t5-nkq"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="DotsImage"/>
+                                <state key="normal" image="Light_three_Dot_Img"/>
                                 <connections>
                                     <action selector="btnMoreoptionAction:" destination="pZT-J6-04c" eventType="touchUpInside" id="6Mh-n8-yNT"/>
                                 </connections>
@@ -469,11 +469,40 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdB-wI-cLe">
+                                <rect key="frame" x="283" y="99.666666666666671" width="100" height="40.000000000000014"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndd-2i-jEd">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsZ-Iw-xcO">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="6dN-1b-rZV"/>
+                                    <constraint firstItem="PsZ-Iw-xcO" firstAttribute="top" secondItem="tdB-wI-cLe" secondAttribute="top" id="84H-FA-A2N"/>
+                                    <constraint firstAttribute="trailing" secondItem="PsZ-Iw-xcO" secondAttribute="trailing" id="MdI-9Z-qVh"/>
+                                    <constraint firstItem="Ndd-2i-jEd" firstAttribute="top" secondItem="tdB-wI-cLe" secondAttribute="top" id="gZd-Yo-m4g"/>
+                                    <constraint firstAttribute="width" constant="100" id="gyt-ZH-caH"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ndd-2i-jEd" secondAttribute="trailing" id="mMY-9V-BbX"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ndd-2i-jEd" secondAttribute="bottom" id="nGO-ia-NDT"/>
+                                    <constraint firstAttribute="bottom" secondItem="PsZ-Iw-xcO" secondAttribute="bottom" id="pa0-0T-vLa"/>
+                                    <constraint firstItem="Ndd-2i-jEd" firstAttribute="leading" secondItem="tdB-wI-cLe" secondAttribute="leading" id="sQq-C1-6Hz"/>
+                                    <constraint firstItem="PsZ-Iw-xcO" firstAttribute="leading" secondItem="tdB-wI-cLe" secondAttribute="leading" id="yLd-fd-sxj"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tqH-UB-Z75"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="gTL-bS-6d3" firstAttribute="leading" secondItem="eKw-uD-ii0" secondAttribute="leading" id="1CO-bQ-6iO"/>
+                            <constraint firstItem="tqH-UB-Z75" firstAttribute="trailing" secondItem="tdB-wI-cLe" secondAttribute="trailing" constant="10" id="45H-Qo-4hL"/>
                             <constraint firstItem="gTL-bS-6d3" firstAttribute="top" secondItem="eKw-uD-ii0" secondAttribute="bottom" id="4ve-a7-Psz"/>
                             <constraint firstItem="pPB-oQ-NkZ" firstAttribute="top" secondItem="LrY-Ig-cnh" secondAttribute="bottom" constant="20" id="50j-30-Aep"/>
                             <constraint firstItem="tqH-UB-Z75" firstAttribute="trailing" secondItem="LrY-Ig-cnh" secondAttribute="trailing" constant="70" id="8VZ-0A-JM3"/>
@@ -501,6 +530,7 @@
                             <constraint firstItem="O6c-5G-f5H" firstAttribute="centerX" secondItem="pPB-oQ-NkZ" secondAttribute="centerX" id="bZ9-vt-arZ"/>
                             <constraint firstItem="TSd-jJ-j3H" firstAttribute="leading" secondItem="tqH-UB-Z75" secondAttribute="leading" constant="15" id="cqC-Ub-08z"/>
                             <constraint firstItem="TcV-rP-lMs" firstAttribute="leading" secondItem="Z7A-CV-cbQ" secondAttribute="trailing" constant="5" id="eRW-Im-9Vo"/>
+                            <constraint firstItem="tdB-wI-cLe" firstAttribute="top" secondItem="KGB-7L-wyl" secondAttribute="bottom" constant="10" id="fx6-bh-74p"/>
                             <constraint firstItem="KGB-7L-wyl" firstAttribute="centerX" secondItem="tqH-UB-Z75" secondAttribute="centerX" id="h3B-WA-23f"/>
                             <constraint firstItem="LrY-Ig-cnh" firstAttribute="centerX" secondItem="eKw-uD-ii0" secondAttribute="centerX" id="hOU-tC-ZlG"/>
                             <constraint firstItem="eKw-uD-ii0" firstAttribute="leading" secondItem="w6T-Ht-vUg" secondAttribute="leading" constant="20" id="kbw-Jj-QFJ"/>
@@ -519,6 +549,7 @@
                         <outlet property="btnBack" destination="TSd-jJ-j3H" id="Czc-XF-dQn"/>
                         <outlet property="btnMoreOption" destination="fTl-aT-eyp" id="cls-vr-frX"/>
                         <outlet property="btnVerify" destination="SCJ-0V-0kV" id="ADf-iW-F9h"/>
+                        <outlet property="helpView" destination="tdB-wI-cLe" id="cJ0-yo-apQ"/>
                         <outlet property="lblEnter6digit" destination="pPB-oQ-NkZ" id="whR-Ib-9no"/>
                         <outlet property="lblNeedHelp" destination="O6c-5G-f5H" id="iFT-GY-ylq"/>
                         <outlet property="lblOpenWhatsapp" destination="eKw-uD-ii0" id="RRa-JS-fpO"/>
@@ -527,6 +558,7 @@
                         <outlet property="lblVerify" destination="KGB-7L-wyl" id="Lcf-MZ-zYk"/>
                         <outlet property="lblYouMay" destination="Z7A-CV-cbQ" id="XVi-lN-Sjs"/>
                         <outlet property="lblcode" destination="gTL-bS-6d3" id="NZl-ZC-dLq"/>
+                        <outlet property="mainView" destination="w6T-Ht-vUg" id="auf-Ny-EIZ"/>
                         <outlet property="otpView" destination="LrY-Ig-cnh" id="1QB-60-Off"/>
                     </connections>
                 </viewController>
@@ -567,7 +599,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OZ0-8T-kzc">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OZ0-8T-kzc">
                                 <rect key="frame" x="144" y="180.66666666666666" width="105" height="104.99999999999997"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <constraints>
@@ -1101,8 +1133,9 @@
     </scenes>
     <resources>
         <image name="DotsImage" width="5.3333334922790527" height="23.333333969116211"/>
+        <image name="Light_three_Dot_Img" width="5.3333334922790527" height="23.333333969116211"/>
         <image name="StarImage" width="130" height="56"/>
-        <image name="backImage" width="29.333333969116211" height="20"/>
+        <image name="backImage" width="21.333333969116211" height="20"/>
         <image name="changePINImg" width="55.333332061767578" height="31"/>
         <image name="ic_Weather" width="337" height="362"/>
         <image name="ic_weatherLocation" width="8" height="11"/>
@@ -1121,6 +1154,9 @@
         </namedColor>
         <namedColor name="LineColor_737373">
             <color red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TextColor_141414">
+            <color red="0.078431372549019607" green="0.078431372549019607" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

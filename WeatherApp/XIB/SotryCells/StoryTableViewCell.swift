@@ -20,7 +20,7 @@ class StoryTableViewCell: UITableViewCell {
         didSet{
             setData()
       
-            setupProgressView(progress: Singleton.sharedInstance.seenStoryCount)
+            setupProgressView(progress: 0)
         }
     }
     

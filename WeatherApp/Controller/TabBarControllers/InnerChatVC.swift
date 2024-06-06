@@ -7,7 +7,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
-
+import SDWebImage
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     @IBOutlet weak var maintableView: UITableView!
@@ -39,13 +39,17 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var AttachmentNames:[String] = ["Document","Camera","Gallery","Audio","Location","Contact"]
     var optionNames:[String] = ["View Contact","Media, links, and docs","Search","Mute notifications","Disappearing messages","Wallpaper","More"]
     let placeholderText = "Message"
+  
+    var LastChatData:LiveChatDataModel?
+    
     class func getInstance()-> InnerChatVC {
         return InnerChatVC.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        setData()
         setupUI()
-       
+       print("=========LastChatData==========",LastChatData)
     }
  
     func setupUI(){
@@ -99,6 +103,33 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             //    cameraBtn.isHidden = true
             }
         }
+    
+    func setData()
+    {
+      
+        nameLbl.text = LastChatData?.senderName ?? ""
+        
+        
+        
+        
+        
+        
+        
+        let imageURLStrings = LastChatData?.senderImage
+
+        // Safely get the last URL string if it exists
+        if let lastImageURLString = imageURLStrings, let imageURL = URL(string: lastImageURLString) {
+            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+        } else {
+            userImageView.image = UIImage(named: "placeholder")
+        }
+    }
+    
+    
+    
+    
+    
+    
     @IBAction func backBtn(_ sender: Any) {
         self.dismiss(animated: true)
     }

@@ -28,7 +28,7 @@ class StoryViewController: UIViewController & UITextViewDelegate {
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
     var imageCollection: [[String]]!
     var contactStoriesData: StoryResultModel?
-    
+    var selectedRowIndex: Int?
     var tapGest: UITapGestureRecognizer!
     var longPressGest: UILongPressGestureRecognizer!
     var panGest: UIPanGestureRecognizer!
@@ -39,9 +39,9 @@ class StoryViewController: UIViewController & UITextViewDelegate {
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
         }()
-    
+    var seenStoryCount = 0
     var showTabBar: (() -> Void)?
-    var callback : (() -> Void)?
+    var callback: ((Int) -> Void)?
     class func GetInstance()-> StoryViewController {
         return StoryViewController.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
@@ -58,6 +58,9 @@ class StoryViewController: UIViewController & UITextViewDelegate {
         setUpUI()
         addGesture()
         setupPlaceholder()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        callback?(seenStoryCount)
     }
     
     func setUpUI()
@@ -199,8 +202,7 @@ extension StoryViewController {
         StoryHandler.userIndex = rowIndex
         if rowIndex == 0
         {
-            
-            Singleton.sharedInstance.seenStoryCount = 1
+           seenStoryCount = 1
         }
         outerCollection.reloadData()
         outerCollection.scrollToItem(at: IndexPath(item: StoryHandler.userIndex, section: 0),
@@ -214,7 +216,7 @@ extension StoryViewController {
         if index > 0
         {
             
-            Singleton.sharedInstance.seenStoryCount = index + 1
+            seenStoryCount = index + 1
         }
         
         if let textBackground = contactStoriesData?.media?[index].textBackground,

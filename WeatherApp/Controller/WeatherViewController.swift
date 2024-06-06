@@ -40,12 +40,6 @@ class WeatherViewController: WhiteColorNoneNavigation {
         // Do any additional setup after loading the view.
         
         print(getCurrentDate(format: "HH"))
-//        if Singleton.sharedInstance.networkStatus.lowercased() == "offline"
-//         {
-//            var toastStyle = ToastStyle()
-//            toastStyle.backgroundColor = appThemeColor.text_Weather
-//            self.view.makeToast("Please Check Internet Connection", duration: 5.0, position: .bottom, style: toastStyle)
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,16 +91,21 @@ class WeatherViewController: WhiteColorNoneNavigation {
             }
         }
         
-        dayTitleLbl.text = "Next \(arrWeatherData?.forecast?.forecastday?.count ?? 0) Days"
-        
+       // dayTitleLbl.text = "Next \(arrWeatherData?.forecast?.forecastday?.count ?? 0) Days"
+        if let actualCount = arrWeatherData?.forecast?.forecastday?.count {
+            let displayCount = min(actualCount, 2)
+            dayTitleLbl.text = "Next \(displayCount) Days"
+        } else {
+            dayTitleLbl.text = "Next 0 Days" // Or handle the nil case appropriately
+        }
+
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.reloadData()
+        
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.reloadData()
     }
  
     func bindDatareset() {
@@ -178,6 +177,8 @@ class WeatherViewController: WhiteColorNoneNavigation {
         CitysPopUPVC.modalPresentationStyle = .overCurrentContext
         CitysPopUPVC.callback = {
             self.bindDatareset()
+            self.tableView.reloadData()
+            self.collectionView.reloadData()
         }
         present(CitysPopUPVC, animated: true)
     }
@@ -187,8 +188,9 @@ class WeatherViewController: WhiteColorNoneNavigation {
 extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrWeatherData?.forecast?.forecastday?.count ?? 0
+        return min(arrWeatherData?.forecast?.forecastday?.count ?? 0, 2)
     }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
@@ -196,19 +198,19 @@ extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: WeatherListCell.identifier, for: indexPath) as? WeatherListCell {
-          
-            if Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?.count ?? 0 > 0
-            {
+            
+            let adjustedIndex = indexPath.row + 1
+            
+            if Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?.count ?? 0 > adjustedIndex {
                 
-                let data = Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?[indexPath.row]
+                let data = Singleton.sharedInstance.arrCityWeatherData?.forecast?.forecastday?[adjustedIndex]
                 // 2023-03-16
                 cell.dateLbl.text = getCustomConvertedDate(format: "dd MMMM yyyy", toFormat: "yyyy-MM-dd", dateString: data?.date ?? "")
                 cell.statusLbl.text = data?.day?.condition?.text ?? ""
                 cell.temperatureLbl.text = "\(data?.day?.mintemp_c ?? 0) / \(data?.day?.maxtemp_c ?? 0)"
                 cell.imageIcon.getImage(data?.day?.condition?.icon?.replacingOccurrences(of: "//", with: "https://") ?? "")
-            }else
-            {
-                let data = arrWeatherData?.forecast?.forecastday?[indexPath.row]
+            } else {
+                let data = arrWeatherData?.forecast?.forecastday?[adjustedIndex]
                 // 2023-03-16
                 cell.dateLbl.text = getCustomConvertedDate(format: "dd MMMM yyyy", toFormat: "yyyy-MM-dd", dateString: data?.date ?? "")
                 cell.statusLbl.text = data?.day?.condition?.text ?? ""
@@ -280,12 +282,12 @@ extension WeatherViewController {
                     print("appWeatherModel ", appWeatherModel)
                 self?.arrWeatherData = appWeatherModel
                 self?.bindData()
-                
+                self?.tableView.reloadData()
+                self?.collectionView.reloadData()
+
             case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
-                    var toastStyle = ToastStyle()
-                    toastStyle.backgroundColor = appThemeColor.text_Weather
-                    self?.view.makeToast("Please Check Internet Connection", duration: 5.0, position: .bottom, style: toastStyle)
+                self?.getWeatherData()
             }
         }
     }

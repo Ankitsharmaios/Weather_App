@@ -48,7 +48,12 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     let userdata = getUserData()
     var statusTime = ""
     
-    var callback:(() -> Void )?
+    var callback:((Int) -> Void )?
+    
+    
+    var selectedIndexPath: IndexPath?
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +62,7 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         toptableView.isHidden = true
         self.isTopTableHide = false
         navigationController?.navigationBar.isHidden = true
-        
+     //   tabBarController?.tabBar.barTintColor = appThemeColor.CommonBlack
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -252,8 +257,14 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                 statusStoryVC.imageCollection = myStories.compactMap{ $0.media?.compactMap{ $0.uRL}}
                 statusStoryVC.showTabBar = {
                     self.showTabBar(animated: true)
-                    self.setupProgressView()
+                   
                 }
+            
+               statusStoryVC.callback = { [weak self] SeenCount in
+                            // Handle the data
+                   print("Received data: \(SeenCount)")
+                   self?.setupProgressView(count: SeenCount)
+                        }
             
                 self.hideTabBar(animated: true)
                 self.present(statusStoryVC, animated: true)
@@ -488,7 +499,7 @@ extension StatusVC
                 self?.StoryListData = StoryList
                 self?.processStories(storyList: StoryList)
                 self?.setUserData()
-                self?.setupProgressView()
+                self?.setupProgressView(count: 0)
                 self?.tableView.reloadData()
                 self?.toptableView.reloadData()
              case .failure(let apiError):
@@ -526,7 +537,7 @@ extension StatusVC
         
         
     }
-    func setupProgressView() {
+    func setupProgressView(count:Int) {
         if let firstStory = self.myStories.first,
            let media = firstStory.media {
             
@@ -541,7 +552,7 @@ extension StatusVC
         
         self.imageInnerView.unseenProgressColor = appThemeColor.text_Weather
         self.imageInnerView.seenProgressColor = appThemeColor.btnLightGrey_BackGround
-        self.imageInnerView.setProgress(progress: CGFloat(Singleton.sharedInstance.seenStoryCount))
+        self.imageInnerView.setProgress(progress: CGFloat(count))
         self.imageInnerView.lineWidth = 2.5
     }
 
@@ -575,9 +586,13 @@ extension StatusVC:UITableViewDataSource & UITableViewDelegate
         if tableView == self.tableView{
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "StoryTableViewCell") as! StoryTableViewCell
             cell.storyData = contactStories[indexPath.row]
-            self.callback = {
-                cell.setupProgressView(progress: Singleton.sharedInstance.seenStoryCount)
-            }
+            self.callback = { [weak self] SeenCount in
+                         // Handle the data
+                print("Received data: \(SeenCount)")
+                cell.setupProgressView(progress: SeenCount)
+                     }
+            
+            
             return cell
         }else if tableView == toptableView {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell
@@ -614,8 +629,14 @@ extension StatusVC:UITableViewDataSource & UITableViewDelegate
             
             statusStoryVC.showTabBar = {
                 self.showTabBar(animated: true)
-                self.callback?()
+                
             }
+            statusStoryVC.callback = { [weak self] SeenCount in
+                         // Handle the data
+                print("Received data: \(SeenCount)")
+                self?.callback?(SeenCount)
+                     }
+
             self.hideTabBar(animated: true)
             self.present(statusStoryVC, animated: false)
         }

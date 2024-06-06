@@ -68,6 +68,9 @@ class AppColor {
     var TextView_BackGround : UIColor = {
             return  #colorLiteral(red: 0.1254901961, green: 0.1725490196, blue: 0.2, alpha: 1)  //  #202c33
     }()
+    var Gray_Colure: UIColor = {
+            return  #colorLiteral(red: 0.4509803922, green: 0.4509803922, blue: 0.4509803922, alpha: 1)  //  #737373
+    }()
     
     //================================ ==========================================
  /*
