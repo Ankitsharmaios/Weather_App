@@ -58,10 +58,6 @@ enum AppSetting {
 }
 
 enum AppKeys: String {
-//    case GoogleMapKey = "AIzaSyD7oq-sqNcyM1TrJHjkEcw2mqaUhrLlnhM"
-//    case RazorpayKey = "rzp_test_4vUFu4whz3SExf"
-//    case RazorpayKey = "rzp_live_i5N7F5A9aWt0pY"
-    
     case WeatherKey = "4cb131e12591438f9fe43510241705"
 }
 

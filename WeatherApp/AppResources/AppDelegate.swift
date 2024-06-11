@@ -227,6 +227,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if let detail = snap?.value as? [String: Any] {
                     print("UserData, \(detail["User"] ?? "")")
                     print("LastChat, \(detail["LastChat"] ?? "")")
+                    
                     print("Chat, \(detail["Chat"] ?? "")")
                     print("iOSLastVersion, \(detail["iOSLastVersion"] ?? "")")
                     print("iOSMaintenance, \(detail["iOSMaintenance"] ?? "")")

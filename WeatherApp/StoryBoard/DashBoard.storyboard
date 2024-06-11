@@ -391,8 +391,8 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChatBGImage" translatesAutoresizingMaskIntoConstraints="NO" id="Ura-Y7-9tD">
                                         <rect key="frame" x="0.0" y="60" width="393" height="719"/>
                                     </imageView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zUg-O1-3Jx">
-                                        <rect key="frame" x="0.0" y="60" width="393" height="719"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zUg-O1-3Jx">
+                                        <rect key="frame" x="0.0" y="60" width="393" height="664"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HOq-LY-IhL">
@@ -529,7 +529,7 @@
                                     <constraint firstAttribute="trailing" secondItem="W0g-uY-eop" secondAttribute="trailing" constant="10" id="pEW-3P-ib9"/>
                                     <constraint firstItem="Ura-Y7-9tD" firstAttribute="top" secondItem="fvT-sJ-rxz" secondAttribute="bottom" id="qN0-Lr-isi"/>
                                     <constraint firstItem="W0g-uY-eop" firstAttribute="top" secondItem="SRw-5k-5MA" secondAttribute="bottom" constant="10" id="qOF-y2-ciO"/>
-                                    <constraint firstAttribute="bottom" secondItem="zUg-O1-3Jx" secondAttribute="bottom" constant="-20" id="sAX-Mu-vFj"/>
+                                    <constraint firstItem="HOq-LY-IhL" firstAttribute="top" secondItem="zUg-O1-3Jx" secondAttribute="bottom" constant="5" id="uuN-Qh-ylr"/>
                                     <constraint firstAttribute="trailing" secondItem="NWS-o8-nXL" secondAttribute="trailing" constant="5" id="v2R-4F-NHc"/>
                                     <constraint firstAttribute="trailing" secondItem="zUg-O1-3Jx" secondAttribute="trailing" id="zKi-mk-HWE"/>
                                 </constraints>
@@ -1622,10 +1622,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray3Color">
-            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

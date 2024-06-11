@@ -42,29 +42,12 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         navigationController?.navigationBar.isHidden = true
         topTableView.isHidden = true
         tabBarController?.tabBar.barTintColor = appThemeColor.CommonBlack
-        
-
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-//        self.view.addGestureRecognizer(tapGesture)
-
-        
     }
     override func viewDidDisappear(_ animated: Bool) {
         self.isTopTableHide = false
         self.topTableView.isHidden = true
     }
-//    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-//               // Get the tap location
-//               let tapLocation = sender.location(in: self.view)
-//
-//               // Check if the tap is outside of myView's bounds
-//               if !bgView.frame.contains(tapLocation) {
-//                   // Dismiss myView or perform any action you want
-//    //               bgView.removeFromSuperview()
-//                   self.dismiss(animated: true)
-//                   
-//               }
-//           }
+
     func setupUI(){
         topTableView.register(UINib(nibName: "optionHeaderTblvCell", bundle: nil),forCellReuseIdentifier: "optionHeaderTblvCell")
         chatTableView.register(UINib(nibName: "ChatsTBlvCell", bundle: nil),forCellReuseIdentifier: "ChatsTBlvCell")

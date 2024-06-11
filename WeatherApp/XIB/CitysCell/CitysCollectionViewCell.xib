@@ -23,10 +23,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KNX-or-wcA">
-                                <rect key="frame" x="0.0" y="0.0" width="70" height="0.66666666666666663"/>
+                                <rect key="frame" x="0.0" y="0.0" width="70" height="0.33333333333333331"/>
                                 <color key="backgroundColor" name="LineColor_737373"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="ljO-qs-bx0"/>
+                                    <constraint firstAttribute="height" constant="0.40000000000000002" id="ljO-qs-bx0"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HGb-Cu-0Hu">
@@ -37,7 +37,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ss-bd-qUI">
-                                <rect key="frame" x="0.0" y="0.6666666666666643" width="0.66666666666666663" height="69"/>
+                                <rect key="frame" x="0.0" y="0.0" width="0.66666666666666663" height="69.666666666666671"/>
                                 <color key="backgroundColor" name="LineColor_737373"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="0.5" id="gT8-RA-bNv"/>
@@ -68,12 +68,12 @@
                             <constraint firstItem="KNX-or-wcA" firstAttribute="leading" secondItem="Vms-u0-MCG" secondAttribute="leading" id="2ru-lV-6kz"/>
                             <constraint firstItem="HGb-Cu-0Hu" firstAttribute="top" secondItem="6Ss-bd-qUI" secondAttribute="bottom" id="3LB-ZW-EUu"/>
                             <constraint firstItem="RKx-y8-qaR" firstAttribute="leading" secondItem="JJE-MK-RC4" secondAttribute="trailing" constant="10" id="Ax5-32-aFt"/>
+                            <constraint firstItem="6Ss-bd-qUI" firstAttribute="top" secondItem="Vms-u0-MCG" secondAttribute="top" id="I5n-F6-s7I"/>
                             <constraint firstItem="JJE-MK-RC4" firstAttribute="top" secondItem="Vms-u0-MCG" secondAttribute="top" constant="10" id="MGV-6V-IzP"/>
                             <constraint firstItem="6Sf-Zt-Mgm" firstAttribute="leading" secondItem="6Ss-bd-qUI" secondAttribute="trailing" constant="6" id="NVf-Uz-iMN"/>
-                            <constraint firstItem="6Ss-bd-qUI" firstAttribute="top" secondItem="KNX-or-wcA" secondAttribute="bottom" id="QIB-Ia-TU1"/>
                             <constraint firstAttribute="bottom" secondItem="RKx-y8-qaR" secondAttribute="bottom" id="UrQ-rD-ED6"/>
                             <constraint firstItem="JJE-MK-RC4" firstAttribute="leading" secondItem="6Ss-bd-qUI" secondAttribute="trailing" constant="10" id="VPL-W2-e2S"/>
-                            <constraint firstItem="RKx-y8-qaR" firstAttribute="top" secondItem="Vms-u0-MCG" secondAttribute="top" id="cmw-nN-PBm"/>
+                            <constraint firstItem="RKx-y8-qaR" firstAttribute="top" secondItem="Vms-u0-MCG" secondAttribute="top" id="bor-bY-5Sb"/>
                             <constraint firstItem="KNX-or-wcA" firstAttribute="top" secondItem="Vms-u0-MCG" secondAttribute="top" id="mEy-71-3SC"/>
                             <constraint firstItem="6Sf-Zt-Mgm" firstAttribute="top" secondItem="JJE-MK-RC4" secondAttribute="bottom" id="ouv-xh-LkP"/>
                             <constraint firstItem="HGb-Cu-0Hu" firstAttribute="leading" secondItem="Vms-u0-MCG" secondAttribute="leading" id="r1i-3d-skY"/>

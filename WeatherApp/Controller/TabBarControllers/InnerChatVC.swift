@@ -8,6 +8,11 @@
 import UIKit
 import IQKeyboardManagerSwift
 import SDWebImage
+import FirebaseDatabase
+import FirebaseDatabase
+import FirebaseMessaging
+import Firebase
+
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     @IBOutlet weak var maintableView: UITableView!
@@ -39,8 +44,11 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var AttachmentNames:[String] = ["Document","Camera","Gallery","Audio","Location","Contact"]
     var optionNames:[String] = ["View Contact","Media, links, and docs","Search","Mute notifications","Disappearing messages","Wallpaper","More"]
     let placeholderText = "Message"
-  
+    var ref: DatabaseReference!
     var LastChatData:LiveChatDataModel?
+    var ChatData:[ChatModel]?
+    var messages = [Message]()
+    
     
     class func getInstance()-> InnerChatVC {
         return InnerChatVC.viewController(storyboard: Constants.Storyboard.DashBoard)
@@ -48,13 +56,29 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         setData()
+        setupTable()
+        fetchData()
         setupUI()
-       print("=========LastChatData==========",LastChatData)
+        fetchFirebaseData()
+        print("=========LastChatData==========",LastChatData)
+  
     }
  
+    func setupTable() {
+        // config tableView
+        maintableView.rowHeight = UITableView.automaticDimension
+        maintableView.dataSource = self
+        // cell setup
+        maintableView.register(UINib(nibName: "RightViewCell", bundle: nil), forCellReuseIdentifier: "RightViewCell")
+        maintableView.register(UINib(nibName: "LeftViewCell", bundle: nil), forCellReuseIdentifier: "LeftViewCell")
+     
+    }
     func setupUI(){
         optionTableView.register(UINib(nibName: "optionHeaderTblvCell", bundle: nil),forCellReuseIdentifier: "optionHeaderTblvCell")
         bottomCollectionView.register(UINib(nibName: "AttachmentCLvCell", bundle: nil),forCellWithReuseIdentifier: "AttachmentCLvCell")
+        
+        
+        
         optionTableView.dataSource = self
         bottomCollectionView.dataSource = self
         bottomCollectionView.delegate = self
@@ -104,17 +128,16 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             }
         }
     
+    func fetchData() {
+        messages = MessageStore.getAll()
+        optionTableView.reloadData()
+    }
+    
     func setData()
     {
       
         nameLbl.text = LastChatData?.senderName ?? ""
-        
-        
-        
-        
-        
-        
-        
+    
         let imageURLStrings = LastChatData?.senderImage
 
         // Safely get the last URL string if it exists
@@ -180,13 +203,40 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return optionNames.count
+        if optionTableView == tableView
+        {
+            return optionNames.count
+        }else if maintableView == tableView
+        {
+            return messages.count
+        }
+        return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = optionTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
-            cell.nameLbl.text = optionNames[indexPath.row]
-            return cell
+      
+       
+        if optionTableView == tableView
+        {
+            if let cell = optionTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
+                cell.nameLbl.text = optionNames[indexPath.row]
+                return cell
+            }
+        }else if maintableView == tableView
+        {
+            let message = messages[indexPath.row]
+            if message.side == .left {
+                    let cell = maintableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
+                    cell.configureCell(message: message)
+                    return cell
+                }
+                else {
+                    let cell = maintableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
+                    cell.configureCell(message: message)
+                    return cell
+                }
         }
+        
+        
         return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -218,4 +268,55 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+    func fetchFirebaseData() {
+        // Initialize the Firebase reference
+        ref = Database.database().reference()
+        
+        // Print the path to verify it's correct
+        print("Firebase Path:", firebaseTableName.Chat.rawValue)
+        
+        // Fetch data from the Firebase database
+        ref.child(firebaseTableName.Chat.rawValue).getData { [weak self] error, snap in
+            guard let self = self else { return }
+            
+            // Check for errors in fetching data
+            if let error = error {
+                print("Error in fetching from Firebase: \(error.localizedDescription)")
+                // Retry fetching data
+                self.fetchFirebaseData()
+            } else if let snap = snap, snap.exists() {
+                print("Snapshot exists, data fetched.")
+                
+                // Observe value changes in the specified child path
+                self.ref.child(firebaseTableName.Chat.rawValue).observeSingleEvent(of: .value, with: { snapshot in
+                    // Clear the current chat data
+                    self.ChatData = []
+                    
+                    // Iterate through each child in the snapshot
+                    for child in snapshot.key {
+                        if let childSnap = child as? DataSnapshot,
+                           let userDict = childSnap.value as? [String: Any] {
+                            
+                            // Debug print the userDict to verify its structure
+                            print("UserDict:", userDict)
+                            
+                            // Initialize ChatModel using ObjectMapper
+                            if let chatData = ChatModel(JSON: userDict) {
+                                self.ChatData?.append(chatData)
+                                print("====ChatData========", self.ChatData)
+                                self.maintableView.reloadData()
+                            }
+                        }
+                    }
+            
+                })
+            } else {
+                // No data available in the snapshot
+                print("No data available")
+            }
+        }
+    }
+
+
+
 }
