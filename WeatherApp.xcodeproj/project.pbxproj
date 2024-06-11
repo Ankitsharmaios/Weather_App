@@ -20,6 +20,7 @@
 		14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C452BFF7B8D004F8894 /* DashChatsVC.swift */; };
 		14392C492BFF7B8D004F8894 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C462BFF7B8D004F8894 /* TabBarVC.swift */; };
 		14392C4B2BFF7BE2004F8894 /* DashBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */; };
+		144063E62C187B3A007E9A52 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 144063E52C187B3A007E9A52 /* MCEmojiPicker */; };
 		145750DE2C04984B0001E286 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */; };
 		145750DF2C04984B0001E286 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */; };
 		145750E22C04A7700001E286 /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750E12C04A7700001E286 /* AccountVC.swift */; };
@@ -253,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70D810CB3A22DB2EF280F369 /* Pods_WeatherApp.framework in Frameworks */,
+				144063E62C187B3A007E9A52 /* MCEmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +693,9 @@
 			dependencies = (
 			);
 			name = WeatherApp;
+			packageProductDependencies = (
+				144063E52C187B3A007E9A52 /* MCEmojiPicker */,
+			);
 			productName = WeatherApp;
 			productReference = 14D3CDE22BFB5CCD00E700CB /* WeatherApp.app */;
 			productType = "com.apple.product-type.application";
@@ -765,6 +770,7 @@
 			mainGroup = 14D3CDD92BFB5CCD00E700CB;
 			packageReferences = (
 				14939D562C06ED39001E6A44 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				144063E12C187823007E9A52 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
 			);
 			productRefGroup = 14D3CDE32BFB5CCD00E700CB /* Products */;
 			projectDirPath = "";
@@ -1324,6 +1330,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		144063E12C187823007E9A52 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
 		14939D562C06ED39001E6A44 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1333,6 +1347,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		144063E52C187B3A007E9A52 /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 144063E12C187823007E9A52 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 14D3CDDA2BFB5CCD00E700CB /* Project object */;
 }

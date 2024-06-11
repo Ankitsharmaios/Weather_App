@@ -282,18 +282,20 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
             // Check for errors in fetching data
             if let error = error {
                 print("Error in fetching from Firebase: \(error.localizedDescription)")
-                // Retry fetching data
-                self.fetchFirebaseData()
+                // Retry fetching data after a delay to avoid immediate recursion
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.fetchFirebaseData()
+                }
             } else if let snap = snap, snap.exists() {
                 print("Snapshot exists, data fetched.")
                 
+                // Clear the current chat data
+                self.ChatData = []
+                
                 // Observe value changes in the specified child path
                 self.ref.child(firebaseTableName.Chat.rawValue).observeSingleEvent(of: .value, with: { snapshot in
-                    // Clear the current chat data
-                    self.ChatData = []
-                    
                     // Iterate through each child in the snapshot
-                    for child in snapshot.key {
+                    for child in snapshot.children {
                         if let childSnap = child as? DataSnapshot,
                            let userDict = childSnap.value as? [String: Any] {
                             
@@ -304,11 +306,11 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
                             if let chatData = ChatModel(JSON: userDict) {
                                 self.ChatData?.append(chatData)
                                 print("====ChatData========", self.ChatData)
-                                self.maintableView.reloadData()
                             }
                         }
                     }
-            
+                    // Reload table view data after all items have been added
+                    self.maintableView.reloadData()
                 })
             } else {
                 // No data available in the snapshot
@@ -316,7 +318,5 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
             }
         }
     }
-
-
 
 }

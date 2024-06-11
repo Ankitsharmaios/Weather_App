@@ -7,8 +7,9 @@
 
 import UIKit
 import AVFoundation
-
-class TextStatusVC: UIViewController , UITextViewDelegate{
+import MCEmojiPicker
+class TextStatusVC: UIViewController , UITextViewDelegate & MCEmojiPickerDelegate {
+    
 
     @IBOutlet weak var statusTextView: UITextView!
     @IBOutlet weak var btnChangeStatusShow: UIButton!
@@ -192,16 +193,36 @@ class TextStatusVC: UIViewController , UITextViewDelegate{
                print("Applying font: \(fonts[currentFontIndex])") // Log the font name
                if let font = UIFont(name: fonts[currentFontIndex], size: 20) {
                    statusTextView.font = font
+                   placeholderLabel.font = font
                } else {
                    print("Error: Font not found: \(fonts[currentFontIndex])")
                }
         
         }
     
-    @IBAction func smileyAction(_ sender: Any)
+    @IBAction func smileyAction(_ sender: UIView)
     {
-        
-    }
+        let viewController = MCEmojiPickerViewController()
+        viewController.delegate = self
+        viewController.sourceView = sender
+        present(viewController, animated: true)
+        }
+    // MARK: - MCEmojiPickerDelegate
+       func didGetEmoji(emoji: String) {
+           if statusTextView.text == placeholderLabel.text {
+               statusTextView.text = ""
+           }
+           statusTextView.text.append(emoji)
+           placeholderLabel.isHidden = !statusTextView.text.isEmpty
+           updateMicAndSendButton()
+       }
+    private func updateMicAndSendButton() {
+            if statusTextView.text.isEmpty {
+                btnMicAndSend.setImage(UIImage(named: "Mic"), for: .normal)
+            } else {
+                btnMicAndSend.setImage(UIImage(named: "Send"), for: .normal)
+            }
+        }
 }
 extension TextStatusVC
 {
