@@ -73,6 +73,7 @@ enum WSEndPoints: String {
     case Logout = "Logout"
     case StoryList = "StoryList"
     case addStory = "addStory"
+    case AppConfig = "AppConfig"
 }
 
 

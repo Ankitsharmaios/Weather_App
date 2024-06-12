@@ -150,15 +150,6 @@ class WeatherViewController: WhiteColorNoneNavigation {
         
         // Set day title label
         dayTitleLbl.text = "Next \(arrWeatherData.forecast?.forecastday?.count ?? 0) Days"
-        
-        // Reload table view and collection view
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.reloadData()
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.reloadData()
     }
 
     /*
@@ -188,7 +179,7 @@ class WeatherViewController: WhiteColorNoneNavigation {
 extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return min(arrWeatherData?.forecast?.forecastday?.count ?? 0, 2)
+        return 2
     }
 
     
@@ -287,7 +278,6 @@ extension WeatherViewController {
 
             case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
-                self?.getWeatherData()
             }
         }
     }

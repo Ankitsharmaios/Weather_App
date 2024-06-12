@@ -44,13 +44,23 @@
                                             <constraint firstAttribute="height" constant="55" id="OpI-X2-0tn"/>
                                         </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZx-jF-B32">
+                                        <rect key="frame" x="7" y="7" width="46" height="46"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="3sP-zN-NNu"/>
                                     <constraint firstItem="rBs-tg-Zf7" firstAttribute="centerY" secondItem="I0P-hq-zjV" secondAttribute="centerY" id="HBs-HH-JoF"/>
                                     <constraint firstAttribute="width" constant="60" id="Wes-mN-KPb"/>
+                                    <constraint firstItem="nZx-jF-B32" firstAttribute="top" secondItem="I0P-hq-zjV" secondAttribute="top" constant="7" id="byg-gN-7o9"/>
                                     <constraint firstItem="rBs-tg-Zf7" firstAttribute="centerX" secondItem="I0P-hq-zjV" secondAttribute="centerX" id="d1Y-sz-CLX"/>
+                                    <constraint firstAttribute="trailing" secondItem="nZx-jF-B32" secondAttribute="trailing" constant="7" id="fQF-Uy-s6b"/>
+                                    <constraint firstItem="nZx-jF-B32" firstAttribute="leading" secondItem="I0P-hq-zjV" secondAttribute="leading" constant="7" id="jJ6-xV-vJV"/>
+                                    <constraint firstAttribute="bottom" secondItem="nZx-jF-B32" secondAttribute="bottom" constant="7" id="pPl-GQ-ewj"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -80,6 +90,7 @@
                 <outlet property="imgInnerView" destination="I0P-hq-zjV" id="JNq-sk-Rra"/>
                 <outlet property="lblName" destination="Rv2-Np-3ra" id="Otm-l7-n16"/>
                 <outlet property="lblTime" destination="NxF-US-av9" id="Xup-vS-GBz"/>
+                <outlet property="lbltextStatusShow" destination="nZx-jF-B32" id="dYw-JE-ctB"/>
                 <outlet property="mainView" destination="3mp-9B-zBb" id="Rw6-AW-L3Q"/>
                 <outlet property="userimageView" destination="rBs-tg-Zf7" id="iEc-TF-oGY"/>
             </connections>

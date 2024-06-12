@@ -237,4 +237,33 @@ extension DataManager {
         }
     }
     
+    
+    //MARK: AppConfig
+    // MARK: AppConfig
+    func AppConfig(isLoader: Bool, view: UIView, _ completion: @escaping (Result<AppConfigModel, APIError>) -> Void) {
+        
+        // Create URL
+        let url = getURL(.AppConfig)
+        
+        NetworkManager.shared.getResponse(url, mappingType: AppConfigModel.self) { (mappableArray, apiError) in
+            // Intermediate closure to handle the response and convert it to Result type
+            if let data = mappableArray as? AppConfigModel {
+                print("status \(data.status ?? false)")
+                print("message \(data.statusMessage ?? "")")
+                
+                if !(data.status ?? false) && data.statusMessage == "Token Expired" {
+                    completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                } else if !(data.status ?? false) && data.statusMessage == "login failed !" {
+                    completion(.success(data))
+                } else {
+                    completion(.success(data))
+                }
+            } else {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+            }
+        }
+    }
+
+    
+    
 }

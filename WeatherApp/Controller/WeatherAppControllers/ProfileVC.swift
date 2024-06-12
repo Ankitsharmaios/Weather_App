@@ -9,7 +9,8 @@ import UIKit
 import Foundation
 import UniformTypeIdentifiers
 import Alamofire
-class ProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+import MCEmojiPicker
+class ProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate & MCEmojiPickerDelegate{
     
     
     @IBOutlet weak var btnMoreOption: UIButton!
@@ -59,10 +60,27 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigatio
     
     
     
-    @IBAction func smileyAction(_ sender: Any)
+    @IBAction func smileyAction(_ sender: UIView)
     {
-        
+        let viewController = MCEmojiPickerViewController()
+        viewController.delegate = self
+        viewController.sourceView = sender
+        present(viewController, animated: true)
     }
+    
+    // MARK: - MCEmojiPickerDelegate
+       func didGetEmoji(emoji: String) {
+           // Insert the emoji at the current cursor position
+              if let textRange = typeyourNameTextField.selectedTextRange {
+                  typeyourNameTextField.replace(textRange, withText: emoji)
+              } else {
+                  // If no cursor position, append to the end
+                  typeyourNameTextField.text?.append(emoji)
+              }
+         
+       }
+        
+    
     
     @IBAction func moreOptionAction(_ sender: Any)
     {

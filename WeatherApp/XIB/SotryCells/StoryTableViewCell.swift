@@ -10,6 +10,7 @@ import SDWebImage
 import WhatsappStatusRingBar
 class StoryTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var lbltextStatusShow: UILabel!
     @IBOutlet weak var imgInnerView: WhatsappStatusRingBar!
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblName: UILabel!
@@ -38,6 +39,9 @@ class StoryTableViewCell: UITableViewCell {
     }
     func setUpUI()
     {
+        
+        lbltextStatusShow.isEnabled = true
+        
         lblName.font = Helvetica.helvetica_semibold.font(size: 16)
         lblName.textColor = appThemeColor.CommonBlack
         
@@ -46,8 +50,7 @@ class StoryTableViewCell: UITableViewCell {
         
         imgInnerView.layer.cornerRadius = imgInnerView.frame.size.width / 2
         imgInnerView.clipsToBounds = true
-//        imgInnerView.layer.borderWidth = 2.5
-//        imgInnerView.layer.borderColor = appThemeColor.text_Weather.cgColor
+
         userimageView.layer.cornerRadius = userimageView.frame.size.width / 2
         userimageView.clipsToBounds = true
     
@@ -69,37 +72,47 @@ class StoryTableViewCell: UITableViewCell {
         self.imgInnerView.setProgress(progress: CGFloat(progress))
         self.imgInnerView.lineWidth = 2.5
     }
-    
-    func setData() {
-        guard let detail = storyData else {
-            return
-        }
-        
-        // Set user image
-        if let imageURLStrings = detail.media?.compactMap({ $0.uRL }),
-           let firstImageURLString = imageURLStrings.first,
-           let imageURL = URL(string: firstImageURLString) {
-            userimageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
-        } else {
-            userimageView.image = UIImage(named: "placeholder")
-        }
-        
-        // Get the latest status date and time
-        if let media = detail.media, let latestMedia = media.last,
-           let statusDate = latestMedia.date,
-           let statusTime = latestMedia.time {
-            
-            // Calculate time difference and set it to the label
-            let elapsedTimeString = Converter.timeAgo(Date: statusDate, Time: statusTime)
-            lblTime.text = elapsedTimeString
-        } else {
-            lblTime.text = ""
-        }
-        
-        // Set user name
-        lblName.text = detail.userName
-    }
 
+    func setData() {
+          guard let detail = storyData else {
+              return
+          }
+          
+          // Set user image
+          if let imageURLStrings = detail.media?.compactMap({ $0.uRL }),
+             let firstImageURLString = imageURLStrings.last, !firstImageURLString.isEmpty,
+             let imageURL = URL(string: firstImageURLString) {
+              userimageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+              userimageView.backgroundColor = .clear // Reset background color
+              lbltextStatusShow.isHidden = true // Hide text status
+          } else {
+              userimageView.image = UIImage(named: "placeholder")
+              // Set background color if image URL is empty
+              if let media = detail.media?.last, let backgroundColorString = media.textBackground, let backgroundColor = UIColor(hex: backgroundColorString) {
+                  userimageView.backgroundColor = backgroundColor
+                  lbltextStatusShow.isHidden = false
+                  lbltextStatusShow.text = media.text?.truncated(wordsLimit: 2) ?? ""
+              } else {
+                  userimageView.backgroundColor = .clear // Default color if no background color is specified
+                  lbltextStatusShow.isHidden = true // Hide text status
+              }
+          }
+          
+          // Get the latest status date and time
+          if let media = detail.media, let latestMedia = media.last,
+             let statusDate = latestMedia.date,
+             let statusTime = latestMedia.time {
+              
+              // Calculate time difference and set it to the label
+              let elapsedTimeString = Converter.timeAgo(Date: statusDate, Time: statusTime)
+              lblTime.text = elapsedTimeString
+          } else {
+              lblTime.text = ""
+          }
+          
+          // Set user name
+          lblName.text = detail.userName
+      }
     
   
 }

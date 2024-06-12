@@ -14,6 +14,7 @@ import WhatsappStatusRingBar
 
 class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var lblTextStatus: UILabel!
     @IBOutlet weak var topTableViewWidthLayout: NSLayoutConstraint!
     @IBOutlet weak var btnStatusprivacy: UIButton!
     @IBOutlet weak var btnTextStatus: UIButton!
@@ -62,7 +63,7 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         toptableView.isHidden = true
         self.isTopTableHide = false
         navigationController?.navigationBar.isHidden = true
-     //   tabBarController?.tabBar.barTintColor = appThemeColor.CommonBlack
+  
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -80,49 +81,68 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         
     }
     
-    
-    
     func setUserData() {
-          if myStoryCount > 0
-        {
-             
-              
-              let statusTimes = myStories.flatMap { $0.media?.compactMap { $0.time } ?? [] }
-              let statusDate = myStories.flatMap { $0.media?.compactMap { $0.date } ?? [] }
-                  if let lastStatusTimeString = statusTimes.last,let statusDate = statusDate.last {
-                         // Calculate time difference and set it to the label
-                         let elapsedTimeString = Converter.timeAgo(Date: statusDate, Time: lastStatusTimeString)
-                         lblTapToadd.text = elapsedTimeString
-                     }
-              
-              
-              // Assuming `myStories` is an array of `StoryResult` objects
-              let imageURLStrings = myStories.flatMap { $0.media?.compactMap { $0.uRL } ?? [] }
+        if myStoryCount > 0 {
+            let statusTimes = myStories.flatMap { $0.media?.compactMap { $0.time } ?? [] }
+            let statusDates = myStories.flatMap { $0.media?.compactMap { $0.date } ?? [] }
+            
+            if let lastStatusTimeString = statusTimes.last, let statusDateString = statusDates.last {
+                // Calculate time difference and set it to the label
+                let elapsedTimeString = Converter.timeAgo(Date: statusDateString, Time: lastStatusTimeString)
+                lblTapToadd.text = elapsedTimeString
+            }
 
-              // Safely get the last URL string if it exists
-              if let lastImageURLString = imageURLStrings.last, let imageURL = URL(string: lastImageURLString) {
-                  imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
-              } else {
-                  imageView.image = UIImage(named: "placeholder")
-              }
-              
-              
-              imageView.layer.borderWidth = 1.5
-              imageView.layer.borderColor = appThemeColor.white.cgColor
-             
-              plusStatusImgView.isHidden = true
-              
+            // Assuming `myStories` is an array of `StoryResult` objects
+            let mediaItems = myStories.flatMap { $0.media ?? [] }
+            let imageURLStrings = mediaItems.compactMap { $0.uRL }
+            
+            if let lastImageURLString = imageURLStrings.last {
+                if lastImageURLString.isEmpty {
+                    // If the last URL is an empty string, set the background color
+                    if let lastMediaItem = mediaItems.last, let backgroundColorString = lastMediaItem.textBackground, let backgroundColor = UIColor(hex: backgroundColorString) {
+                        imageView.backgroundColor = backgroundColor
+                        lblTextStatus.isHidden = false
+                        if let text = mediaItems.compactMap({ $0.text }).last {
+                            lblTextStatus.text = text.truncated(wordsLimit: 2)
+                        } else {
+                            lblTextStatus.text = ""
+                        }
+                    } else {
+                        imageView.backgroundColor = .clear // Default color if no background color is specified
+                    }
+                    imageView.image = nil
+                } else {
+                    // Otherwise, set the image as usual
+                    if let imageURL = URL(string: lastImageURLString) {
+                        imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                    } else {
+                        imageView.image = UIImage(named: "placeholder")
+                    }
+                    imageView.backgroundColor = .clear // Reset background color
+                    lblTextStatus.isHidden = true
+                }
+            } else {
+                imageView.image = UIImage(named: "placeholder")
+                imageView.backgroundColor = .clear // Reset background color
+                lblTextStatus.isHidden = true
+            }
 
-          }else{
-              let imageURLString = userdata?.result?.image ?? ""
-              
-              if let imageURL = URL(string: imageURLString) {
-                  imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
-              } else {
-                  imageView.image = UIImage(named: "placeholder")
-              }
-          }
+            imageView.layer.borderWidth = 1.5
+            imageView.layer.borderColor = appThemeColor.white.cgColor
+            plusStatusImgView.isHidden = true
+
+        } else {
+            let imageURLString = userdata?.result?.image ?? ""
+            
+            if let imageURL = URL(string: imageURLString) {
+                imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                plusStatusImgView.isHidden = false
+            } else {
+                imageView.image = UIImage(named: "placeholder")
+                plusStatusImgView.isHidden = false
+            }
         }
+    }
 
     func removeExpiredStories() {
         let currentTime = Date()
@@ -166,20 +186,20 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
      
     func setupUI()
     {
+        
+        lblTextStatus.isHidden = true
+        
         lblUpdate.textColor = appThemeColor.CommonBlack
-        lblUpdate.font = Helvetica.helvetica_bold.font(size: 24)
+        lblUpdate.font = Helvetica.helvetica_regular.font(size: 24)
         
         lblStatus.textColor = appThemeColor.CommonBlack
-        lblStatus.font = Helvetica.helvetica_bold.font(size: 18)
+        lblStatus.font = Helvetica.helvetica_medium.font(size: 18)
         
         lblMyStatus.textColor = appThemeColor.CommonBlack
         lblMyStatus.font = Helvetica.helvetica_semibold.font(size: 16)
         
         lblTapToadd.textColor = appThemeColor.text_LightColure
         lblTapToadd.font = Helvetica.helvetica_regular.font(size: 15)
-
-        lblRecentUpdates.textColor = appThemeColor.CommonBlack
-        lblRecentUpdates.font = Helvetica.helvetica_medium.font(size: 18)
         
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
@@ -350,13 +370,13 @@ extension StatusVC {
                     imageView.image = editedImage
                     imageView.layer.borderWidth = 1.5
                     imageView.layer.borderColor = appThemeColor.white.cgColor
-                  
+                    lblTextStatus.isHidden = true
                     plusStatusImgView.isHidden = true
                 } else if let originalImage = info[.originalImage] as? UIImage {
                     imageView.image = originalImage
                     imageView.layer.borderWidth = 1.5
                     imageView.layer.borderColor = appThemeColor.white.cgColor
-                   
+                    lblTextStatus.isHidden = true
                     plusStatusImgView.isHidden = true
                 }
                 
@@ -386,6 +406,7 @@ extension StatusVC {
                     imageView.layer.borderColor = appThemeColor.white.cgColor
                    
                     plusStatusImgView.isHidden = true
+                    lblTextStatus.isHidden = true
                     // Optionally, save the video to the documents directory and handle further
                     if let videoData = try? Data(contentsOf: videoURL) {
                         if let videoFileURL = saveVideoToDocumentsDirectory(data: videoData) {
@@ -406,6 +427,7 @@ extension StatusVC {
                             imageView.layer.borderWidth = 2.5
                             imageView.layer.borderColor = appThemeColor.text_Weather.cgColor
                             plusStatusImgView.isHidden = true
+                            lblTextStatus.isHidden = true
                         }
                     }
                 }
@@ -740,5 +762,14 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
+    }
+}
+extension String {
+    func truncated(wordsLimit: Int) -> String {
+        let words = self.split { $0.isWhitespace }
+        guard words.count > wordsLimit else {
+            return self
+        }
+        return words.prefix(wordsLimit).joined(separator: " ")
     }
 }

@@ -27,6 +27,7 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var weatherLbl: UILabel!
     @IBOutlet weak var bgView: UIView!
+    var AppConfigData:AppConfigModel?
     var isTopTableHide = false
     var ref: DatabaseReference!
     var LastChatData:[LiveChatDataModel]?
@@ -37,6 +38,7 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCityWeatherData()
         setupUI()
         fetchFirebaseData()
         navigationController?.navigationBar.isHidden = true
@@ -58,7 +60,6 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         chatTableView.separatorStyle = .none
         toptableHeightLayout.constant = CGFloat(CGFloat((OptionNames.count)) * (40))
         topTableView.separatorStyle = .none
-        weatherLbl.textColor = appThemeColor.text_Weather
         weatherLbl.font = Helvetica.helvetica_bold.font(size: 24)
         
         searchbgView.layer.cornerRadius = 20
@@ -261,7 +262,7 @@ extension DashChatsVC
                                 self.LastChatData?.append(chatData)
                                 print("LastChat",LastChatData ?? [])
                                 self.chatTableView.reloadData()
-                            }
+                           }
                         }
                     }
                         
@@ -275,3 +276,32 @@ extension DashChatsVC
     }
     
 }
+extension DashChatsVC
+{
+    
+    // MARK: Call Api
+    func getCityWeatherData() {
+        DataManager.shared.AppConfig(isLoader: false, view: view) { [weak self] (result) in
+            switch result {
+            case .success(let appConfig):
+                print("AppConfigData", appConfig)
+                self?.AppConfigData = appConfig
+                
+                if self?.AppConfigData?.statusMessage?.lowercased() == "app configuration list".lowercased() || self?.AppConfigData?.status == true {
+                    self?.weatherLbl.text = appConfig.result?.appName ?? ""
+                    
+                    if let colorString = appConfig.result?.appColor, let color = UIColor(hex: colorString) {
+                        self?.weatherLbl.textColor = color
+                    } else {
+                        self?.weatherLbl.textColor = appThemeColor.CommonBlack
+                    }
+                }
+            case .failure(let error):
+                print("Failed to get AppConfig:", error)
+            }
+        }
+    }
+
+
+  
+      }

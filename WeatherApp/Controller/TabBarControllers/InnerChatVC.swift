@@ -13,10 +13,10 @@ import FirebaseDatabase
 import FirebaseMessaging
 import Firebase
 
-class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+
+class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate{
 
     @IBOutlet weak var maintableView: UITableView!
-    @IBOutlet weak var emojiTxt: EmojiTextField!
     @IBOutlet weak var bottomCollectionView: UICollectionView!
     @IBOutlet weak var topTableHeightLayout: NSLayoutConstraint!
     @IBOutlet weak var optionTableView: UITableView!
@@ -48,8 +48,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var LastChatData:LiveChatDataModel?
     var ChatData:[ChatModel]?
     var messages = [Message]()
-    
-    
+
     class func getInstance()-> InnerChatVC {
         return InnerChatVC.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
@@ -150,6 +149,9 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     
     
     
+    @IBAction func sendMgsAction(_ sender: Any) 
+    {
+    }
     
     
     
@@ -177,9 +179,8 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         }
     }
     
-    @IBAction func emojiBtn(_ sender: Any) {
-        emojiTxt.becomeFirstResponder()
-    }
+  
+    
     func openCamera() {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
             let imagePicker = UIImagePickerController()
@@ -268,52 +269,56 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+    // MARK: FireBase Data Method Chat
     func fetchFirebaseData() {
-        // Initialize the Firebase reference
         ref = Database.database().reference()
-        
-        // Print the path to verify it's correct
-        print("Firebase Path:", firebaseTableName.Chat.rawValue)
-        
-        // Fetch data from the Firebase database
-        ref.child(firebaseTableName.Chat.rawValue).getData { [weak self] error, snap in
-            guard let self = self else { return }
-            
-            // Check for errors in fetching data
+        ref.getData { [self] error, snap in
             if let error = error {
-                print("Error in fetching from Firebase: \(error.localizedDescription)")
-                // Retry fetching data after a delay to avoid immediate recursion
+                print("Error in fetching from Firebase: \(error)")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.fetchFirebaseData()
+                    fetchFirebaseData() // Retry fetching data
                 }
-            } else if let snap = snap, snap.exists() {
-                print("Snapshot exists, data fetched.")
-                
-                // Clear the current chat data
-                self.ChatData = []
-                
-                // Observe value changes in the specified child path
-                self.ref.child(firebaseTableName.Chat.rawValue).observeSingleEvent(of: .value, with: { snapshot in
-                    // Iterate through each child in the snapshot
+            } else if snap?.exists() ?? false {
+                ref.child("\(firebaseTableName.Chat.rawValue)").observe(.value, with: { [self] snapshot in
+                    self.ChatData = []
+                    
                     for child in snapshot.children {
-                        if let childSnap = child as? DataSnapshot,
-                           let userDict = childSnap.value as? [String: Any] {
+                        let childSnap = child as! DataSnapshot
+                        if let userDict = childSnap.value as? NSDictionary {
+                            print("UserDict:", userDict) // Debug print to verify the structure
+
+                            // Fetching data from the dictionary
+                            let date = userDict["date"] as? String
+                            let id = userDict["id"] as? String
+                            let indexId = userDict["indexId"] as? String
+                            let isDeleted = userDict["isDeleted"] as? String
+                            let message = userDict["message"] as? String
+                            let messageStatus = userDict["messageStatus"] as? String
+                            let receiverID = userDict["receiverID"] as? String
+                            let receiverImage = userDict["receiverImage"] as? String
+                            let receiverName = userDict["receiverName"] as? String
+                            let receiverToken = userDict["receiverToken"] as? String
+                            let senderFcmToken = userDict["senderFcmToken"] as? String
+                            let senderImage = userDict["senderImage"] as? String
+                            let senderName = userDict["senderName"] as? String
+                            let sentID = userDict["sentID"] as? String
+                            let time = userDict["time"] as? String
+                            let videoCallLink = userDict["videoCallLink"] as? String
+                            let videoCallStatus = userDict["videoCallStatus"] as? String
                             
-                            // Debug print the userDict to verify its structure
-                            print("UserDict:", userDict)
-                            
-                            // Initialize ChatModel using ObjectMapper
-                            if let chatData = ChatModel(JSON: userDict) {
-                                self.ChatData?.append(chatData)
-                                print("====ChatData========", self.ChatData)
+                            // Debug print to verify the extracted values
+                            print("Extracted Values - sentID: \(String(describing: sentID)), receiverID: \(String(describing: receiverID))")
+                            if let chatData = ChatModel(JSON: userDict as! [String : Any]) {
+                                        self.ChatData?.append(chatData)
+                                        print("ChatData===================>", ChatData ?? [])
+                                        self.maintableView.reloadData()
+                                    
+                                
                             }
                         }
                     }
-                    // Reload table view data after all items have been added
-                    self.maintableView.reloadData()
                 })
             } else {
-                // No data available in the snapshot
                 print("No data available")
             }
         }

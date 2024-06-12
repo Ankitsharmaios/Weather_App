@@ -13,7 +13,6 @@ class StoryViewController: UIViewController & UITextViewDelegate {
 
     @IBOutlet weak var replyTextView: UITextView!
     @IBOutlet weak var textDataShowLbl: UILabel!
-    @IBOutlet weak var textStoryView: UIView!
     @IBOutlet weak var btnMoreOption: UIButton!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
@@ -71,11 +70,16 @@ class StoryViewController: UIViewController & UITextViewDelegate {
         replyTextView.layer.cornerRadius = 20
         replyTextView.clipsToBounds = true
         replyTextView.backgroundColor = appThemeColor.TextView_BackGround
-        replyTextView.font = Helvetica.helvetica_regular.font(size: 15)
+      //  replyTextView.font = Helvetica.helvetica_regular.font(size: 30)
         replyTextView.textColor = appThemeColor.white
         
-      
-        textStoryView.isHidden = true
+        nameLbl.font = Helvetica.helvetica_regular.font(size: 18)
+        nameLbl.textColor = appThemeColor.white
+        
+        timeLbl.font = Helvetica.helvetica_regular.font(size: 14)
+        timeLbl.textColor = appThemeColor.white
+        
+     
         textDataShowLbl.isHidden = true
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
         userImageView.layer.borderWidth = 1.5
@@ -95,8 +99,8 @@ class StoryViewController: UIViewController & UITextViewDelegate {
         if let firstMedia = contactStoriesData?.media?.first {
                 if let textBackground = firstMedia.textBackground,
                    let color = UIColor(hex: textBackground) {
-                    textStoryView.isHidden = false
-                    textStoryView.backgroundColor = color
+                    
+                    outerCollection.backgroundColor = color
                 }
                 
                 if let textData = firstMedia.text {
@@ -113,7 +117,7 @@ class StoryViewController: UIViewController & UITextViewDelegate {
            replyTextView.addSubview(placeholderLabel)
            
            NSLayoutConstraint.activate([
-               placeholderLabel.leadingAnchor.constraint(equalTo: replyTextView.leadingAnchor, constant: 5),
+               placeholderLabel.leadingAnchor.constraint(equalTo: replyTextView.leadingAnchor, constant: 15),
                placeholderLabel.topAnchor.constraint(equalTo: replyTextView.topAnchor, constant: 8),
                placeholderLabel.widthAnchor.constraint(equalTo: replyTextView.widthAnchor, multiplier: 0.8)
            ])
@@ -123,38 +127,7 @@ class StoryViewController: UIViewController & UITextViewDelegate {
        
        func textViewDidChange(_ textView: UITextView) {
            placeholderLabel.isHidden = !replyTextView.text.isEmpty
-          // adjustTextViewHeight()
        }
-
-//    private func adjustTextViewHeight() {
-//        let size = CGSize(width: replyTextView.frame.width, height: .infinity)
-//        let estimatedSize = replyTextView.sizeThatFits(size)
-//
-//        // Calculate the height of one line of text
-//        let oneLineHeight = replyTextView.font?.lineHeight ?? 0
-//
-//        // Check if the height exceeds the height of one line of text
-//        if estimatedSize.height > oneLineHeight {
-//            // Disable animations
-//            UIView.setAnimationsEnabled(false)
-//            
-//            // Preserve the current content offset
-//            let originalOffset = replyTextView.contentOffset
-//            
-//            // Adjust the height constraint
-//            replyTextView.constraints.forEach { (constraint) in
-//                if constraint.firstAttribute == .height {
-//                    constraint.constant = estimatedSize.height
-//                }
-//            }
-//            
-//            // Set the content offset back to its original position
-//            replyTextView.setContentOffset(originalOffset, animated: false)
-//            
-//            // Re-enable animations
-//            UIView.setAnimationsEnabled(true)
-//        }
-//    }
 
     
     func updateTimeLabel(for storyIndex: Int) {
@@ -164,7 +137,7 @@ class StoryViewController: UIViewController & UITextViewDelegate {
         }
 
         let media = mediaArray[storyIndex]
-        if let date = media.date, let time = media.time, let formattedTime = Converter.convertApiDateTime(apiDate: date, apiTime: time) {
+        if let date = media.date, let time = media.time, let formattedTime = Converter.timeAgo(Date: date, Time: time){
             timeLbl.text = formattedTime
         } else {
             timeLbl.text = ""
@@ -221,10 +194,11 @@ extension StoryViewController {
         
         if let textBackground = contactStoriesData?.media?[index].textBackground,
            let color = UIColor(hex: textBackground) {
-            textStoryView.isHidden = false
-            textStoryView.backgroundColor = color
+            
+            outerCollection.backgroundColor = color
+            
         } else {
-            textStoryView.isHidden = true
+            outerCollection.backgroundColor = .black
         }
         
         if let textData = contactStoriesData?.media?[index].text {
@@ -273,10 +247,10 @@ extension StoryViewController {
         
         if let textBackground = contactStoriesData?.media?[StoryHandler.userIndex].textBackground,
            let color = UIColor(hex: textBackground) {
-            textStoryView.isHidden = false
-            textStoryView.backgroundColor = color
+           
+            outerCollection.backgroundColor = color
         } else {
-            textStoryView.isHidden = true
+            outerCollection.backgroundColor = .black
         }
         
         if let textData = contactStoriesData?.media?[StoryHandler.userIndex].text {
