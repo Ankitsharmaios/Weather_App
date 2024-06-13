@@ -21,12 +21,13 @@ class StoryViewController: UIViewController & UITextViewDelegate {
     @IBOutlet weak var cancelBtn: UIButton!
     
     var seenStoriesCount: Int = 0
-    
+    var selectedTag = 0
     var rowIndex:Int = 0
     var arrUser = [StoryHandler]()
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
     var imageCollection: [[String]]!
     var contactStoriesData: StoryResultModel?
+    var fromScreen = ""
     var selectedRowIndex: Int?
     var tapGest: UITapGestureRecognizer!
     var longPressGest: UILongPressGestureRecognizer!
@@ -57,6 +58,8 @@ class StoryViewController: UIViewController & UITextViewDelegate {
         setUpUI()
         addGesture()
         setupPlaceholder()
+        
+        print("selectedTag-======>",selectedTag)
     }
     override func viewWillDisappear(_ animated: Bool) {
         callback?(seenStoryCount)

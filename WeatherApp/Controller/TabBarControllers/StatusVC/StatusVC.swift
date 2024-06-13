@@ -268,26 +268,18 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBAction func opengalleryAction(_ sender: Any)
     {
         if !imagePath.isEmpty || !videoPath.isEmpty || !myStories.isEmpty {
-                let statusStoryVC = StoryViewController.GetInstance()
-                statusStoryVC.modalPresentationStyle = .overCurrentContext
-            
-            if let selectedData = myStories.first {
-                statusStoryVC.contactStoriesData = selectedData
-            }
-                statusStoryVC.imageCollection = myStories.compactMap{ $0.media?.compactMap{ $0.uRL}}
-                statusStoryVC.showTabBar = {
+            let MyStatusDeleteVC = MyStatusDeleteVC.getInstance()
+            MyStatusDeleteVC.modalPresentationStyle = .overCurrentContext
+            MyStatusDeleteVC.showTabBar = {
                     self.showTabBar(animated: true)
-                   
-                }
             
-               statusStoryVC.callback = { [weak self] SeenCount in
-                            // Handle the data
-                   print("Received data: \(SeenCount)")
-                   self?.setupProgressView(count: SeenCount)
-                        }
+            }
+            MyStatusDeleteVC.myStorys = StoryListData?.result 
+            self.hideTabBar(animated: true)
+            self.present(MyStatusDeleteVC, animated: true)
             
-                self.hideTabBar(animated: true)
-                self.present(statusStoryVC, animated: true)
+            
+            
             } else {
                 openCamera()
             }

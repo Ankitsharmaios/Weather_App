@@ -139,21 +139,23 @@ extension CitysPopUPVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLa
                     
         if indexPath.item == 0
         {
-            cell.rightView.isHidden = true
+
             
         }else if indexPath.item == 1
         {
-            
+            cell.leftView.isHidden = true
         }else if indexPath.item == 2
         {
             
             cell.leftView.isHidden = true
         }else if indexPath.item == 3
         {
+            
             cell.topView.isHidden = true
-            cell.rightView.isHidden = true
+
         }else if indexPath.item == 4
         {
+            cell.leftView.isHidden = true
             cell.topView.isHidden = true
         }else if indexPath.item == 5
         {
@@ -162,10 +164,11 @@ extension CitysPopUPVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLa
         }else if indexPath.item == 6
         {
             cell.topView.isHidden = true
-            cell.rightView.isHidden = true
+          
         }else if indexPath.item == 7
         {
             cell.topView.isHidden = true
+            cell.leftView.isHidden = true
         }
         
         
