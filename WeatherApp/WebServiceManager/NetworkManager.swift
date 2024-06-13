@@ -24,24 +24,30 @@ class NetworkManager: Session {
     
     //----------------------------------------------------------------
     // MARK: Get Request Method
-    //----------------------------------------------------------------
     
-    func getResponse<T: Mappable>(_ url: String, parameter: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default, header: HTTPHeaders? = nil, showHUD: HUDFlag = .show, mappingType: T.Type, completion: @escaping (Mappable?, APIError?) -> Void) {
-        
-        self.objectRequest(url, method: .get, parameter: parameter, encoding: encoding, header: header, mappingType: mappingType, showHUD: showHUD) { (mappableResponse) in
+    func getResponse<T: Mappable>(_ url: String, mappingType: T.Type, view: UIView, completion: @escaping (Result<T, APIError>) -> Void) {
             
-            switch mappableResponse.result {
-                
-            case .success(let data):
-                completion(data, nil)
-                break
-                
-            case .failure(let error):
-                completion(nil, .errorMessage(error.localizedDescription))
-                break
+            // Check network status
+            if Singleton.sharedInstance.networkStatus.lowercased() == "offline" {
+                var toastStyle = ToastStyle()
+                toastStyle.backgroundColor = appThemeColor.text_Weather
+                view.makeToast("Please Check Internet Connection", duration: 5.0, position: .bottom, style: toastStyle)
+                completion(.failure(.errorMessage("No internet connection")))
+                return
             }
+            
+            // Make GET request
+            AF.request(url, method: .get, encoding: JSONEncoding.default)
+                .validate()
+                .responseObject { (response: DataResponse<T, AFError>) in
+                    switch response.result {
+                    case .success(let value):
+                        completion(.success(value))
+                    case .failure(let error):
+                        completion(.failure(.errorMessage(error.localizedDescription)))
+                    }
+                }
         }
-    }
     
     //--------------------------------------------------
     

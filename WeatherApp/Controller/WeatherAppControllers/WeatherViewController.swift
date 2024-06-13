@@ -149,7 +149,13 @@ class WeatherViewController: WhiteColorNoneNavigation {
         }
         
         // Set day title label
-        dayTitleLbl.text = "Next \(arrWeatherData.forecast?.forecastday?.count ?? 0) Days"
+     
+        if let actualCount = arrWeatherData.forecast?.forecastday?.count {
+             let displayCount = min(actualCount, 2)
+             dayTitleLbl.text = "Next \(displayCount) Days"
+         } else {
+             dayTitleLbl.text = "Next 0 Days" // Or handle the nil case appropriately
+         }
     }
 
     /*
@@ -167,6 +173,7 @@ class WeatherViewController: WhiteColorNoneNavigation {
         let CitysPopUPVC = CitysPopUPVC.getInstance()
         CitysPopUPVC.modalPresentationStyle = .overCurrentContext
         CitysPopUPVC.callback = {
+            self.getWeatherData()
             self.bindDatareset()
             self.tableView.reloadData()
             self.collectionView.reloadData()

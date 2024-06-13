@@ -14,21 +14,25 @@ import Alamofire
 extension DataManager {
      
     func getWeatherDetail(view: UIView, _ completion: @escaping(Result<WeatherListModel, APIError>) -> Void) {
-        
-        // Create URL
-        let url = "http://api.weatherapi.com/v1/forecast.json?key=\(AppKeys.WeatherKey.rawValue)&q=\(UserLoginData.CityName)&days=3"
-        print(url)
-        //        let url = "http://api.weatherapi.com/v1/forecast.json?key=\(AppKeys.WeatherKey.rawValue)&q=Ahmedabad&dt=\(getCurrentDate(format: "yyyy-MM-dd"))"
-        
-        NetworkManager.shared.postResponse(url, mappingType: WeatherListModel.self, view: view) { (mappableArray, apiError) in
-            guard let data = mappableArray as? WeatherListModel else {
-                // APPLICATION_DELEGATE.toastMessage(message: Validation.somethingWentWrong)
-                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
-                return
+            
+            // Create URL
+            let baseURL = "http://api.weatherapi.com/v1/forecast.json"
+            let apiKey = AppKeys.WeatherKey.rawValue
+            let cityName = UserLoginData.CityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "New Delhi"
+            let days = 3
+            
+            let urlString = "\(baseURL)?key=\(apiKey)&q=\(cityName)&days=\(days)"
+            
+            NetworkManager.shared.getResponse(urlString, mappingType: WeatherListModel.self, view: view) { result in
+                switch result {
+                case .success(let weatherData):
+                    completion(.success(weatherData))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
-            completion(.success(data))
         }
-    }
+
     func getCityWeatherDetail(city:String,view:UIView, _ completion: @escaping(Result<WeatherListModel, APIError>) -> Void) {
         
         // Create URL
@@ -238,31 +242,32 @@ extension DataManager {
     }
     
     
-    //MARK: AppConfig
+ 
     // MARK: AppConfig
     func AppConfig(isLoader: Bool, view: UIView, _ completion: @escaping (Result<AppConfigModel, APIError>) -> Void) {
         
         // Create URL
         let url = getURL(.AppConfig)
         
-        NetworkManager.shared.getResponse(url, mappingType: AppConfigModel.self) { (mappableArray, apiError) in
-            // Intermediate closure to handle the response and convert it to Result type
-            if let data = mappableArray as? AppConfigModel {
+        NetworkManager.shared.getResponse(url, mappingType: AppConfigModel.self, view: view) { result in
+            switch result {
+            case .success(let data):
                 print("status \(data.status ?? false)")
                 print("message \(data.statusMessage ?? "")")
                 
                 if !(data.status ?? false) && data.statusMessage == "Token Expired" {
-                    completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                    completion(.failure(.errorMessage("Token Expired")))
                 } else if !(data.status ?? false) && data.statusMessage == "login failed !" {
-                    completion(.success(data))
+                    completion(.failure(.errorMessage("Login failed!")))
                 } else {
                     completion(.success(data))
                 }
-            } else {
-                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
+
 
     
     
