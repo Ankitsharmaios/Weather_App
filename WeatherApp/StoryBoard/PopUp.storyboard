@@ -212,6 +212,98 @@
             </objects>
             <point key="canvasLocation" x="-1185" y="-39"/>
         </scene>
+        <!--Delete Pop UpVC-->
+        <scene sceneID="2nP-mb-bjh">
+            <objects>
+                <viewController storyboardIdentifier="DeletePopUpVC" id="oT2-aR-ec6" customClass="DeletePopUpVC" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="u05-Ka-qkA">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B4D-yf-3u3">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <connections>
+                                    <action selector="backAction:" destination="oT2-aR-ec6" eventType="touchUpInside" id="NGX-EH-HEv"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E55-xp-iKr">
+                                <rect key="frame" x="30" y="383.66666666666669" width="333" height="110"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete 1 status update?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l6O-Tu-rYG">
+                                        <rect key="frame" x="25" y="20" width="283" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="SJ1-rP-DwZ">
+                                        <rect key="frame" x="150" y="70" width="163" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6p-My-aGP">
+                                                <rect key="frame" x="0.0" y="0.0" width="81.666666666666671" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Cancel">
+                                                    <color key="titleColor" red="0.0" green="0.50196078430000002" blue="0.41176470590000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="cancelAction:" destination="oT2-aR-ec6" eventType="touchUpInside" id="egI-0m-zmV"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S17-St-i6s">
+                                                <rect key="frame" x="81.666666666666686" y="0.0" width="81.333333333333314" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Delete">
+                                                    <color key="titleColor" red="0.0" green="0.50196078430000002" blue="0.41176470590000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="deleteAction:" destination="oT2-aR-ec6" eventType="touchUpInside" id="elH-nr-WrW"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Zkb-HW-qWW"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="SJ1-rP-DwZ" secondAttribute="trailing" constant="20" id="2Ud-bv-gRi"/>
+                                    <constraint firstAttribute="height" constant="110" id="468-es-gdy"/>
+                                    <constraint firstItem="l6O-Tu-rYG" firstAttribute="top" secondItem="E55-xp-iKr" secondAttribute="top" constant="20" id="Qx2-MM-s4c"/>
+                                    <constraint firstItem="SJ1-rP-DwZ" firstAttribute="leading" secondItem="E55-xp-iKr" secondAttribute="leading" constant="150" id="Ur4-Gm-Qah"/>
+                                    <constraint firstAttribute="trailing" secondItem="l6O-Tu-rYG" secondAttribute="trailing" constant="25" id="WJr-GC-xtY"/>
+                                    <constraint firstAttribute="bottom" secondItem="SJ1-rP-DwZ" secondAttribute="bottom" constant="10" id="bO6-o5-X7f"/>
+                                    <constraint firstItem="l6O-Tu-rYG" firstAttribute="leading" secondItem="E55-xp-iKr" secondAttribute="leading" constant="25" id="pPg-ce-ot2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="zvI-lc-2C0"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="B4D-yf-3u3" firstAttribute="leading" secondItem="zvI-lc-2C0" secondAttribute="leading" id="4ET-mq-sXz"/>
+                            <constraint firstItem="E55-xp-iKr" firstAttribute="centerX" secondItem="B4D-yf-3u3" secondAttribute="centerX" id="IBq-yT-iED"/>
+                            <constraint firstItem="zvI-lc-2C0" firstAttribute="bottom" secondItem="B4D-yf-3u3" secondAttribute="bottom" id="JGm-1y-cOZ"/>
+                            <constraint firstItem="B4D-yf-3u3" firstAttribute="top" secondItem="zvI-lc-2C0" secondAttribute="top" id="Xry-VR-Mrh"/>
+                            <constraint firstItem="zvI-lc-2C0" firstAttribute="trailing" secondItem="B4D-yf-3u3" secondAttribute="trailing" id="epY-ei-ui1"/>
+                            <constraint firstItem="zvI-lc-2C0" firstAttribute="trailing" secondItem="E55-xp-iKr" secondAttribute="trailing" constant="30" id="hcP-n2-Djq"/>
+                            <constraint firstItem="E55-xp-iKr" firstAttribute="leading" secondItem="zvI-lc-2C0" secondAttribute="leading" constant="30" id="oMi-Od-CzY"/>
+                            <constraint firstItem="E55-xp-iKr" firstAttribute="centerY" secondItem="B4D-yf-3u3" secondAttribute="centerY" id="uOs-f4-6D2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="btnCancel" destination="SJ1-rP-DwZ" id="Iln-Zk-Xc0"/>
+                        <outlet property="btnDelete" destination="S17-St-i6s" id="wK2-gA-RGg"/>
+                        <outlet property="lblDelete" destination="l6O-Tu-rYG" id="T8F-hJ-he9"/>
+                        <outlet property="mainView" destination="E55-xp-iKr" id="A6X-7p-yOK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u4P-wp-v2r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="301.52671755725191" y="-39.436619718309863"/>
+        </scene>
     </scenes>
     <resources>
         <namedColor name="RedColor_D62323">

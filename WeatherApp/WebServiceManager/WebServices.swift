@@ -267,7 +267,33 @@ extension DataManager {
             }
         }
     }
+    //MARK: DeleteStory
+    func DeleteStory(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<DeleteStoryModel, APIError>) -> Void) {
 
+        // Create URL
+        let url = getURL(.DeleteStory)
+
+        NetworkManager.shared.postResponse(url, parameter: params, header: getHttpHeaders(), mappingType: DeleteStoryModel.self,view:view) { (mappableArray, apiError) in
+            
+            guard let data = mappableArray as? DeleteStoryModel else {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }
+            
+            print("status \(data.status ?? false)")
+            print("message \(data.statusMessage ?? "")")
+            
+            if !(data.status ?? false) && data.statusMessage == "Token Expired" {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }else if !(data.status ?? false) && data.statusMessage == "login failed !" {
+                completion(.success(data))
+            } else{
+                completion(.success(data))
+            }
+        }
+    }
+    
 
     
     

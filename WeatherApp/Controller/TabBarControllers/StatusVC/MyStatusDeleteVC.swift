@@ -20,7 +20,9 @@ class MyStatusDeleteVC: UIViewController {
     
     var myStorys:[StoryResultModel]?
     var showTabBar: (() -> Void )?
-
+    var callback : (() -> Void)?
+    var StoryListData:StoryListModel?
+    
     let text = "Your status updates are end-to-end encrypted. They will disappear after 24 hours."
 
    
@@ -37,7 +39,9 @@ class MyStatusDeleteVC: UIViewController {
       
         // Do any additional setup after loading the view.
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
     func setUpUI() {
          lblMyStatus.font = Helvetica.helvetica_regular.font(size: 20)
          lblMyStatus.textColor = appThemeColor.CommonBlack
@@ -79,36 +83,43 @@ class MyStatusDeleteVC: UIViewController {
         lblYourStatus.numberOfLines = 0
     }
     
-    func setNib()
-    {
+    func setNib() {
+        // Assume currentRegisterId holds the current user's RegisterId
+        let currentRegisterIdString = getString(key: userDefaultsKeys.RegisterId.rawValue)
         
-        
-        if let myStorys = myStorys, let mediaCount = myStorys.first?.media?.count {
-                    if mediaCount > 8 {
-                        tableViewHeightLayout.constant = 8 * 70.0
-                        tableView.isScrollEnabled = true
-                        tableView.showsVerticalScrollIndicator = true
-                    } else {
-                        tableViewHeightLayout.constant = CGFloat(mediaCount) * 70.0
-                        tableView.isScrollEnabled = false
-                        tableView.showsVerticalScrollIndicator = false
-                    }
-                }
-        
-        
-        
+        // Check if currentRegisterIdString is not empty before converting to Int
+        guard !currentRegisterIdString.isEmpty, let currentRegisterId = Int(currentRegisterIdString) else {
+            return
+        }
+
+        // Filter the stories based on RegisterId
+        let filteredStories = myStorys?.filter { $0.userId == currentRegisterId }
+
+        if let mediaCount = filteredStories?.first?.media?.count {
+            if mediaCount > 8 {
+                tableViewHeightLayout.constant = 8 * 70.0
+                tableView.isScrollEnabled = true
+                tableView.showsVerticalScrollIndicator = true
+            } else {
+                tableViewHeightLayout.constant = CGFloat(mediaCount) * 70.0
+                tableView.isScrollEnabled = false
+                tableView.showsVerticalScrollIndicator = false
+            }
+        }
+
         tableView.register(UINib(nibName: "MyStatusTableViewCell", bundle: nil), forCellReuseIdentifier: "MyStatusTableViewCell")
         tableView.tableFooterView = foterView
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
-    
+
+
     @IBAction func backAction(_ sender: Any)
     {
         self.dismiss(animated: true)
         {
             self.showTabBar?()
+            Singleton.sharedInstance.storyId = nil
         }
     }
     
@@ -120,17 +131,39 @@ class MyStatusDeleteVC: UIViewController {
 }
 extension MyStatusDeleteVC:UITableViewDataSource & UITableViewDelegate
 {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myStorys?.first?.media?.count ?? 0
+        // Assume currentRegisterId holds the current user's RegisterId
+        let currentRegisterIdString = getString(key: userDefaultsKeys.RegisterId.rawValue)
+        
+        // Check if currentRegisterIdString is not empty before converting to Int
+        guard !currentRegisterIdString.isEmpty, let currentRegisterId = Int(currentRegisterIdString) else {
+            return 0
+        }
+
+        // Filter the stories based on RegisterId
+        let filteredStories = myStorys?.filter { $0.userId == currentRegisterId }
+
+        return filteredStories?.first?.media?.count ?? 0
     }
 
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyStatusTableViewCell", for: indexPath) as? MyStatusTableViewCell else {
             return UITableViewCell()
         }
 
-        if let mediaItems = myStorys?.first?.media {
+        // Assume currentRegisterId holds the current user's RegisterId
+        let currentRegisterIdString = getString(key: userDefaultsKeys.RegisterId.rawValue)
+        
+        // Check if currentRegisterIdString is not empty before converting to Int
+        guard !currentRegisterIdString.isEmpty, let currentRegisterId = Int(currentRegisterIdString) else {
+            return cell
+        }
+
+        // Filter the stories based on RegisterId
+        let filteredStories = myStorys?.filter { $0.userId == currentRegisterId }
+
+        if let mediaItems = filteredStories?.first?.media {
             let mediaItem = mediaItems[indexPath.row]
 
             // Set user image if URL is available
@@ -143,7 +176,6 @@ extension MyStatusDeleteVC:UITableViewDataSource & UITableViewDelegate
             }
 
             // Set text story
-            
             if let backgroundColorString = mediaItem.textBackground, !backgroundColorString.isEmpty {
                 cell.statusImgView.backgroundColor = UIColor(hex: backgroundColorString)
                 cell.lblStatusText.text = mediaItem.text ?? ""
@@ -166,10 +198,40 @@ extension MyStatusDeleteVC:UITableViewDataSource & UITableViewDelegate
             cell.configureSeparator(isLastCell: isLastCell)
         }
 
+        cell.btnMoreOption.tag = indexPath.row
+
+        // Set the button action closure
+        cell.buttonAction = { [weak self] tag in
+            print("Selected tag: \(tag)")
+            self?.handleButtonAction(tag: tag)
+        }
+
         cell.callBack = {
-            tableView.reloadData()
+            self.StoryList()
         }
         return cell
+    }
+
+
+
+    func handleButtonAction(tag: Int) {
+        // Handle the button action here, using the tag to identify the button
+        print("Button with tag \(tag) was pressed.")
+        
+        guard let stories = myStorys, let selectedData = stories.first else { return }
+        
+        // Check if the tag is within the valid range of media items
+        if let mediaItems = selectedData.media, tag >= 0 && tag < mediaItems.count {
+            let mediaItem = mediaItems[tag]
+            if let storyID = mediaItem.Id {
+                print("Selected Story ID for tag \(tag): \(storyID)")
+                Singleton.sharedInstance.storyId =  storyID
+            } else {
+                print("No ID found for media item at tag \(tag)")
+            }
+        } else {
+            print("No media item found for tag \(tag)")
+        }
     }
 
 
@@ -178,25 +240,82 @@ extension MyStatusDeleteVC:UITableViewDataSource & UITableViewDelegate
         return UITableView.automaticDimension
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let stories = myStorys, let selectedData = stories.first else { return }
-        
-        let statusStoryVC = StoryViewController.GetInstance()
-        statusStoryVC.modalPresentationStyle = .overCurrentContext
+            guard let stories = myStorys, let selectedData = stories.first else { return }
+            
+            let statusStoryVC = StoryViewController.GetInstance()
+            statusStoryVC.modalPresentationStyle = .overCurrentContext
 
-        // Pass the stories and the tag
-        statusStoryVC.contactStoriesData = selectedData
-        statusStoryVC.selectedTag = indexPath.row
-        statusStoryVC.fromScreen = "MyStory"
-        // Wrap the compactMap result in an array to match the expected type
-        if let mediaURLs = selectedData.media?.compactMap({ $0.uRL }) {
-            statusStoryVC.imageCollection = [mediaURLs]
-        } else {
-            statusStoryVC.imageCollection = [[]] // or nil, based on your needs
+            // Pass the stories and the tag
+            statusStoryVC.contactStoriesData = selectedData
+            statusStoryVC.selectedTag = indexPath.row
+            statusStoryVC.fromScreen = "MyStory"
+            // Wrap the compactMap result in an array to match the expected type
+            if let mediaURLs = selectedData.media?.compactMap({ $0.uRL }) {
+                statusStoryVC.imageCollection = [mediaURLs]
+            } else {
+                statusStoryVC.imageCollection = [[]] // or nil, based on your needs
+            }
+            
+        if let storyID = selectedData.media?[indexPath.row].Id {
+                print("Selected Story ID: \(storyID)")
+            }
+
+            self.present(statusStoryVC, animated: true)
         }
-        
-       
-        self.present(statusStoryVC, animated: true)
-    }
 
 }
+
+
+extension MyStatusDeleteVC {
+    func StoryList() {
+        let param = ["RegisterId": "\(getString(key: userDefaultsKeys.RegisterId.rawValue))"] as [String: Any]
+
+        DataManager.shared.StoryList(params: param, isLoader: false, view: view) { [weak self] (result) in
+            switch result {
+            case .success(let StoryList):
+                print("StoryList ", StoryList)
+                self?.myStorys = StoryList.result
+                
+                // Assume currentRegisterId holds the current user's RegisterId
+                let currentRegisterIdString = getString(key: userDefaultsKeys.RegisterId.rawValue)
+                guard !currentRegisterIdString.isEmpty, let currentRegisterId = Int(currentRegisterIdString) else {
+                    return
+                }
+
+                // Filter the stories based on RegisterId
+                let filteredStories = self?.myStorys?.filter { $0.userId == currentRegisterId }
+                
+                // Check if filteredStories is nil or empty and dismiss the view controller if true
+                if filteredStories?.isEmpty ?? true {
+                    self?.dismiss(animated: true, completion: nil)
+                    self?.showTabBar?()
+                } else {
+                    self?.tableView.reloadData()
+                }
+
+            case .failure(let apiError):
+                print("Error ", apiError.localizedDescription)
+                // Handle the error appropriately, e.g., show an alert to the user
+            }
+        }
+    }
+}
+
+
+
+
+extension UIResponder {
+    func getViewController() -> UIViewController? {
+        if let nextResponder = self.next {
+            if let viewController = nextResponder as? UIViewController {
+                return viewController
+            } else {
+                return nextResponder.getViewController()
+            }
+        }
+        return nil
+    }
+}
+

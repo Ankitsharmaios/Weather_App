@@ -271,15 +271,13 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             let MyStatusDeleteVC = MyStatusDeleteVC.getInstance()
             MyStatusDeleteVC.modalPresentationStyle = .overCurrentContext
             MyStatusDeleteVC.showTabBar = {
+                   
                     self.showTabBar(animated: true)
-            
+                    self.StoryList()
             }
             MyStatusDeleteVC.myStorys = StoryListData?.result 
             self.hideTabBar(animated: true)
             self.present(MyStatusDeleteVC, animated: true)
-            
-            
-            
             } else {
                 openCamera()
             }

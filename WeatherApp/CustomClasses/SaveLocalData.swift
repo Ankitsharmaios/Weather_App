@@ -63,12 +63,19 @@ func saveboolean(bool: Bool, key: String){
     UserDefaults.standard.synchronize()
 }
 
+//func getString(key: String) -> String {
+//    if let token = UserDefaults.standard.object(forKey: key) as? String {
+//        return token
+//    }
+//    return ""
+//}
 func getString(key: String) -> String {
     if let token = UserDefaults.standard.object(forKey: key) as? String {
         return token
     }
     return ""
 }
+
 func getBoolean(key: String) -> String {
     if let token = UserDefaults.standard.object(forKey: key) as? String {
         return token

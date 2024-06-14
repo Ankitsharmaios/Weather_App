@@ -107,6 +107,9 @@
 		14E1FC6F2C09FDFA001739C3 /* StoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1FC6C2C09FDFA001739C3 /* StoryHandler.swift */; };
 		14E1FC712C09FE6B001739C3 /* OuterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1FC702C09FE6B001739C3 /* OuterCell.swift */; };
 		14E1FC732C09FEA5001739C3 /* InnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1FC722C09FEA5001739C3 /* InnerCell.swift */; };
+		14EFF34F2C1C0C4200671970 /* ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFF34E2C1C0C4200671970 /* ActionSheet.swift */; };
+		14EFF3512C1C4ACB00671970 /* DeleteStoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFF3502C1C4ACB00671970 /* DeleteStoryModel.swift */; };
+		14EFF3532C1C605B00671970 /* DeletePopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFF3522C1C605B00671970 /* DeletePopUpVC.swift */; };
 		14F11F862C0EE95000F29729 /* TextStatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F11F852C0EE95000F29729 /* TextStatusVC.swift */; };
 		14F11F8E2C0F186F00F29729 /* font2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14F11F872C0F186E00F29729 /* font2.ttf */; };
 		14F11F8F2C0F186F00F29729 /* font6.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14F11F882C0F186F00F29729 /* font6.ttf */; };
@@ -244,6 +247,9 @@
 		14E1FC6C2C09FDFA001739C3 /* StoryHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryHandler.swift; sourceTree = "<group>"; };
 		14E1FC702C09FE6B001739C3 /* OuterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OuterCell.swift; sourceTree = "<group>"; };
 		14E1FC722C09FEA5001739C3 /* InnerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerCell.swift; sourceTree = "<group>"; };
+		14EFF34E2C1C0C4200671970 /* ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheet.swift; sourceTree = "<group>"; };
+		14EFF3502C1C4ACB00671970 /* DeleteStoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStoryModel.swift; sourceTree = "<group>"; };
+		14EFF3522C1C605B00671970 /* DeletePopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePopUpVC.swift; sourceTree = "<group>"; };
 		14F11F852C0EE95000F29729 /* TextStatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatusVC.swift; sourceTree = "<group>"; };
 		14F11F872C0F186E00F29729 /* font2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font2.ttf; sourceTree = "<group>"; };
 		14F11F882C0F186F00F29729 /* font6.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font6.ttf; sourceTree = "<group>"; };
@@ -389,6 +395,7 @@
 			children = (
 				14AF4BB02BFC6DA00042CB95 /* CitysPopUPVC.swift */,
 				14392C432BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift */,
+				14EFF3522C1C605B00671970 /* DeletePopUpVC.swift */,
 			);
 			path = PopUPControllers;
 			sourceTree = "<group>";
@@ -535,6 +542,7 @@
 				14D3CE322BFB625000E700CB /* CommonFile.swift */,
 				14A3E2A12C00578500417919 /* UIView.swift */,
 				14DB818C2C05A2E8000BB7FB /* UITextField.swift */,
+				14EFF34E2C1C0C4200671970 /* ActionSheet.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -556,6 +564,7 @@
 				140B20DC2C08517200BDCFAC /* addStoryModel.swift */,
 				147DA4772C1846AA00D616E7 /* ChatModel.swift */,
 				148F89322C196DA200F59092 /* AppConfigModel.swift */,
+				14EFF3502C1C4ACB00671970 /* DeleteStoryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -942,10 +951,12 @@
 				14D3CE1C2BFB5D9500E700CB /* WeatherDayListCollectionCell.swift in Sources */,
 				14E1FC732C09FEA5001739C3 /* InnerCell.swift in Sources */,
 				14D3CE502BFB68E000E700CB /* Constant.swift in Sources */,
+				14EFF34F2C1C0C4200671970 /* ActionSheet.swift in Sources */,
 				14D3CE452BFB659300E700CB /* UIImage.swift in Sources */,
 				14BD6B582C05DD4200D76C36 /* InnerChatTblvCell.swift in Sources */,
 				147DA4782C1846AA00D616E7 /* ChatModel.swift in Sources */,
 				14D3CE562BFB68E000E700CB /* Reachability.swift in Sources */,
+				14EFF3532C1C605B00671970 /* DeletePopUpVC.swift in Sources */,
 				14DB818D2C05A2E8000BB7FB /* UITextField.swift in Sources */,
 				14BD6B542C05D1A100D76C36 /* TimeConverter.swift in Sources */,
 				145750E62C04AB960001E286 /* AccountTableViewCell.swift in Sources */,
@@ -957,6 +968,7 @@
 				1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */,
 				14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */,
 				147DA46B2C181D7600D616E7 /* Message.swift in Sources */,
+				14EFF3512C1C4ACB00671970 /* DeleteStoryModel.swift in Sources */,
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
 				1463100E2C00C1DD0034896A /* AttachmentCLvCell.swift in Sources */,
 				14C0AEC22C1ADF1600F737A4 /* MyStatusTableViewCell.swift in Sources */,

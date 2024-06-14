@@ -15,6 +15,6 @@ class Singleton {
     var RegisterId: Int?
     var EditProfileData:EditProfileModel?
     var networkStatus = ""
-    
+    var storyId : Int?
 }
 

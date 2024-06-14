@@ -49,6 +49,7 @@ struct StoryResultModel : Mappable {
 }
 
 struct MediaModel : Mappable {
+    var Id : Int?
     var uRL : String?
     var date : String?
     var time : String?
@@ -63,6 +64,7 @@ struct MediaModel : Mappable {
 
     mutating func mapping(map: Map) {
 
+        Id <- map["Id"]
         uRL <- map["URL"]
         date <- map["Date"]
         time <- map["Time"]
