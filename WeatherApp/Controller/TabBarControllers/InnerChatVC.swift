@@ -16,6 +16,8 @@ import Firebase
 
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate{
 
+    @IBOutlet weak var stackViewtrailingLayout: NSLayoutConstraint!
+    @IBOutlet weak var stackViewWidthLayout: NSLayoutConstraint!
     @IBOutlet weak var maintableView: UITableView!
     @IBOutlet weak var bottomCollectionView: UICollectionView!
     @IBOutlet weak var topTableHeightLayout: NSLayoutConstraint!
@@ -46,6 +48,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     let placeholderText = "Message"
     var ref: DatabaseReference!
     var LastChatData:LiveChatDataModel?
+    var communitiesData:CommunitiesListModel?
     var ChatData:[ChatModel]?
     var messages = [Message]()
 
@@ -54,12 +57,21 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setData()
+       
+        if LastChatData != nil
+        {
+            setChatData()
+        }else if communitiesData != nil
+        {
+            setGroupData()
+        }
+        
+        
         setupTable()
         fetchData()
         setupUI()
-        fetchFirebaseData()
-        print("=========LastChatData==========",LastChatData)
+     //   fetchFirebaseData()
+        print("=========LastChatData==========",communitiesData)
   
     }
  
@@ -90,7 +102,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         optionTableView.layer.cornerRadius = 8
         bottomCollectionView.layer.cornerRadius = 8
         optionTableView.reloadData()
-        userImageView.layer.cornerRadius = userImageView.layer.bounds.height / 2
+    //    userImageView.layer.cornerRadius = userImageView.layer.bounds.height / 2
         nameLbl.font = Helvetica.helvetica_bold.font(size: 15)
         statusLbl.font = Helvetica.helvetica_regular.font(size: 11)
         statusLbl.textColor = appThemeColor.text_LightColure
@@ -132,9 +144,13 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         optionTableView.reloadData()
     }
     
-    func setData()
+    func setChatData()
     {
-      
+       
+        vcallBtn.isHidden = false
+        callBtn.isHidden = false
+        stackViewWidthLayout.constant = 115
+        userImageView.layer.cornerRadius = userImageView.layer.bounds.height / 2
         nameLbl.text = LastChatData?.senderName ?? ""
     
         let imageURLStrings = LastChatData?.senderImage
@@ -147,7 +163,23 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         }
     }
     
+    func setGroupData()
+    {
+        vcallBtn.isHidden = true
+        callBtn.isHidden = true
+        stackViewWidthLayout.constant = 25
+        userImageView.layer.cornerRadius = 10
+        nameLbl.text = communitiesData?.groupName ?? ""
     
+        let imageURLStrings = communitiesData?.groupIcon
+
+        // Safely get the last URL string if it exists
+        if let lastImageURLString = imageURLStrings, let imageURL = URL(string: lastImageURLString) {
+            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+        } else {
+            userImageView.image = UIImage(named: "placeholder")
+        }
+    }
     
     @IBAction func sendMgsAction(_ sender: Any) 
     {

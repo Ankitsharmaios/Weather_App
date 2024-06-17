@@ -167,6 +167,17 @@
                                         <color key="textColor" name="RedColor_D62323"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MqP-0Y-3UK">
+                                        <rect key="frame" x="188" y="165" width="90" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="2wH-Bl-Bbd"/>
+                                            <constraint firstAttribute="width" constant="90" id="lfb-5c-n08"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <connections>
+                                            <action selector="forgotPINAction:" destination="je4-Cq-krD" eventType="touchUpInside" id="HLO-SR-1Jh"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -177,7 +188,9 @@
                                     <constraint firstAttribute="trailing" secondItem="KVc-aT-Cg0" secondAttribute="trailing" id="GsZ-tE-8tL"/>
                                     <constraint firstAttribute="trailing" secondItem="jza-cA-YjX" secondAttribute="trailing" constant="15" id="L59-38-RgW"/>
                                     <constraint firstAttribute="height" constant="200" id="NEO-sB-JeF"/>
+                                    <constraint firstAttribute="trailing" secondItem="MqP-0Y-3UK" secondAttribute="trailing" constant="65" id="P9D-wG-5el"/>
                                     <constraint firstAttribute="trailing" secondItem="C5e-RA-LAZ" secondAttribute="trailing" constant="50" id="RX2-s0-jIa"/>
+                                    <constraint firstAttribute="bottom" secondItem="MqP-0Y-3UK" secondAttribute="bottom" constant="15" id="S72-Cb-dyQ"/>
                                     <constraint firstItem="Gjz-jy-zXu" firstAttribute="centerX" secondItem="C5e-RA-LAZ" secondAttribute="centerX" id="TFp-wf-EvS"/>
                                     <constraint firstItem="jza-cA-YjX" firstAttribute="leading" secondItem="eLy-vL-zJX" secondAttribute="leading" constant="15" id="cAC-pp-Mza"/>
                                     <constraint firstItem="jza-cA-YjX" firstAttribute="top" secondItem="C5e-RA-LAZ" secondAttribute="bottom" constant="26" id="cUM-C8-GbR"/>
@@ -200,6 +213,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnForgotPin" destination="MqP-0Y-3UK" id="PVn-PL-0eW"/>
                         <outlet property="lblEnterYou" destination="VGr-Mz-DDE" id="IUV-kn-SoA"/>
                         <outlet property="lblIncorrectPIN" destination="Gjz-jy-zXu" id="nZf-tJ-Lrq"/>
                         <outlet property="lblYouwillbe" destination="jza-cA-YjX" id="cgy-OQ-zi2"/>
@@ -210,7 +224,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MfM-Kc-74v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1185" y="-39"/>
+            <point key="canvasLocation" x="-1187.0229007633586" y="-39.436619718309863"/>
         </scene>
         <!--Delete Pop UpVC-->
         <scene sceneID="2nP-mb-bjh">

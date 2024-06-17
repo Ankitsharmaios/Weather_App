@@ -39,6 +39,8 @@ class StoryTableViewCell: UITableViewCell {
     }
     func setUpUI()
     {
+       
+        lblTime.isHidden = true
         
         lbltextStatusShow.isEnabled = true
         
@@ -98,17 +100,17 @@ class StoryTableViewCell: UITableViewCell {
               }
           }
           
-          // Get the latest status date and time
-          if let media = detail.media, let latestMedia = media.last,
-             let statusDate = latestMedia.date,
-             let statusTime = latestMedia.time {
-              
-              // Calculate time difference and set it to the label
-              let elapsedTimeString = Converter.timeAgo(Date: statusDate, Time: statusTime)
-              lblTime.text = elapsedTimeString
-          } else {
-              lblTime.text = ""
-          }
+//          // Get the latest status date and time
+//          if let media = detail.media, let latestMedia = media.last,
+//             let statusDate = latestMedia.date,
+//             let statusTime = latestMedia.time {
+//              
+//              // Calculate time difference and set it to the label
+//              let elapsedTimeString = Converter.timeAgo(Date: statusDate, Time: statusTime)
+//              lblTime.text = elapsedTimeString
+//          } else {
+//              lblTime.text = ""
+//          }
           
           // Set user name
           lblName.text = detail.userName

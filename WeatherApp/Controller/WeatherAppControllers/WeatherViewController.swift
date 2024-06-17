@@ -10,6 +10,7 @@ import Toast_Swift
 
 class WeatherViewController: WhiteColorNoneNavigation {
     
+    @IBOutlet weak var btnLongPress: UIButton!
     @IBOutlet weak var selectCityBtn: UIButton!
     @IBOutlet weak var lblWeatherApp: UILabel!
     @IBOutlet weak var collectioninnerView: UIView!
@@ -37,6 +38,9 @@ class WeatherViewController: WhiteColorNoneNavigation {
         cellNib()
         getWeatherData()
         setFont()
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(long))
+        longGesture.minimumPressDuration = 3
+        btnLongPress.addGestureRecognizer(longGesture)
         // Do any additional setup after loading the view.
         
         print(getCurrentDate(format: "HH"))
@@ -179,6 +183,41 @@ class WeatherViewController: WhiteColorNoneNavigation {
             self.collectionView.reloadData()
         }
         present(CitysPopUPVC, animated: true)
+    }
+    @IBAction func longPressAction(_ sender: Any)
+    {
+       
+    }
+    @objc func long(gesture: UILongPressGestureRecognizer) {
+        let userData = getUserData()
+        print("UserData", userData ?? "nil")
+        
+        if gesture.state == .began {
+            DispatchQueue.main.async {
+                self.dismiss(animated: true) {
+                    if userData != nil {
+                        let storyboard = UIStoryboard(name: "PopUp", bundle: nil)
+                        if let destinationVC = storyboard.instantiateViewController(withIdentifier: "Two_step_verificationPopUpVC") as? Two_step_verificationPopUpVC {
+                            destinationVC.modalPresentationStyle = .overCurrentContext
+                            if let viewController = UIViewController.currentViewc() {
+                                
+                                // Present the new view controller after the dismissal animation completes
+                                viewController.present(destinationVC, animated: true, completion: nil)
+                            }
+                        }
+                    } else {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        if let destinationVC = storyboard.instantiateViewController(withIdentifier: "WelcomeToTheWeatherAppVC") as? WelcomeToTheWeatherAppVC {
+                            destinationVC.modalPresentationStyle = .overCurrentContext
+                            if let viewController = UIViewController.currentViewcc() {
+                                // Present the new view controller after the dismissal animation completes
+                                viewController.present(destinationVC, animated: true, completion: nil)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

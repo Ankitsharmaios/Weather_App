@@ -12,6 +12,7 @@ class Two_step_verificationPopUpVC: UIViewController,DPOTPViewDelegate {
    
  
 
+    @IBOutlet weak var btnForgotPin: UIButton!
     @IBOutlet weak var otpView: DPOTPView!
     @IBOutlet weak var lblIncorrectPIN: UILabel!
     
@@ -65,7 +66,8 @@ class Two_step_verificationPopUpVC: UIViewController,DPOTPViewDelegate {
 
         // Define the attributes for the "Forgot PIN?" part
         let greenAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: appThemeColor.text_Weather
+            .foregroundColor: appThemeColor.text_Weather,
+            .underlineStyle: NSUnderlineStyle.single.rawValue // Add underline attribute
         ]
 
         // Find the range of "Forgot PIN?" in the full text
@@ -77,6 +79,7 @@ class Two_step_verificationPopUpVC: UIViewController,DPOTPViewDelegate {
         // Assign the attributed string to the label
         lblYouwillbe.attributedText = attributedString
     }
+
     
     
     func setupOTPView()
@@ -122,6 +125,19 @@ class Two_step_verificationPopUpVC: UIViewController,DPOTPViewDelegate {
     func dpOTPViewChangePositionAt(_ position: Int) {
         print("")
     }
+    
+    @IBAction func forgotPINAction(_ sender: Any) 
+    {
+        DispatchQueue.main.async {
+            let controller =  VerifyNumberVC.getInstance()
+            controller.modalPresentationStyle = .fullScreen
+            controller.userStatusMessage = "ForgotPIN"
+            self.present(controller, animated: true)
+        }
+    }
+    
+    
+    
 }
 
 extension Two_step_verificationPopUpVC{

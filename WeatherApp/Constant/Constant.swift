@@ -79,4 +79,5 @@ enum firebaseTableName: String{
     case Chat = "Chat"
     case LastChat = "LastChat"
     case User = "User"
+    case GroupChat = "GroupChat"
 }

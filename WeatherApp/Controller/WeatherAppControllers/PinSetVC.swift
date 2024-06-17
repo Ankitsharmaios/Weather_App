@@ -127,7 +127,7 @@ class PinSetVC: UIViewController & DPOTPViewDelegate{
                     let ConfirmPinVC = ConfirmPinVC.getInstance()
                     ConfirmPinVC.modalPresentationStyle = .overCurrentContext
                     ConfirmPinVC.pin = self.otpView.text ?? ""
-                    ConfirmPinVC.isFrom = self.isFrom ?? ""
+                    ConfirmPinVC.isFrom = self.isFrom
                     self.present(ConfirmPinVC, animated: false)
         }
     }

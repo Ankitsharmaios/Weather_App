@@ -159,7 +159,7 @@ extension WelcomeToTheWeatherAppVC
                                     VerifyNumberVC.number = self?.numberField.text ?? ""
                                     VerifyNumberVC.userStatusMessage = userRegister.statusMessage ?? ""
                         
-                        self?.present(VerifyNumberVC, animated: true)
+                                    self?.present(VerifyNumberVC, animated: true)
                     }
                 }
                 

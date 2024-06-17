@@ -74,7 +74,7 @@ class MyStatusTableViewCell: UITableViewCell {
         guard let viewController = self.getViewController(), let storyID = Singleton.sharedInstance.storyId else { return }
         
         // Close previously open action sheet if any
-        NotificationCenter.default.post(name: Notification.Name("CloseActionSheet"), object: nil)
+    //    NotificationCenter.default.post(name: Notification.Name("CloseActionSheet"), object: nil)
         
         customAlertView = CustomAlertView(options: optionArray)
         customAlertView?.optionSelected = { [weak self] option in

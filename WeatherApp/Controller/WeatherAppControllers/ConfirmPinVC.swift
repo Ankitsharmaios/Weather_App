@@ -125,7 +125,7 @@ class ConfirmPinVC: UIViewController & DPOTPViewDelegate{
         }
         
         self.view.endEditing(true)
-        if isFrom == "Account"
+        if isFrom == "Account" || isFrom == "ForgotPIN"
         {
             AddTwoStepVerificationcode(type: "Edit")
         }else {
@@ -142,7 +142,7 @@ extension ConfirmPinVC
                      "Passcode":otpView.text ?? "",
                      "PasscodeEnable":"true",
                      "Type":type
-                     ] as [String : Any]
+        ] as [String : Any]
         
         DataManager.shared.AddTwoStepVerificationcode(params: param,isLoader: false, view: view) { [weak self] (result) in
             switch result {
@@ -152,11 +152,23 @@ extension ConfirmPinVC
                 
                 if AddTwoStepVerificationcode.statusMessage?.lowercased() == "Added successully".lowercased() {
                     DispatchQueue.main.async {
-                                    let TabBarVC = TabBarVC.getInstance()
-                                    TabBarVC.modalPresentationStyle = .overCurrentContext
-                                    self?.present(TabBarVC, animated: true)
+                        let TabBarVC = TabBarVC.getInstance()
+                        TabBarVC.modalPresentationStyle = .overCurrentContext
+                        self?.present(TabBarVC, animated: true)
                     }
-                }else if AddTwoStepVerificationcode.statusMessage?.lowercased() == "Edit successully".lowercased() {
+                } else if AddTwoStepVerificationcode.statusMessage?.lowercased() == "Edit successfully" || self?.isFrom == "ForgotPIN" {
+                    DispatchQueue.main.async {
+                        var toastStyle = ToastStyle()
+                        toastStyle.backgroundColor = appThemeColor.CommonBlack
+                        toastStyle.messageFont = UIFont.systemFont(ofSize: 13.0) // Adjust the font size to make the text smaller
+                        
+                        self?.view.makeToast("Two-Step Verification PIN changed successfully", duration: 2.0, position: .bottom, style: toastStyle)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            self?.restartApp()
+                        }
+                    }
+                } else if AddTwoStepVerificationcode.statusMessage?.lowercased() == "Edit successully".lowercased() {
                     DispatchQueue.main.async {
                         let controller =  Two_step_verificationVC.getInstance()
                         controller.modalPresentationStyle = .fullScreen
@@ -172,6 +184,15 @@ extension ConfirmPinVC
         }
     }
     
-   
     
+    // Function to reinitialize the app's initial state
+    func restartApp() {
+        guard let window = UIApplication.shared.keyWindow else { return }
+        
+        let rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        window.rootViewController = rootViewController
+        window.makeKeyAndVisible()
+        
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
     }
+}

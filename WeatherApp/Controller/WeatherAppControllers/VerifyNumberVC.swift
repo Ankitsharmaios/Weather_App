@@ -91,10 +91,24 @@ class VerifyNumberVC: UIViewController {
         
         btnVerify.layer.cornerRadius = btnVerify.frame.size.height / 2
         btnVerify.clipsToBounds = true
+       
+        if number == ""
+        {
+            setnumber()
+        }else{
+            lblVerify.text = "Verify +91 \(number)"
+        }
         
-        lblVerify.text = "Verify +91 \(number)"
+        
     }
-    
+    func setnumber()
+    {
+        
+        let userdata = getUserData()
+        let number = userdata?.result?.phoneNo
+        lblVerify.text = "Verify +91 \(String(describing: number!))"
+        self.number = number!
+    }
 
     func setHelpView()
     {
@@ -152,16 +166,9 @@ class VerifyNumberVC: UIViewController {
             self.view.makeToast("Enter valid OTP", duration: 2.0, position: .bottom, style: toastStyle)
             return
         }
-        
-       
-        
-        
+
         self.view.endEditing(true)
         verifyOTP()
-        
-        
-        
-        
         
     }
 }
@@ -195,12 +202,21 @@ extension VerifyNumberVC
                                         
                                         saveString(strin: UserToken.userToken, key: userDefaultsKeys.token.rawValue)
                                         saveString(strin: "\(Singleton.sharedInstance.RegisterId ?? 0)", key: userDefaultsKeys.RegisterId.rawValue)
-                    
-                            if self?.userStatusMessage.lowercased() == "User exist!".lowercased(){
+                            
+                            
+                            
+                            if self?.userStatusMessage.lowercased() == "ForgotPIN".lowercased() {
                                 DispatchQueue.main.async {
-                                            let VerifyOTPVC =  Two_step_verificationPopUpVC.getInstance()
-                                            VerifyOTPVC.modalPresentationStyle = .overCurrentContext
-                                            self?.present(VerifyOTPVC, animated: true)
+                                            let PinSetVC =  PinSetVC.getInstance()
+                                            PinSetVC.modalPresentationStyle = .overCurrentContext
+                                            PinSetVC.isFrom = "ForgotPIN"
+                                            self?.present(PinSetVC, animated: true)
+                                }
+                            }else if self?.userStatusMessage.lowercased() == "User exist!".lowercased(){
+                                DispatchQueue.main.async {
+                                            let Two_step_verificationPopUpVC =  Two_step_verificationPopUpVC.getInstance()
+                                            Two_step_verificationPopUpVC.modalPresentationStyle = .overCurrentContext
+                                            self?.present(Two_step_verificationPopUpVC, animated: true)
                                 }
                             }else if  self?.userStatusMessage.lowercased() == "Data added successully".lowercased(){
                                 DispatchQueue.main.async {

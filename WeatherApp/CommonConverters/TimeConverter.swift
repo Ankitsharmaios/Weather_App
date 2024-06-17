@@ -7,6 +7,31 @@
 
 import Foundation
 struct Converter{
+  
+    static func convertDateFormat(dateString: String) -> String? {
+            // Define the input date format
+            let inputDateFormat = "dd-MM-yyyy"
+            // Define the output date format
+            let outputDateFormat = "dd/MM/yy"
+
+            // Create a DateFormatter for the input format
+            let inputFormatter = DateFormatter()
+            inputFormatter.dateFormat = inputDateFormat
+
+            // Convert the string to a Date object
+            guard let date = inputFormatter.date(from: dateString) else {
+                return nil
+            }
+
+            // Create a DateFormatter for the output format
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = outputDateFormat
+
+            // Convert the Date object to the desired output string format
+            let outputDateString = outputFormatter.string(from: date)
+            return outputDateString
+        }
+    
     static func convertApiTimeToAMPM(apiTime: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss"

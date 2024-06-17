@@ -38,11 +38,12 @@
 		147DA4752C181E7900D616E7 /* RightViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DA4702C181E7900D616E7 /* RightViewCell.swift */; };
 		147DA4762C181E7900D616E7 /* RightViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147DA4712C181E7900D616E7 /* RightViewCell.xib */; };
 		147DA4782C1846AA00D616E7 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DA4772C1846AA00D616E7 /* ChatModel.swift */; };
-		1488B0C62C0603E700DF7372 /* StatusStoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488B0C52C0603E700DF7372 /* StatusStoryVC.swift */; };
 		148F89332C196DA200F59092 /* AppConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F89322C196DA200F59092 /* AppConfigModel.swift */; };
 		14939D582C07230D001E6A44 /* StoryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14939D572C07230D001E6A44 /* StoryListModel.swift */; };
 		14939D5C2C07269F001E6A44 /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14939D5A2C07269F001E6A44 /* StoryTableViewCell.swift */; };
 		14939D5D2C0726A0001E6A44 /* StoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14939D5B2C07269F001E6A44 /* StoryTableViewCell.xib */; };
+		149F12BA2C2068590048A84D /* CallsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F12B92C2068590048A84D /* CallsVC.swift */; };
+		149F12BC2C206EC20048A84D /* UserListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F12BB2C206EC20048A84D /* UserListModel.swift */; };
 		14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */; };
 		14A3E2A02C00557900417919 /* optionHeaderTblvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */; };
 		14A3E2A22C00578500417919 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3E2A12C00578500417919 /* UIView.swift */; };
@@ -118,6 +119,8 @@
 		14F11F922C0F186F00F29729 /* font4.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14F11F8B2C0F186F00F29729 /* font4.ttf */; };
 		14F11F932C0F186F00F29729 /* font7.otf in Resources */ = {isa = PBXBuildFile; fileRef = 14F11F8C2C0F186F00F29729 /* font7.otf */; };
 		14F11F942C0F186F00F29729 /* font3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14F11F8D2C0F186F00F29729 /* font3.ttf */; };
+		14F7ACC42C1FFD4900FA2BBD /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F7ACC32C1FFD4900FA2BBD /* CommunitiesVC.swift */; };
+		14F7ACC62C20079700FA2BBD /* CommunitiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F7ACC52C20079700FA2BBD /* CommunitiesModel.swift */; };
 		70D810CB3A22DB2EF280F369 /* Pods_WeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4D3880110DF7A00E159173 /* Pods_WeatherApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -170,11 +173,12 @@
 		147DA4702C181E7900D616E7 /* RightViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightViewCell.swift; sourceTree = "<group>"; };
 		147DA4712C181E7900D616E7 /* RightViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightViewCell.xib; sourceTree = "<group>"; };
 		147DA4772C1846AA00D616E7 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
-		1488B0C52C0603E700DF7372 /* StatusStoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusStoryVC.swift; sourceTree = "<group>"; };
 		148F89322C196DA200F59092 /* AppConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigModel.swift; sourceTree = "<group>"; };
 		14939D572C07230D001E6A44 /* StoryListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListModel.swift; sourceTree = "<group>"; };
 		14939D5A2C07269F001E6A44 /* StoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
 		14939D5B2C07269F001E6A44 /* StoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryTableViewCell.xib; sourceTree = "<group>"; };
+		149F12B92C2068590048A84D /* CallsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsVC.swift; sourceTree = "<group>"; };
+		149F12BB2C206EC20048A84D /* UserListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListModel.swift; sourceTree = "<group>"; };
 		14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = optionHeaderTblvCell.swift; sourceTree = "<group>"; };
 		14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = optionHeaderTblvCell.xib; sourceTree = "<group>"; };
 		14A3E2A12C00578500417919 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -258,6 +262,8 @@
 		14F11F8B2C0F186F00F29729 /* font4.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font4.ttf; sourceTree = "<group>"; };
 		14F11F8C2C0F186F00F29729 /* font7.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font7.otf; sourceTree = "<group>"; };
 		14F11F8D2C0F186F00F29729 /* font3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font3.ttf; sourceTree = "<group>"; };
+		14F7ACC32C1FFD4900FA2BBD /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
+		14F7ACC52C20079700FA2BBD /* CommunitiesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesModel.swift; sourceTree = "<group>"; };
 		73CF1AFA498B569ECB9CC7FB /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		7AE7CD4A886247067C92030F /* Pods-WeatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.debug.xcconfig"; path = "Target Support Files/Pods-WeatherApp/Pods-WeatherApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -361,7 +367,6 @@
 				14E1FC6D2C09FDFA001739C3 /* Model */,
 				14E1FC692C09FD38001739C3 /* StoryViewController.swift */,
 				1423389A2C05D72500328AB1 /* StatusVC.swift */,
-				1488B0C52C0603E700DF7372 /* StatusStoryVC.swift */,
 				14F11F852C0EE95000F29729 /* TextStatusVC.swift */,
 				14C0AEBE2C1AC86000F737A4 /* MyStatusDeleteVC.swift */,
 			);
@@ -379,6 +384,14 @@
 				14C0AEC12C1ADF1600F737A4 /* MyStatusTableViewCell.xib */,
 			);
 			path = SotryCells;
+			sourceTree = "<group>";
+		};
+		149F12B82C2068330048A84D /* CallsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				149F12B92C2068590048A84D /* CallsVC.swift */,
+			);
+			path = CallsViewController;
 			sourceTree = "<group>";
 		};
 		14A3E29C2C00555400417919 /* OptionHeaderCell */ = {
@@ -565,6 +578,8 @@
 				147DA4772C1846AA00D616E7 /* ChatModel.swift */,
 				148F89322C196DA200F59092 /* AppConfigModel.swift */,
 				14EFF3502C1C4ACB00671970 /* DeleteStoryModel.swift */,
+				14F7ACC52C20079700FA2BBD /* CommunitiesModel.swift */,
+				149F12BB2C206EC20048A84D /* UserListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -591,6 +606,8 @@
 		14D3CE392BFB62E500E700CB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				149F12B82C2068330048A84D /* CallsViewController */,
+				14F7ACC22C1FFD2600FA2BBD /* CommunitiesViewControllers */,
 				147DA4672C18184E00D616E7 /* WeatherAppControllers */,
 				14392C472BFF7B8D004F8894 /* TabBarControllers */,
 				14AF4BAF2BFC6D750042CB95 /* PopUPControllers */,
@@ -677,6 +694,14 @@
 				14E1FC6C2C09FDFA001739C3 /* StoryHandler.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		14F7ACC22C1FFD2600FA2BBD /* CommunitiesViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				14F7ACC32C1FFD4900FA2BBD /* CommunitiesVC.swift */,
+			);
+			path = CommunitiesViewControllers;
 			sourceTree = "<group>";
 		};
 		627E93590F24FDFFD49C77C5 /* Pods */ = {
@@ -916,12 +941,12 @@
 				14D3CE542BFB68E000E700CB /* DataManager.swift in Sources */,
 				14AF4BBF2BFC80940042CB95 /* CitysCollectionViewCell.swift in Sources */,
 				14AF4BB42BFC72540042CB95 /* UIViewControllerExtented.swift in Sources */,
+				149F12BC2C206EC20048A84D /* UserListModel.swift in Sources */,
 				14D3CE232BFB5F0300E700CB /* AppResources.swift in Sources */,
 				14939D5C2C07269F001E6A44 /* StoryTableViewCell.swift in Sources */,
 				145750DF2C04984B0001E286 /* SettingsTableViewCell.swift in Sources */,
 				14D3CE532BFB68E000E700CB /* CounterManaged.swift in Sources */,
 				1423389B2C05D72500328AB1 /* StatusVC.swift in Sources */,
-				1488B0C62C0603E700DF7372 /* StatusStoryVC.swift in Sources */,
 				14D3CE332BFB625000E700CB /* CommonFile.swift in Sources */,
 				14E1FC712C09FE6B001739C3 /* OuterCell.swift in Sources */,
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
@@ -967,6 +992,7 @@
 				14D3CE512BFB68E000E700CB /* APILogs.swift in Sources */,
 				1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */,
 				14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */,
+				14F7ACC42C1FFD4900FA2BBD /* CommunitiesVC.swift in Sources */,
 				147DA46B2C181D7600D616E7 /* Message.swift in Sources */,
 				14EFF3512C1C4ACB00671970 /* DeleteStoryModel.swift in Sources */,
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
@@ -974,6 +1000,8 @@
 				14C0AEC22C1ADF1600F737A4 /* MyStatusTableViewCell.swift in Sources */,
 				1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */,
 				1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */,
+				14F7ACC62C20079700FA2BBD /* CommunitiesModel.swift in Sources */,
+				149F12BA2C2068590048A84D /* CallsVC.swift in Sources */,
 				14B3742E2C006D6500AC949B /* ProfileVC.swift in Sources */,
 				145750E82C04B4AA0001E286 /* LogOutModel.swift in Sources */,
 				14A3E2A22C00578500417919 /* UIView.swift in Sources */,

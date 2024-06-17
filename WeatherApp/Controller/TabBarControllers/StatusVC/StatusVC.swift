@@ -190,7 +190,7 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         lblTextStatus.isHidden = true
         
         lblUpdate.textColor = appThemeColor.CommonBlack
-        lblUpdate.font = Helvetica.helvetica_regular.font(size: 24)
+        lblUpdate.font = Nunitonsans.nuniton_regular.font(size: 24)
         
         lblStatus.textColor = appThemeColor.CommonBlack
         lblStatus.font = Helvetica.helvetica_medium.font(size: 18)

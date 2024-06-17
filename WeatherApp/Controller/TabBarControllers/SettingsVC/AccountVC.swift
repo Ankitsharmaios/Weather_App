@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class AccountVC: UIViewController {
 
@@ -77,38 +78,50 @@ extension AccountVC:UITableViewDataSource & UITableViewDelegate
 }
     
 }
-extension AccountVC
-{
-    //MARK: Call Api
-    func Logout(){
-        let param = ["RegisterId":getString(key: userDefaultsKeys.RegisterId.rawValue),
-                     "HashToken":getString(key: userDefaultsKeys.token.rawValue),
-                     ] as [String : Any]
+
+extension AccountVC {
+    // MARK: Call Api
+    func Logout() {
+        let param = ["RegisterId": getString(key: userDefaultsKeys.RegisterId.rawValue),
+                     "HashToken": getString(key: userDefaultsKeys.token.rawValue)]
         
-        DataManager.shared.Logout(params: param,isLoader: false, view: view) { [weak self] (result) in
+        DataManager.shared.Logout(params: param, isLoader: false, view: view) { [weak self] (result) in
             switch result {
             case .success(let Logout):
                 print("Logout ", Logout)
                 self?.LogoutData = Logout
                 
-                if Logout.statusMessage?.lowercased() == "Logged out successfully".lowercased(){
+                if Logout.statusMessage?.lowercased() == "logged out successfully" {
                     removeUserDefaultsKey(key: userDefaultsKeys.userdata.rawValue)
                     removeUserDefaultsKey(key: userDefaultsKeys.RegisterId.rawValue)
-                    
                     DispatchQueue.main.async {
-                        let controller =  WeatherViewController.getInstance()
-                        controller.modalPresentationStyle = .fullScreen
-                        self?.present(controller, animated: true)
+                        var toastStyle = ToastStyle()
+                        toastStyle.backgroundColor = appThemeColor.CommonBlack
+                        toastStyle.messageFont = UIFont.systemFont(ofSize: 13.0) // Adjust the font size to make the text smaller
+                        
+                        self?.view.makeToast(Logout.statusMessage, duration: 1.0, position: .bottom, style: toastStyle)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            self?.restartApp()
+                        }
                     }
                 }
-                
             case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
-               
             }
         }
     }
     
-    
-    
+    func restartApp() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+        
+        let rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        window.rootViewController = rootViewController
+        window.makeKeyAndVisible()
+        
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
+    }
 }
+

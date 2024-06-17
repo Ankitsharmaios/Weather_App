@@ -22,13 +22,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="380" height="80"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rv2-Np-3ra">
-                                <rect key="frame" x="95" y="18" width="275" height="24"/>
+                                <rect key="frame" x="87" y="30" width="283" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxF-US-av9">
-                                <rect key="frame" x="95" y="44" width="275" height="21"/>
+                                <rect key="frame" x="87" y="56" width="283" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -66,9 +66,9 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Rv2-Np-3ra" firstAttribute="leading" secondItem="I0P-hq-zjV" secondAttribute="trailing" constant="20" id="2vJ-YT-1ja"/>
+                            <constraint firstItem="Rv2-Np-3ra" firstAttribute="leading" secondItem="I0P-hq-zjV" secondAttribute="trailing" constant="12" id="2vJ-YT-1ja"/>
                             <constraint firstItem="I0P-hq-zjV" firstAttribute="centerY" secondItem="3mp-9B-zBb" secondAttribute="centerY" id="6VM-hD-maR"/>
-                            <constraint firstItem="Rv2-Np-3ra" firstAttribute="top" secondItem="3mp-9B-zBb" secondAttribute="top" constant="18" id="7OU-dD-2U9"/>
+                            <constraint firstItem="Rv2-Np-3ra" firstAttribute="top" secondItem="3mp-9B-zBb" secondAttribute="top" constant="30" id="7OU-dD-2U9"/>
                             <constraint firstItem="NxF-US-av9" firstAttribute="leading" secondItem="Rv2-Np-3ra" secondAttribute="leading" id="XpT-lU-F6v"/>
                             <constraint firstItem="I0P-hq-zjV" firstAttribute="leading" secondItem="3mp-9B-zBb" secondAttribute="leading" constant="15" id="epv-EO-9GN"/>
                             <constraint firstAttribute="trailing" secondItem="Rv2-Np-3ra" secondAttribute="trailing" constant="10" id="meM-wg-yfW"/>

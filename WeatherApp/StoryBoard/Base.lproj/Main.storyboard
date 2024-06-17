@@ -107,10 +107,23 @@
                                                         <action selector="selectCityAction:" destination="fBE-2f-wo9" eventType="touchUpInside" id="xvc-a0-gVk"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Cy-ka-ym4">
+                                                    <rect key="frame" x="256" y="7.6666666666666679" width="90" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="K5m-cn-Khv"/>
+                                                        <constraint firstAttribute="width" constant="90" id="kbd-dT-k8y"/>
+                                                    </constraints>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <buttonConfiguration key="configuration" style="plain"/>
+                                                    <connections>
+                                                        <action selector="longPressAction:" destination="fBE-2f-wo9" eventType="touchUpInside" id="5Nq-mr-0Mf"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" name="BlueLightColor_EAF5FF"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="380" id="0GH-If-Wm1"/>
+                                                <constraint firstAttribute="trailing" secondItem="9Cy-ka-ym4" secondAttribute="trailing" constant="15" id="1RO-S3-hV6"/>
                                                 <constraint firstItem="Buz-VF-BEE" firstAttribute="top" secondItem="aRg-mq-Lut" secondAttribute="bottom" constant="50" id="2Pz-4o-SlZ"/>
                                                 <constraint firstItem="HsU-vE-TPN" firstAttribute="leading" secondItem="PFB-mD-2cU" secondAttribute="leading" constant="20" symbolic="YES" id="6lH-C0-9IU"/>
                                                 <constraint firstItem="jFF-0p-ebd" firstAttribute="leading" secondItem="HsU-vE-TPN" secondAttribute="trailing" constant="8" symbolic="YES" id="7fN-gT-hhz"/>
@@ -130,6 +143,7 @@
                                                 <constraint firstItem="xbv-rC-ela" firstAttribute="top" secondItem="PFB-mD-2cU" secondAttribute="top" constant="130" id="ZOA-ig-Juy"/>
                                                 <constraint firstItem="aRg-mq-Lut" firstAttribute="top" secondItem="xbv-rC-ela" secondAttribute="bottom" constant="5" id="bTF-2d-N2O"/>
                                                 <constraint firstItem="ZnG-0h-zYr" firstAttribute="top" secondItem="PFB-mD-2cU" secondAttribute="top" id="gCj-Af-rNl"/>
+                                                <constraint firstItem="9Cy-ka-ym4" firstAttribute="centerY" secondItem="sY4-4U-ZK1" secondAttribute="centerY" id="lEW-0t-Dzw"/>
                                                 <constraint firstItem="sY4-4U-ZK1" firstAttribute="trailing" secondItem="jFF-0p-ebd" secondAttribute="trailing" id="uA2-uo-QhG"/>
                                                 <constraint firstItem="jFF-0p-ebd" firstAttribute="centerY" secondItem="HsU-vE-TPN" secondAttribute="centerY" id="uYG-rJ-rIt"/>
                                             </constraints>
@@ -205,6 +219,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="jpb-gw-gPp"/>
                     <connections>
+                        <outlet property="btnLongPress" destination="9Cy-ka-ym4" id="OK7-Hn-uK7"/>
                         <outlet property="collectionView" destination="0yp-kv-Jt6" id="U2z-jY-AUk"/>
                         <outlet property="collectioninnerView" destination="Buz-VF-BEE" id="lcy-cL-54P"/>
                         <outlet property="dateLbl" destination="pFt-fh-41D" id="gVv-nX-dR3"/>
