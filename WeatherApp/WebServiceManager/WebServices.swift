@@ -244,29 +244,32 @@ extension DataManager {
     
  
     // MARK: AppConfig
-    func AppConfig(isLoader: Bool, view: UIView, _ completion: @escaping (Result<AppConfigModel, APIError>) -> Void) {
-        
+    func AppConfig(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<AppConfigModel, APIError>) -> Void) {
+
         // Create URL
         let url = getURL(.AppConfig)
-        
-        NetworkManager.shared.getResponse(url, mappingType: AppConfigModel.self, view: view) { result in
-            switch result {
-            case .success(let data):
-                print("status \(data.status ?? false)")
-                print("message \(data.statusMessage ?? "")")
-                
-                if !(data.status ?? false) && data.statusMessage == "Token Expired" {
-                    completion(.failure(.errorMessage("Token Expired")))
-                } else if !(data.status ?? false) && data.statusMessage == "login failed !" {
-                    completion(.failure(.errorMessage("Login failed!")))
-                } else {
-                    completion(.success(data))
-                }
-            case .failure(let error):
-                completion(.failure(error))
+
+        NetworkManager.shared.postResponse(url, parameter: params, header: getHttpHeaders(), mappingType: AppConfigModel.self,view:view) { (mappableArray, apiError) in
+            
+            guard let data = mappableArray as? AppConfigModel else {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }
+            
+            print("status \(data.status ?? false)")
+            print("message \(data.statusMessage ?? "")")
+            
+            if !(data.status ?? false) && data.statusMessage == "Token Expired" {
+                completion(.failure(apiError ?? .errorMessage("Something went wrong")))
+                return
+            }else if !(data.status ?? false) && data.statusMessage == "login failed !" {
+                completion(.success(data))
+            } else{
+                completion(.success(data))
             }
         }
     }
+    
     //MARK: DeleteStory
     func DeleteStory(params: [String : Any], isLoader:Bool,view:UIView, _ completion: @escaping(Result<DeleteStoryModel, APIError>) -> Void) {
 

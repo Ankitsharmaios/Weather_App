@@ -87,11 +87,14 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="imgHeightLayout" destination="OpI-X2-0tn" id="CbT-o8-rcM"/>
                 <outlet property="imgInnerView" destination="I0P-hq-zjV" id="JNq-sk-Rra"/>
+                <outlet property="imgWidthLayout" destination="2ga-0w-j4O" id="hts-p7-1se"/>
                 <outlet property="lblName" destination="Rv2-Np-3ra" id="Otm-l7-n16"/>
                 <outlet property="lblTime" destination="NxF-US-av9" id="Xup-vS-GBz"/>
                 <outlet property="lbltextStatusShow" destination="nZx-jF-B32" id="dYw-JE-ctB"/>
                 <outlet property="mainView" destination="3mp-9B-zBb" id="Rw6-AW-L3Q"/>
+                <outlet property="nameTopLayout" destination="7OU-dD-2U9" id="dWU-cy-Ms0"/>
                 <outlet property="userimageView" destination="rBs-tg-Zf7" id="iEc-TF-oGY"/>
             </connections>
             <point key="canvasLocation" x="151.14503816793894" y="-2.1126760563380285"/>

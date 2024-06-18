@@ -9,7 +9,10 @@ import UIKit
 import SDWebImage
 import WhatsappStatusRingBar
 class StoryTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var imgHeightLayout: NSLayoutConstraint!
+    
+    @IBOutlet weak var imgWidthLayout: NSLayoutConstraint!
+    @IBOutlet weak var nameTopLayout: NSLayoutConstraint!
     @IBOutlet weak var lbltextStatusShow: UILabel!
     @IBOutlet weak var imgInnerView: WhatsappStatusRingBar!
     @IBOutlet weak var lblTime: UILabel!

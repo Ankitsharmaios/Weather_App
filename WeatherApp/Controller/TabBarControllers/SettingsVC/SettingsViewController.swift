@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var btnEditProfile: UIButton!
     @IBOutlet weak var lblUserStatus: UILabel!
     @IBOutlet weak var lblUserName: UILabel!
     @IBOutlet weak var userImage: UIImageView!
@@ -91,6 +92,13 @@ class SettingsViewController: UIViewController {
         tableView.delegate = self
     }
     
+    @IBAction func editProfileAction(_ sender: Any)
+    {
+        let EditProfileVC = EditProfileVC.getInstance()
+        EditProfileVC.modalPresentationStyle = .overCurrentContext
+        self.present(EditProfileVC, animated: true)
+        
+    }
     @IBAction func backAction(_ sender: Any)
     {
         self.dismiss(animated: true) {

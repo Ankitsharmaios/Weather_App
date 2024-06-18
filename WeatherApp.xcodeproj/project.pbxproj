@@ -65,6 +65,10 @@
 		14C0AEBF2C1AC86000F737A4 /* MyStatusDeleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0AEBE2C1AC86000F737A4 /* MyStatusDeleteVC.swift */; };
 		14C0AEC22C1ADF1600F737A4 /* MyStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0AEC02C1ADF1600F737A4 /* MyStatusTableViewCell.swift */; };
 		14C0AEC32C1ADF1600F737A4 /* MyStatusTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14C0AEC12C1ADF1600F737A4 /* MyStatusTableViewCell.xib */; };
+		14CB050D2C214E7D00E69A94 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CB050C2C214E7D00E69A94 /* ContactsViewController.swift */; };
+		14CB05112C21586300E69A94 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CB050F2C21586300E69A94 /* ContactsTableViewCell.swift */; };
+		14CB05122C21586300E69A94 /* ContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14CB05102C21586300E69A94 /* ContactsTableViewCell.xib */; };
+		14CB05142C21BEE000E69A94 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CB05132C21BEE000E69A94 /* EditProfileVC.swift */; };
 		14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CDE52BFB5CCD00E700CB /* AppDelegate.swift */; };
 		14D3CDE82BFB5CCD00E700CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3CDE72BFB5CCD00E700CB /* SceneDelegate.swift */; };
 		14D3CDED2BFB5CCD00E700CB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 14D3CDEC2BFB5CCD00E700CB /* Base */; };
@@ -204,6 +208,10 @@
 		14C0AEBE2C1AC86000F737A4 /* MyStatusDeleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatusDeleteVC.swift; sourceTree = "<group>"; };
 		14C0AEC02C1ADF1600F737A4 /* MyStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatusTableViewCell.swift; sourceTree = "<group>"; };
 		14C0AEC12C1ADF1600F737A4 /* MyStatusTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyStatusTableViewCell.xib; sourceTree = "<group>"; };
+		14CB050C2C214E7D00E69A94 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		14CB050F2C21586300E69A94 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
+		14CB05102C21586300E69A94 /* ContactsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsTableViewCell.xib; sourceTree = "<group>"; };
+		14CB05132C21BEE000E69A94 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		14D3CDE22BFB5CCD00E700CB /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D3CDE52BFB5CCD00E700CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14D3CDE72BFB5CCD00E700CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -323,6 +331,7 @@
 			children = (
 				1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */,
 				145750E12C04A7700001E286 /* AccountVC.swift */,
+				14CB05132C21BEE000E69A94 /* EditProfileVC.swift */,
 			);
 			path = SettingsVC;
 			sourceTree = "<group>";
@@ -448,6 +457,23 @@
 				14BD6B532C05D1A100D76C36 /* TimeConverter.swift */,
 			);
 			path = CommonConverters;
+			sourceTree = "<group>";
+		};
+		14CB050B2C214E6200E69A94 /* ContactViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				14CB050C2C214E7D00E69A94 /* ContactsViewController.swift */,
+			);
+			path = ContactViewControllers;
+			sourceTree = "<group>";
+		};
+		14CB050E2C21584700E69A94 /* ContactCell */ = {
+			isa = PBXGroup;
+			children = (
+				14CB050F2C21586300E69A94 /* ContactsTableViewCell.swift */,
+				14CB05102C21586300E69A94 /* ContactsTableViewCell.xib */,
+			);
+			path = ContactCell;
 			sourceTree = "<group>";
 		};
 		14D3CDD92BFB5CCD00E700CB = {
@@ -606,6 +632,7 @@
 		14D3CE392BFB62E500E700CB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				14CB050B2C214E6200E69A94 /* ContactViewControllers */,
 				149F12B82C2068330048A84D /* CallsViewController */,
 				14F7ACC22C1FFD2600FA2BBD /* CommunitiesViewControllers */,
 				147DA4672C18184E00D616E7 /* WeatherAppControllers */,
@@ -675,6 +702,7 @@
 		14D3CE5C2BFB791300E700CB /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				14CB050E2C21584700E69A94 /* ContactCell */,
 				147DA4722C181E7900D616E7 /* ChatDetails */,
 				14939D592C072680001E6A44 /* SotryCells */,
 				145750DB2C04981E0001E286 /* SettingsCells */,
@@ -846,6 +874,7 @@
 				14F11F922C0F186F00F29729 /* font4.ttf in Resources */,
 				14D3CE1F2BFB5D9500E700CB /* WeatherListCell.xib in Resources */,
 				14F11F902C0F186F00F29729 /* font5.ttf in Resources */,
+				14CB05122C21586300E69A94 /* ContactsTableViewCell.xib in Resources */,
 				14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */,
 				14D3CE2E2BFB5F0C00E700CB /* nunitosans_semibold.TTF in Resources */,
 				14D3CE1D2BFB5D9500E700CB /* WeatherDayListCollectionCell.xib in Resources */,
@@ -996,10 +1025,13 @@
 				147DA46B2C181D7600D616E7 /* Message.swift in Sources */,
 				14EFF3512C1C4ACB00671970 /* DeleteStoryModel.swift in Sources */,
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
+				14CB05112C21586300E69A94 /* ContactsTableViewCell.swift in Sources */,
 				1463100E2C00C1DD0034896A /* AttachmentCLvCell.swift in Sources */,
 				14C0AEC22C1ADF1600F737A4 /* MyStatusTableViewCell.swift in Sources */,
+				14CB05142C21BEE000E69A94 /* EditProfileVC.swift in Sources */,
 				1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */,
 				1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */,
+				14CB050D2C214E7D00E69A94 /* ContactsViewController.swift in Sources */,
 				14F7ACC62C20079700FA2BBD /* CommunitiesModel.swift in Sources */,
 				149F12BA2C2068590048A84D /* CallsVC.swift in Sources */,
 				14B3742E2C006D6500AC949B /* ProfileVC.swift in Sources */,

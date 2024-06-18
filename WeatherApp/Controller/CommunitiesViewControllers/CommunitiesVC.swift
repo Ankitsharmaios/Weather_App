@@ -75,7 +75,24 @@ class CommunitiesVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         
     }
     
-    @IBAction func createNewGroupAction(_ sender: Any) {
+    @IBAction func createNewGroupAction(_ sender: Any) 
+    {
+        DispatchQueue.main.async {
+            let ContactVc = ContactsViewController.getInstance()
+            ContactVc.isfrom = "Communities"
+            ContactVc.modalPresentationStyle = .overCurrentContext
+            ContactVc.stackViewHideShow.isHidden = true
+            ContactVc.stackviewHeightlayout.constant = 0
+            ContactVc.view.layoutIfNeeded()
+            ContactVc.updateHeaderViewHeight(newHeight: 40)
+            
+            ContactVc.showTabbar = {
+                self.showTabBar(animated: true)
+            }
+            self.topTableView.isHidden = true
+            self.hideTabBar(animated: true)
+            self.present(ContactVc, animated: true)
+        }
     }
     
     @IBAction func cameraAction(_ sender: Any) 
@@ -239,50 +256,50 @@ extension CommunitiesVC {
                 fetchFirebaseData()
             } else if let snap = snap, snap.exists() {
                 ref.child("\(firebaseTableName.GroupChat)").observe(.value, with: { [self] (snapshot) in
-                    self.communitiesData = []
-                    
+                    var tempCommunitiesData: [CommunitiesListModel] = []
+
                     for child in snapshot.children {
                         let childSnap = child as! DataSnapshot
                         if let userDict = childSnap.value as? [String: Any] {
                             if let chatData = CommunitiesListModel(JSON: userDict) {
-                                // Append to communitiesData
-                                self.communitiesData?.append(chatData)
-                                
-                                // Validation for appending to LastChatData
+
                                 if let adminId = userDict["adminId"] as? String,
-                                   let registerID = getString(key: userDefaultsKeys.RegisterId.rawValue) as String? {
-                                    
+                                   let registerID = getString(key: userDefaultsKeys.RegisterId.rawValue) as String?,
+                                   let membersArray = userDict["members"] as? [[String: Any]] {
+
+                                    var isAdmin = false
                                     var isMemberMatch = false
-                                    if let membersArray = userDict["members"] as? [[String: Any]] {
-                                        for memberDict in membersArray {
-                                            if let memberId = memberDict["id"] as? String, memberId == registerID {
-                                                isMemberMatch = true
-                                                break
-                                            }
+
+                                    for memberDict in membersArray {
+                                        if let memberId = memberDict["id"] as? Int, String(memberId) == registerID {
+                                            isMemberMatch = true
+                                            break
                                         }
                                     }
-                                    
-                                    if adminId == registerID || isMemberMatch {
-                                        if let chatData = CommunitiesListModel(JSON: userDict) {
-                                            self.communitiesData?.append(chatData)
-                                            print("LastChat=============>", self.communitiesData ?? [])
-                                        }
+
+                                    if adminId == registerID {
+                                        isAdmin = true
+                                    }
+
+                                    if isAdmin || isMemberMatch {
+                                        tempCommunitiesData.append(chatData)
                                     }
                                 }
                             }
                         }
                     }
-                    
+                    self.communitiesData = tempCommunitiesData
+
                     // Show or hide table view and empty view based on data
-                    if ((self.communitiesData?.isEmpty) != nil) {
-                        self.communitiesTableView.isHidden = true
-                        self.createGroupView.isHidden = false
-                    } else {
+                    if let communitiesData = self.communitiesData, !communitiesData.isEmpty {
                         self.communitiesTableView.isHidden = false
                         self.createGroupView.isHidden = true
+                        self.communitiesTableView.reloadData()
+                        print("self.communitiesData====>", self.communitiesData)
+                    } else {
+                        self.communitiesTableView.isHidden = true
+                        self.createGroupView.isHidden = false
                     }
-                    
-                    self.communitiesTableView.reloadData()
                 })
             } else {
                 print("No data available")
@@ -290,5 +307,6 @@ extension CommunitiesVC {
                 self.createGroupView.isHidden = false
             }
         }
+
     }
 }

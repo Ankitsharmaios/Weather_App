@@ -51,7 +51,9 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var communitiesData:CommunitiesListModel?
     var ChatData:[ChatModel]?
     var messages = [Message]()
-
+    var isfrom = ""
+    var showTabbar : (() -> Void )?
+    var contactUserData:UserResultModel?
     class func getInstance()-> InnerChatVC {
         return InnerChatVC.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
@@ -61,20 +63,27 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         if LastChatData != nil
         {
             setChatData()
+            
         }else if communitiesData != nil
         {
             setGroupData()
         }
-        
+        if contactUserData != nil
+        {
+            contactUserDataSet()
+        }
         
         setupTable()
         fetchData()
         setupUI()
      //   fetchFirebaseData()
-        print("=========LastChatData==========",communitiesData)
+        print("=========LastChatData==========",contactUserData)
   
     }
  
+    
+    
+    
     func setupTable() {
         // config tableView
         maintableView.rowHeight = UITableView.automaticDimension
@@ -162,7 +171,23 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             userImageView.image = UIImage(named: "placeholder")
         }
     }
+    func contactUserDataSet()
+    {
+        vcallBtn.isHidden = false
+        callBtn.isHidden = false
+        stackViewWidthLayout.constant = 115
+        userImageView.layer.cornerRadius = userImageView.layer.bounds.height / 2
+        nameLbl.text = contactUserData?.name ?? ""
     
+        let imageURLStrings = contactUserData?.image
+
+        // Safely get the last URL string if it exists
+        if let lastImageURLString = imageURLStrings, let imageURL = URL(string: lastImageURLString) {
+            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+        } else {
+            userImageView.image = UIImage(named: "placeholder")
+        }
+    }
     func setGroupData()
     {
         vcallBtn.isHidden = true
@@ -188,7 +213,14 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     
     
     @IBAction func backBtn(_ sender: Any) {
-        self.dismiss(animated: true)
+        
+        if isfrom == "SelectContect" {
+            
+            NotificationCenter.default.post(name: Notification.Name("dismiss"), object: nil)
+            self.dismiss(animated: true)
+           } else {
+               self.dismiss(animated: true)
+           }
     }
     
     @IBAction func clipsBtn(_ sender: Any) {

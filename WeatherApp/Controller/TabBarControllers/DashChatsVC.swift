@@ -13,6 +13,7 @@ import Firebase
 import SDWebImage
 class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate & UITableViewDataSource & UITableViewDelegate{
 
+    @IBOutlet weak var btnAddChat: UIButton!
     @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var toptableHeightLayout: NSLayoutConstraint!
     @IBOutlet weak var topTableView: UITableView!
@@ -29,6 +30,7 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     @IBOutlet weak var bgView: UIView!
     var AppConfigData:AppConfigModel?
     var isTopTableHide = false
+    var showTabbar: (() -> Void )?
     var ref: DatabaseReference!
     var LastChatData:[LiveChatDataModel]?
     var OptionNames:[String] = ["New group","New broadcast","Linked device","Starred message","Settings"]
@@ -45,6 +47,7 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         topTableView.isHidden = true
         tabBarController?.tabBar.barTintColor = appThemeColor.CommonBlack
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         self.isTopTableHide = false
         self.topTableView.isHidden = true
@@ -80,6 +83,21 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         }
     }
     
+    @IBAction func addChatAction(_ sender: Any)
+    {
+        DispatchQueue.main.async {
+            let ContactVc = ContactsViewController.getInstance()
+            ContactVc.modalPresentationStyle = .overCurrentContext
+            ContactVc.showTabbar = {
+                self.showTabBar(animated: true)
+            }
+            self.topTableView.isHidden = true
+            self.hideTabBar(animated: true)
+            self.present(ContactVc, animated: true)
+        }
+
+        
+    }
     @IBAction func cameraBtn(_ sender: Any) {
        openCamera()
     }
@@ -281,7 +299,10 @@ extension DashChatsVC
     
     // MARK: Call Api
     func getCityWeatherData() {
-        DataManager.shared.AppConfig(isLoader: false, view: view) { [weak self] (result) in
+   
+        let params = ["RegisterId":getString(key: userDefaultsKeys.RegisterId.rawValue),
+        ]
+        DataManager.shared.AppConfig(params: params, isLoader: false, view: view) { [weak self] (result) in
             switch result {
             case .success(let appConfig):
                 print("AppConfigData", appConfig)
