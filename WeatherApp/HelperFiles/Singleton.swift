@@ -16,5 +16,6 @@ class Singleton {
     var EditProfileData:EditProfileModel?
     var networkStatus = ""
     var storyId : Int?
+    var verifyOTPDATA:verifyOTPModel?
 }
 

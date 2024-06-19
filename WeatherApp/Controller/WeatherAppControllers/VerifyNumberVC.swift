@@ -198,11 +198,11 @@ extension VerifyNumberVC
                                       
                                         UserToken.userToken = userDetail?.hashToken ?? ""
                                         Singleton.sharedInstance.RegisterId = userDetail?.registerId ?? 0
-                                        
-                                        
+    
+                                    
                                         saveString(strin: UserToken.userToken, key: userDefaultsKeys.token.rawValue)
                                         saveString(strin: "\(Singleton.sharedInstance.RegisterId ?? 0)", key: userDefaultsKeys.RegisterId.rawValue)
-                            
+                                
                             
                             
                             if self?.userStatusMessage.lowercased() == "ForgotPIN".lowercased() {

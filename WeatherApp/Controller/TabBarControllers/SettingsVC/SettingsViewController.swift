@@ -96,6 +96,11 @@ class SettingsViewController: UIViewController {
     {
         let EditProfileVC = EditProfileVC.getInstance()
         EditProfileVC.modalPresentationStyle = .overCurrentContext
+        EditProfileVC.callback = {
+            self.edituserData()
+            
+            
+        }
         self.present(EditProfileVC, animated: true)
         
     }

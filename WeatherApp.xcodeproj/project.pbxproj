@@ -62,6 +62,10 @@
 		14BD6B542C05D1A100D76C36 /* TimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD6B532C05D1A100D76C36 /* TimeConverter.swift */; };
 		14BD6B572C05DD4200D76C36 /* InnerChatTblvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14BD6B562C05DD4200D76C36 /* InnerChatTblvCell.xib */; };
 		14BD6B582C05DD4200D76C36 /* InnerChatTblvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD6B552C05DD4200D76C36 /* InnerChatTblvCell.swift */; };
+		14C02AF72C22E0E000D1AD62 /* NamePopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C02AF62C22E0E000D1AD62 /* NamePopUpVC.swift */; };
+		14C02AF92C22EEAA00D1AD62 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C02AF82C22EEAA00D1AD62 /* AboutVC.swift */; };
+		14C02B012C22FBA400D1AD62 /* AboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C02AFF2C22FBA400D1AD62 /* AboutTableViewCell.swift */; };
+		14C02B022C22FBA400D1AD62 /* AboutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14C02B002C22FBA400D1AD62 /* AboutTableViewCell.xib */; };
 		14C0AEBF2C1AC86000F737A4 /* MyStatusDeleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0AEBE2C1AC86000F737A4 /* MyStatusDeleteVC.swift */; };
 		14C0AEC22C1ADF1600F737A4 /* MyStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0AEC02C1ADF1600F737A4 /* MyStatusTableViewCell.swift */; };
 		14C0AEC32C1ADF1600F737A4 /* MyStatusTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14C0AEC12C1ADF1600F737A4 /* MyStatusTableViewCell.xib */; };
@@ -205,6 +209,10 @@
 		14BD6B532C05D1A100D76C36 /* TimeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConverter.swift; sourceTree = "<group>"; };
 		14BD6B552C05DD4200D76C36 /* InnerChatTblvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerChatTblvCell.swift; sourceTree = "<group>"; };
 		14BD6B562C05DD4200D76C36 /* InnerChatTblvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InnerChatTblvCell.xib; sourceTree = "<group>"; };
+		14C02AF62C22E0E000D1AD62 /* NamePopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePopUpVC.swift; sourceTree = "<group>"; };
+		14C02AF82C22EEAA00D1AD62 /* AboutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
+		14C02AFF2C22FBA400D1AD62 /* AboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTableViewCell.swift; sourceTree = "<group>"; };
+		14C02B002C22FBA400D1AD62 /* AboutTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutTableViewCell.xib; sourceTree = "<group>"; };
 		14C0AEBE2C1AC86000F737A4 /* MyStatusDeleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatusDeleteVC.swift; sourceTree = "<group>"; };
 		14C0AEC02C1ADF1600F737A4 /* MyStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatusTableViewCell.swift; sourceTree = "<group>"; };
 		14C0AEC12C1ADF1600F737A4 /* MyStatusTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyStatusTableViewCell.xib; sourceTree = "<group>"; };
@@ -332,6 +340,7 @@
 				1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */,
 				145750E12C04A7700001E286 /* AccountVC.swift */,
 				14CB05132C21BEE000E69A94 /* EditProfileVC.swift */,
+				14C02AF82C22EEAA00D1AD62 /* AboutVC.swift */,
 			);
 			path = SettingsVC;
 			sourceTree = "<group>";
@@ -418,6 +427,7 @@
 				14AF4BB02BFC6DA00042CB95 /* CitysPopUPVC.swift */,
 				14392C432BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift */,
 				14EFF3522C1C605B00671970 /* DeletePopUpVC.swift */,
+				14C02AF62C22E0E000D1AD62 /* NamePopUpVC.swift */,
 			);
 			path = PopUPControllers;
 			sourceTree = "<group>";
@@ -457,6 +467,15 @@
 				14BD6B532C05D1A100D76C36 /* TimeConverter.swift */,
 			);
 			path = CommonConverters;
+			sourceTree = "<group>";
+		};
+		14C02AFE2C22FB8E00D1AD62 /* aboutCell */ = {
+			isa = PBXGroup;
+			children = (
+				14C02AFF2C22FBA400D1AD62 /* AboutTableViewCell.swift */,
+				14C02B002C22FBA400D1AD62 /* AboutTableViewCell.xib */,
+			);
+			path = aboutCell;
 			sourceTree = "<group>";
 		};
 		14CB050B2C214E6200E69A94 /* ContactViewControllers */ = {
@@ -702,6 +721,7 @@
 		14D3CE5C2BFB791300E700CB /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				14C02AFE2C22FB8E00D1AD62 /* aboutCell */,
 				14CB050E2C21584700E69A94 /* ContactCell */,
 				147DA4722C181E7900D616E7 /* ChatDetails */,
 				14939D592C072680001E6A44 /* SotryCells */,
@@ -886,6 +906,7 @@
 				14F11F942C0F186F00F29729 /* font3.ttf in Resources */,
 				14D3CE2B2BFB5F0C00E700CB /* nunitosans_bold.TTF in Resources */,
 				14AF4BAE2BFC6B790042CB95 /* PopUp.storyboard in Resources */,
+				14C02B022C22FBA400D1AD62 /* AboutTableViewCell.xib in Resources */,
 				14C0AEC32C1ADF1600F737A4 /* MyStatusTableViewCell.xib in Resources */,
 				147DA4762C181E7900D616E7 /* RightViewCell.xib in Resources */,
 				14F11F932C0F186F00F29729 /* font7.otf in Resources */,
@@ -980,11 +1001,13 @@
 				14E1FC712C09FE6B001739C3 /* OuterCell.swift in Sources */,
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
 				147366272C0092D700419797 /* EditProfileModel.swift in Sources */,
+				14C02AF72C22E0E000D1AD62 /* NamePopUpVC.swift in Sources */,
 				14939D582C07230D001E6A44 /* StoryListModel.swift in Sources */,
 				14D3CE1E2BFB5D9500E700CB /* WeatherListCell.swift in Sources */,
 				14D950AB2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift in Sources */,
 				14C0AEBF2C1AC86000F737A4 /* MyStatusDeleteVC.swift in Sources */,
 				14AF4BB62BFC72EC0042CB95 /* UIColores.swift in Sources */,
+				14C02B012C22FBA400D1AD62 /* AboutTableViewCell.swift in Sources */,
 				147DA46D2C181E1500D616E7 /* MessageStore.swift in Sources */,
 				1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */,
 				14D3CE572BFB68E000E700CB /* WebServices.swift in Sources */,
@@ -1015,6 +1038,7 @@
 				14BD6B542C05D1A100D76C36 /* TimeConverter.swift in Sources */,
 				145750E62C04AB960001E286 /* AccountTableViewCell.swift in Sources */,
 				14F11F862C0EE95000F29729 /* TextStatusVC.swift in Sources */,
+				14C02AF92C22EEAA00D1AD62 /* AboutVC.swift in Sources */,
 				145750E22C04A7700001E286 /* AccountVC.swift in Sources */,
 				14AFB24C2C0073D200F0D93D /* ChatsTBlvCell.swift in Sources */,
 				140B20DD2C08517200BDCFAC /* addStoryModel.swift in Sources */,
