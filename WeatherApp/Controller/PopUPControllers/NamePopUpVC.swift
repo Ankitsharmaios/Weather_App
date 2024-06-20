@@ -84,10 +84,9 @@ class NamePopUpVC: UIViewController {
                         return
                     }
                     
-                    // Dismiss the popup and invoke callback passing the text
-                    dismiss(animated: true) {
-                        self.callback?(text)
-                    }
+                dismiss(animated: true) {
+                    self.callback?(text)
+                 }
             
         }else{
                    // Validate and handle saving logic

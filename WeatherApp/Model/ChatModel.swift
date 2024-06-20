@@ -4,14 +4,16 @@
 //
 //  Created by Ankit_Mac on 11/06/24.
 //
-import Foundation
+
 import ObjectMapper
+import Foundation
 
 struct ChatModel: Mappable {
+    var attachmentUploadFrom: String?
     var date: String?
+    var deleted: String?
     var id: String?
     var indexId: String?
-    var isDeleted: String?
     var mediatype: String?
     var mediaurl: String?
     var message: String?
@@ -35,10 +37,11 @@ struct ChatModel: Mappable {
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
+        attachmentUploadFrom <- map["attachmentUploadFrom"]
         date <- map["date"]
+        deleted <- map["deleted"]
         id <- map["id"]
         indexId <- map["indexId"]
-        isDeleted <- map["isDeleted"]
         mediatype <- map["mediatype"]
         mediaurl <- map["mediaurl"]
         message <- map["message"]

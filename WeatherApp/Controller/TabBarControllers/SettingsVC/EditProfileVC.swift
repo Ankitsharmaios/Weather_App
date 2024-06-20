@@ -32,20 +32,27 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate {
     var imagePath = ""
     let imagePicker = UIImagePickerController()
     
-    var callback: (() -> Void )?
+    var callback: ((String?,String) -> Void )?
     
     class func getInstance()-> EditProfileVC {
         return EditProfileVC.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
-    
+    var userstatus = ""
+    var userNmae = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
         edituserData()
         setUpUI()
+           NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedAboutNotification(notification:)), name: Notification.Name("aboutUpdated"), object: nil)
         // Do any additional setup after loading the view.
     }
-    
+    @objc func methodOfReceivedAboutNotification(notification: Notification) {
+        if let about = notification.object as? String {
+            self.EditProfile(UserImage: "", name: "", about: about)
+            self.userstatus = about
+        }
+    }
     func edituserData()
     {
         if Singleton.sharedInstance.EditProfileData?.result?.name?.count ?? 0 > 0
@@ -130,7 +137,7 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate {
     {
         self.dismiss(animated: true)
         {
-            self.callback?()
+            self.callback?(self.lblShowAbout.text ?? "",self.lblNameShow.text ?? "")
         }
     }
     
@@ -147,7 +154,7 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate {
         viewController.callback = { [weak self] name in
                     // Handle the received name here
                     print("Received name:", name)
-                    self?.EditProfile(UserImage: "", name: name)
+            self?.EditProfile(UserImage: "", name: name, about: "")
                     self?.edituserData()
                 }
         present(viewController, animated: true)
@@ -158,11 +165,12 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate {
         
         let viewController = AboutVC.getInstance()
         viewController.modalPresentationStyle = .overCurrentContext
+        viewController.passAbout = lblShowAbout.text ?? ""
         viewController.callback = { [weak self] about in
-                    // Handle the received name here
-                    print("Received about:", about)
-                    
-                }
+                NotificationCenter.default.post(name: Notification.Name("aboutUpdated"), object: about)
+                self?.dismiss(animated: true)
+            
+            }
         present(viewController, animated: true)
     }
     
@@ -204,7 +212,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate {
                     self.imagePath = imagePath
                     // Call the EditProfile function with the image path
                     
-                    EditProfile(UserImage: imagePath, name: "")
+                    EditProfile(UserImage: imagePath, name: "", about: "")
                     
                 }
             }
@@ -225,7 +233,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate {
 }
 extension EditProfileVC {
     // MARK: - API CALL
-    func EditProfile(UserImage: String,name:String) {
+    func EditProfile(UserImage: String,name:String,about:String) {
         guard let url = URL(string: DataManager.shared.getURL(.EditProfile)) else {
             print("Invalid URL")
             return
@@ -239,7 +247,7 @@ extension EditProfileVC {
             "RegisterId": getString(key: userDefaultsKeys.RegisterId.rawValue),
             "HashToken": getString(key: userDefaultsKeys.token.rawValue),
             "Name": name,
-            "About": self.lblShowAbout.text ?? ""
+            "About": about
         ]
 
         AF.upload(multipartFormData: { multipartFormData in
@@ -268,7 +276,7 @@ extension EditProfileVC {
                         print("Success: \(statusMessage)")
                         DispatchQueue.main.async {
                             if statusMessage.lowercased() == "profile edit successully" {
-                              //  self.edituserData()
+                                self.edituserData()
                                 var toastStyle = ToastStyle()
                                 toastStyle.backgroundColor = appThemeColor.text_Weather
                                 self.view.makeToast(editProfileModel.statusMessage ?? "", duration: 2.0, position: .bottom, style: toastStyle)

@@ -35,13 +35,16 @@ class SettingsViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         edituserData()
-        setUserData()
+        
     }
     func setUserData() {
             let userdata = getUserData()
             let name = userdata?.result?.name ?? ""
             let imageURLString = userdata?.result?.image ?? ""
-            
+            let about = userdata?.result?.about ?? ""
+        
+        
+            lblUserStatus.text = about
             lblUserName.text = name
             
             if let imageURL = URL(string: imageURLString) {
@@ -54,10 +57,15 @@ class SettingsViewController: UIViewController {
     {
         if Singleton.sharedInstance.EditProfileData?.result?.name?.count ?? 0 > 0
         {
+            
+           
+            
             let userdata = Singleton.sharedInstance.EditProfileData?.result
             let name = userdata?.name ?? ""
             let imageURLString = userdata?.userImage ?? ""
+            let about = userdata?.about ?? ""
             
+            lblUserStatus.text = about
             lblUserName.text = name
             
             if let imageURL = URL(string: imageURLString) {
@@ -65,6 +73,8 @@ class SettingsViewController: UIViewController {
             } else {
                 userImage.image = UIImage(named: "placeholder")
             }
+        }else{
+            setUserData()
         }
     }
     
@@ -74,10 +84,10 @@ class SettingsViewController: UIViewController {
         lblSettings.font = Helvetica.helvetica_regular.font(size: 20)
         lblSettings.textColor = appThemeColor.CommonBlack
         
-        lblUserName.font = Helvetica.helvetica_regular.font(size: 18)
+        lblUserName.font = Helvetica.helvetica_regular.font(size: 19)
         lblUserName.textColor = appThemeColor.CommonBlack
         
-        lblUserStatus.font = Helvetica.helvetica_regular.font(size: 15)
+        lblUserStatus.font = Helvetica.helvetica_regular.font(size: 12)
         lblUserStatus.textColor = appThemeColor.text_LightColure
         
         userImage.layer.cornerRadius = userImage.frame.size.width / 2
@@ -96,11 +106,18 @@ class SettingsViewController: UIViewController {
     {
         let EditProfileVC = EditProfileVC.getInstance()
         EditProfileVC.modalPresentationStyle = .overCurrentContext
-        EditProfileVC.callback = {
-            self.edituserData()
+        EditProfileVC.callback = { [weak self] about,name in
+           if about == ""
+            {
+             //  self?.edituserData()
+           }else{
+               self?.lblUserStatus.text = about
+               self?.lblUserName.text = name
+           }
             
             
-        }
+                        }
+        
         self.present(EditProfileVC, animated: true)
         
     }

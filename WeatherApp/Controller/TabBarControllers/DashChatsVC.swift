@@ -275,7 +275,7 @@ extension DashChatsVC
                         print("Ids-->",sentID,receiverID)
                         print("RegisterId",getString(key: userDefaultsKeys.RegisterId.rawValue))
                         if isDeleted?.lowercased() != "yes".lowercased(){
-                        if sentID == getString(key: userDefaultsKeys.RegisterId.rawValue) || receiverID == getString(key: userDefaultsKeys.RegisterId.rawValue){
+                        if receiverID == getString(key: userDefaultsKeys.RegisterId.rawValue){
                             if let chatData = LiveChatDataModel(JSON: userDict) {
                                 self.LastChatData?.append(chatData)
                                 print("LastChat",LastChatData ?? [])

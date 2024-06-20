@@ -9,12 +9,11 @@ import UIKit
 import IQKeyboardManagerSwift
 import SDWebImage
 import FirebaseDatabase
-import FirebaseDatabase
-import FirebaseMessaging
+import ObjectMapper
 import Firebase
 
-
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate{
+    
 
     @IBOutlet weak var stackViewtrailingLayout: NSLayoutConstraint!
     @IBOutlet weak var stackViewWidthLayout: NSLayoutConstraint!
@@ -49,17 +48,21 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var ref: DatabaseReference!
     var LastChatData:LiveChatDataModel?
     var communitiesData:CommunitiesListModel?
-    var ChatData:[ChatModel]?
+    var ChatData:[ChatModel] = []
     var messages = [Message]()
     var isfrom = ""
     var showTabbar : (() -> Void )?
     var contactUserData:UserResultModel?
+   
+    
     class func getInstance()-> InnerChatVC {
         return InnerChatVC.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        ref = Database.database().reference()
+        
+        fetchChatData(for: "\(LastChatData?.id ?? "")")
         if LastChatData != nil
         {
             setChatData()
@@ -76,8 +79,6 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         setupTable()
         fetchData()
         setupUI()
-     //   fetchFirebaseData()
-        print("=========LastChatData==========",contactUserData)
   
     }
  
@@ -208,8 +209,82 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     
     @IBAction func sendMgsAction(_ sender: Any) 
     {
+        // Fetch current date and time
+           let currentDate = Date()
+           let dateFormatter = DateFormatter()
+           
+           // Date format for "20-06-2024"
+           dateFormatter.dateFormat = "dd-MM-yyyy"
+           let presentDate = dateFormatter.string(from: currentDate)
+           
+           // Date format for "11:31:14"
+           dateFormatter.dateFormat = "hh:mm:ss"
+           let presentTime = dateFormatter.string(from: currentDate)
+           
+           guard let text = textView.text, !text.isEmpty else {
+               print("Text field is empty")
+               return
+           }
+           
+           guard let chatRoomId = LastChatData?.id else {
+               print("Chat room ID is nil")
+               return
+           }
+           
+           // Generate a unique key for each path
+           let chatPathKey = ref.child("Chat").child(chatRoomId).childByAutoId().key ?? ""
+           let LastChatPathKey = ref.child("LastChat").child(chatRoomId).childByAutoId().key ?? ""
+           
+           let userData = getUserData()
+           
+           // Create a dictionary to hold the data
+           let data: [String: Any] = [
+               "attachmentUploadFrom":"",
+               "date": presentDate,
+               "deleted":"",
+               "id":"\(LastChatData?.id ?? "")",
+               "indexId": chatPathKey,
+               "mediatype":"M",
+               "mediaurl":"",
+               "message": text,
+               "messageStatus":"",
+               "receiverID":"\(LastChatData?.sentID ?? "")",
+               "receiverImage":"\(LastChatData?.senderImage ?? "")",
+               "receiverName":"\(LastChatData?.senderName ?? "")",
+               "receiverToken":"\(LastChatData?.senderFcmToken ?? "")",
+               "replyMessage":"",
+               "replySendUserId":"\(getString(key: userDefaultsKeys.RegisterId.rawValue))",
+               "sendType":"Send",
+               "senderFcmToken":"\(AppSetting.FCMTokenString)",
+               "senderImage":"\(userData?.result?.image ?? "")",
+               "senderName":"\(userData?.result?.name ?? "")",
+               "sentID":"\(getString(key: userDefaultsKeys.RegisterId.rawValue))",
+               "time": presentTime,
+               "unReadMessageCount":"1"
+           ]
+           
+           // Post data to Firebase under the Chat path
+           let chatPath = ref.child("Chat").child(chatRoomId).child(chatPathKey)
+           chatPath.setValue(data) { error, ref in
+               if let error = error {
+                   print("Error posting data to Chat path: \(error.localizedDescription)")
+               } else {
+                   print("Data posted successfully to Chat path")
+               }
+           }
+           
+           // Post data to Firebase under the Messages path
+           let messagesPath = ref.child("LastChat").child(chatRoomId).child(LastChatPathKey)
+           messagesPath.setValue(data) { error, ref in
+               if let error = error {
+                   print("Error posting data to Messages path: \(error.localizedDescription)")
+               } else {
+                   print("Data posted successfully to Messages path")
+               }
+           }
     }
-    
+        
+            
     
     
     @IBAction func backBtn(_ sender: Any) {
@@ -333,59 +408,37 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
-    // MARK: FireBase Data Method Chat
-    func fetchFirebaseData() {
-        ref = Database.database().reference()
-        ref.getData { [self] error, snap in
-            if let error = error {
-                print("Error in fetching from Firebase: \(error)")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    fetchFirebaseData() // Retry fetching data
-                }
-            } else if snap?.exists() ?? false {
-                ref.child("\(firebaseTableName.Chat.rawValue)").observe(.value, with: { [self] snapshot in
-                    self.ChatData = []
-                    
-                    for child in snapshot.children {
-                        let childSnap = child as! DataSnapshot
-                        if let userDict = childSnap.value as? NSDictionary {
-                            print("UserDict:", userDict) // Debug print to verify the structure
+   
+}
+extension InnerChatVC {
+    func fetchChatData(for chatRoomId: String) {
+        ref.child("Chat").observeSingleEvent(of: .value, with: { [weak self] snapshot in
+            guard let self = self else { return }
 
-                            // Fetching data from the dictionary
-                            let date = userDict["date"] as? String
-                            let id = userDict["id"] as? String
-                            let indexId = userDict["indexId"] as? String
-                            let isDeleted = userDict["isDeleted"] as? String
-                            let message = userDict["message"] as? String
-                            let messageStatus = userDict["messageStatus"] as? String
-                            let receiverID = userDict["receiverID"] as? String
-                            let receiverImage = userDict["receiverImage"] as? String
-                            let receiverName = userDict["receiverName"] as? String
-                            let receiverToken = userDict["receiverToken"] as? String
-                            let senderFcmToken = userDict["senderFcmToken"] as? String
-                            let senderImage = userDict["senderImage"] as? String
-                            let senderName = userDict["senderName"] as? String
-                            let sentID = userDict["sentID"] as? String
-                            let time = userDict["time"] as? String
-                            let videoCallLink = userDict["videoCallLink"] as? String
-                            let videoCallStatus = userDict["videoCallStatus"] as? String
-                            
-                            // Debug print to verify the extracted values
-                            print("Extracted Values - sentID: \(String(describing: sentID)), receiverID: \(String(describing: receiverID))")
-                            if let chatData = ChatModel(JSON: userDict as! [String : Any]) {
-                                        self.ChatData?.append(chatData)
-                                        print("ChatData===================>", ChatData ?? [])
-                                        self.maintableView.reloadData()
-                                    
-                                
-                            }
-                        }
+            var fetchedChatData: [ChatModel] = []
+
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                   let chatDict = childSnapshot.value as? [String: Any],
+                   let indexId = chatDict["id"] as? String,
+                   indexId == chatRoomId {
+                    
+                    print("Raw chatDict: \(chatDict)")
+                    print("indexId: \(indexId)")
+                    if let chatModel = ChatModel(JSON: chatDict) {
+                        print("Mapped ChatModel: \(chatModel)")
+                        fetchedChatData.append(chatModel)
+                    } else {
+                        print("Failed to map ChatModel")
                     }
-                })
-            } else {
-                print("No data available")
+                }
             }
+
+            self.ChatData = fetchedChatData
+            self.maintableView.reloadData()
+        }) { error in
+            print("Error fetching data from Firebase: \(error.localizedDescription)")
         }
     }
-
 }
+

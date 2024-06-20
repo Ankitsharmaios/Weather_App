@@ -13,6 +13,7 @@
 		140B20DD2C08517200BDCFAC /* addStoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B20DC2C08517200BDCFAC /* addStoryModel.swift */; };
 		1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */; };
 		1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */; };
+		142058F92C24517A0044A9CF /* Time&DamePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142058F82C24517A0044A9CF /* Time&DamePicker.swift */; };
 		1423389B2C05D72500328AB1 /* StatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1423389A2C05D72500328AB1 /* StatusVC.swift */; };
 		14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C3F2BFF4256004F8894 /* RegisterModel.swift */; };
 		14392C422BFF5D03004F8894 /* VerifyOTPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C412BFF5D03004F8894 /* VerifyOTPModel.swift */; };
@@ -157,6 +158,7 @@
 		140B20DC2C08517200BDCFAC /* addStoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addStoryModel.swift; sourceTree = "<group>"; };
 		1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeToTheWeatherAppVC.swift; sourceTree = "<group>"; };
 		1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyNumberVC.swift; sourceTree = "<group>"; };
+		142058F82C24517A0044A9CF /* Time&DamePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Time&DamePicker.swift"; sourceTree = "<group>"; };
 		1423389A2C05D72500328AB1 /* StatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusVC.swift; sourceTree = "<group>"; };
 		14392C3F2BFF4256004F8894 /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		14392C412BFF5D03004F8894 /* VerifyOTPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPModel.swift; sourceTree = "<group>"; };
@@ -601,6 +603,7 @@
 				14A3E2A12C00578500417919 /* UIView.swift */,
 				14DB818C2C05A2E8000BB7FB /* UITextField.swift */,
 				14EFF34E2C1C0C4200671970 /* ActionSheet.swift */,
+				142058F82C24517A0044A9CF /* Time&DamePicker.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -985,6 +988,7 @@
 				14D3CE212BFB5E8000E700CB /* WhiteColorNoneNavigation.swift in Sources */,
 				14AF4BB12BFC6DA00042CB95 /* CitysPopUPVC.swift in Sources */,
 				147366252C008B9B00419797 /* SaveLocalData.swift in Sources */,
+				142058F92C24517A0044A9CF /* Time&DamePicker.swift in Sources */,
 				147DA4732C181E7900D616E7 /* LeftViewCell.swift in Sources */,
 				14BD6B512C05AF0F00D76C36 /* LiveChatModel.swift in Sources */,
 				14D950A62C00AC1900EDD4E8 /* PinSetVC.swift in Sources */,

@@ -75,9 +75,7 @@ class AboutVC: UIViewController {
     @IBAction func backAction(_ sender: Any) 
     {
         self.dismiss(animated: true)
-        {
-            self.callback?(self.passAbout)
-        }
+        
     }
     
 }
@@ -110,7 +108,7 @@ extension AboutVC:UITableViewDataSource & UITableViewDelegate{
         if tableView == aboutTableView{
             if indexPath.section == 0 {
                 if let cell = aboutTableView.dequeueReusableCell(withIdentifier: "AboutTableViewCell", for: indexPath) as? AboutTableViewCell{
-                    
+                    cell.lblabout.text = passAbout 
                     return cell
                 }
             }else if indexPath.section == 1{
@@ -148,11 +146,10 @@ extension AboutVC:UITableViewDataSource & UITableViewDelegate{
                         viewController.selectedData = cell.lblabout.text ?? ""
                     }
                     
-                    viewController.callback = { [weak self] About in
-                                // Handle the received name here
-                                print("Received About:", About)
-                                self?.passAbout = About
-                            }
+                    viewController.callback = { [weak self] about in
+                                        
+                                            self?.callback?(about)
+                                    }
                     
                     
                     self.present(viewController, animated: true)
