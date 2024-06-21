@@ -11,6 +11,7 @@ import SDWebImage
 import FirebaseDatabase
 import ObjectMapper
 import Firebase
+import FirebaseMessaging
 
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     
@@ -48,21 +49,22 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var ref: DatabaseReference!
     var LastChatData:LiveChatDataModel?
     var communitiesData:CommunitiesListModel?
-    var ChatData:[ChatModel] = []
+    
+    var chatDataArray: [ChatModel] = []
     var messages = [Message]()
     var isfrom = ""
     var showTabbar : (() -> Void )?
     var contactUserData:UserResultModel?
-   
-    
+   var pathKey = ""
+    var categoriesArr:[ChatModel] = []
     class func getInstance()-> InnerChatVC {
         return InnerChatVC.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-        
-        fetchChatData(for: "\(LastChatData?.id ?? "")")
+       
+        fetchFirebaseData()
         if LastChatData != nil
         {
             setChatData()
@@ -77,13 +79,13 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         }
         
         setupTable()
-        fetchData()
         setupUI()
   
     }
- 
-    
-    
+    override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            scrollToLastMessage()
+        }
     
     func setupTable() {
         // config tableView
@@ -105,14 +107,12 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         bottomCollectionView.delegate = self
         topTableHeightLayout.constant = CGFloat(CGFloat((optionNames.count)) * (40))
         optionTableView.addShadowToTableView(view: optionTableView, value: 2)
-    //    bottomCollectionView.addShadowToCollectionView(view: bottomCollectionView, value: 2)
         optionTableView.separatorStyle = .none
         optionTableView.isHidden = true
         bottomCollectionView.isHidden = true
         optionTableView.layer.cornerRadius = 8
         bottomCollectionView.layer.cornerRadius = 8
         optionTableView.reloadData()
-    //    userImageView.layer.cornerRadius = userImageView.layer.bounds.height / 2
         nameLbl.font = Helvetica.helvetica_bold.font(size: 15)
         statusLbl.font = Helvetica.helvetica_regular.font(size: 11)
         statusLbl.textColor = appThemeColor.text_LightColure
@@ -149,11 +149,35 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             }
         }
     
+ 
     func fetchData() {
-        messages = MessageStore.getAll()
-        optionTableView.reloadData()
+        // Sort chatDataArray by indexId or any other timestamp field
+        chatDataArray.sort { $0.indexId ?? "" < $1.indexId ?? "" }
+        
+        // Map sorted chatDataArray to messages
+        messages = chatDataArray.map { chatModel in
+            let currentUserID = getString(key: userDefaultsKeys.RegisterId.rawValue)
+            
+            if chatModel.receiverID == currentUserID {
+                // Messages sent by the current logged-in user
+                return Message(text: chatModel.message ?? "", side: .left)
+            } else {
+                // Messages sent by others
+                return Message(text: chatModel.message ?? "", side: .right)
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.maintableView.reloadData()
+            self.scrollToLastMessage()
+        }
     }
-    
+    func scrollToLastMessage() {
+            guard !messages.isEmpty else { return }
+            
+            let lastIndexPath = IndexPath(row: messages.count - 1, section: 0)
+            maintableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: false)
+        }
     func setChatData()
     {
        
@@ -279,6 +303,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
                if let error = error {
                    print("Error posting data to Messages path: \(error.localizedDescription)")
                } else {
+                   self.textView.text = ""
                    print("Data posted successfully to Messages path")
                }
            }
@@ -319,7 +344,6 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     }
     
   
-    
     func openCamera() {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
             let imagePicker = UIImagePickerController()
@@ -353,32 +377,27 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
         return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      
-       
-        if optionTableView == tableView
-        {
-            if let cell = optionTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
+        if optionTableView == tableView {
+            if let cell = optionTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell {
                 cell.nameLbl.text = optionNames[indexPath.row]
                 return cell
             }
-        }else if maintableView == tableView
-        {
+        } else if maintableView == tableView {
             let message = messages[indexPath.row]
             if message.side == .left {
-                    let cell = maintableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
-                    cell.configureCell(message: message)
-                    return cell
-                }
-                else {
-                    let cell = maintableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
-                    cell.configureCell(message: message)
-                    return cell
-                }
+                let cell = maintableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
+                cell.configureCell(message: message)
+                return cell
+            } else {
+                let cell = maintableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
+                cell.configureCell(message: message)
+                return cell
+            }
         }
-        
         
         return UITableViewCell()
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
@@ -410,35 +429,113 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
     }
    
 }
+
 extension InnerChatVC {
-    func fetchChatData(for chatRoomId: String) {
-        ref.child("Chat").observeSingleEvent(of: .value, with: { [weak self] snapshot in
-            guard let self = self else { return }
+    // MARK: Firebase Data Method LastChat
+       func fetchFirebaseData() {
+           ref = Database.database().reference()
+           ref.child(firebaseTableName.Chat.rawValue).observe(.value, with: { [weak self] (snapshot) in
+               guard let self = self else { return }
 
-            var fetchedChatData: [ChatModel] = []
+               guard snapshot.exists(), let userDict = snapshot.value as? [String: Any] else {
+                   print("No data available or data format is incorrect")
+                   return
+               }
 
-            for child in snapshot.children {
-                if let childSnapshot = child as? DataSnapshot,
-                   let chatDict = childSnapshot.value as? [String: Any],
-                   let indexId = chatDict["id"] as? String,
-                   indexId == chatRoomId {
-                    
-                    print("Raw chatDict: \(chatDict)")
-                    print("indexId: \(indexId)")
-                    if let chatModel = ChatModel(JSON: chatDict) {
-                        print("Mapped ChatModel: \(chatModel)")
-                        fetchedChatData.append(chatModel)
-                    } else {
-                        print("Failed to map ChatModel")
-                    }
-                }
-            }
+               self.chatDataArray.removeAll() // Clear the array before adding new data
 
-            self.ChatData = fetchedChatData
-            self.maintableView.reloadData()
-        }) { error in
-            print("Error fetching data from Firebase: \(error.localizedDescription)")
-        }
-    }
-}
+               // Iterate through each child node in userDict
+               for (key, value) in userDict {
+                   guard let itemDict = value as? [String: Any] else {
+                       print("Failed to parse item dictionary for key: \(key)")
+                       continue
+                   }
+
+                   print("Key:", key)
+
+                   // Iterate through each key-value pair in itemDict
+                   for (nestedKey, nestedValue) in itemDict {
+                       print("Nested Key:", nestedKey)
+                       print("Nested Value:", nestedValue)
+
+                       if let nestedValueDict = nestedValue as? [String: Any] {
+                           // Access specific fields like receiverName within the nested dictionary
+                           let attachmentUploadFrom = nestedValueDict["attachmentUploadFrom"] as? String ?? ""
+                           let date = nestedValueDict["date"] as? String ?? ""
+                           let deleted = nestedValueDict["deleted"] as? String ?? ""
+                           let id = nestedValueDict["id"] as? String ?? ""
+                           let indexId = nestedValueDict["indexId"] as? String ?? ""
+                           let mediatype = nestedValueDict["mediatype"] as? String ?? ""
+                           let mediaurl = nestedValueDict["mediaurl"] as? String ?? ""
+                           let message = nestedValueDict["message"] as? String ?? ""
+                           let messageStatus = nestedValueDict["messageStatus"] as? String ?? ""
+                           let receiverID = nestedValueDict["receiverID"] as? String ?? ""
+                           let receiverImage = nestedValueDict["receiverImage"] as? String ?? ""
+                           let receiverName = nestedValueDict["receiverName"] as? String ?? ""
+                           let receiverToken = nestedValueDict["receiverToken"] as? String ?? ""
+                           let replyMessage = nestedValueDict["replyMessage"] as? String ?? ""
+                           let replySendUserId = nestedValueDict["replySendUserId"] as? String ?? ""
+                           let sendType = nestedValueDict["sendType"] as? String ?? ""
+                           let senderFcmToken = nestedValueDict["senderFcmToken"] as? String ?? ""
+                           let senderImage = nestedValueDict["senderImage"] as? String ?? ""
+                           let senderName = nestedValueDict["senderName"] as? String ?? ""
+                           let sentID = nestedValueDict["sentID"] as? String ?? ""
+                           let time = nestedValueDict["time"] as? String ?? ""
+                           let unReadMessageCount = nestedValueDict["unReadMessageCount"] as? String ?? ""
+                           let videoCallLink = nestedValueDict["videoCallLink"] as? String ?? ""
+                           let videoCallStatus = nestedValueDict["videoCallStatus"] as? String ?? ""
+
+
+                           // Create a dictionary for ChatModel
+                           let tempDic: [String: String] = [
+                               "attachmentUploadFrom": attachmentUploadFrom,
+                               "date": date,
+                               "deleted": deleted,
+                               "id": id,
+                               "indexId": indexId,
+                               "mediatype": mediatype,
+                               "mediaurl": mediaurl,
+                               "message": message,
+                               "messageStatus": messageStatus,
+                               "receiverID": receiverID,
+                               "receiverImage": receiverImage,
+                               "receiverName": receiverName,
+                               "receiverToken": receiverToken,
+                               "replyMessage": replyMessage,
+                               "replySendUserId": replySendUserId,
+                               "sendType": sendType,
+                               "senderFcmToken": senderFcmToken,
+                               "senderImage": senderImage,
+                               "senderName": senderName,
+                               "sentID": sentID,
+                               "time": time,
+                               "unReadMessageCount": unReadMessageCount,
+                               "videoCallLink": videoCallLink,
+                               "videoCallStatus": videoCallStatus
+                           ]
+
+                           // Check if the id matches lastChatdataId and create ChatModel instance
+                           if id == LastChatData?.id, let chatModel = ChatModel(JSON: tempDic) {
+                               self.chatDataArray.append(chatModel)
+                           } else {
+                               print("ID does not match or failed to initialize ChatModel with dictionary:")
+                           }
+                       }
+                   }
+               }
+
+               // Reload UI on the main thread if needed
+               DispatchQueue.main.async {
+                   self.fetchData()
+                   self.maintableView.reloadData()
+                   
+                   print("=====self.chatDataArray=====>",self.LastChatData?.id ?? "",self.chatDataArray.count)
+               }
+           }) { (error) in
+               print("Error in fetching from firebase:", error.localizedDescription)
+               // Handle error or retry fetching if needed
+           }
+       }
+   }
+
 

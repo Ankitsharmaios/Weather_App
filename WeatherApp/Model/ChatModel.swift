@@ -4,9 +4,8 @@
 //
 //  Created by Ankit_Mac on 11/06/24.
 //
-
-import ObjectMapper
 import Foundation
+import ObjectMapper
 
 struct ChatModel: Mappable {
     var attachmentUploadFrom: String?

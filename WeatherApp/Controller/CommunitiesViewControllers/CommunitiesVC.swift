@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseDatabase
-import FirebaseDatabase
 import FirebaseMessaging
 import Firebase
 import SDWebImage

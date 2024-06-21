@@ -129,7 +129,14 @@ extension AboutVC:UITableViewDataSource & UITableViewDelegate{
         return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        if tableView == aboutTableView
+        {
+            return UITableView.automaticDimension
+        }else if tableView == toptableView
+        {
+            return UITableView.automaticDimension
+        }
+       return 0
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

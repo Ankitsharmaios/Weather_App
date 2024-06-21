@@ -14,6 +14,7 @@ enum MessageSide {
 }
 
 struct Message {
-    var text = ""
-    var side: MessageSide = .right
+    var text: String
+    var side: MessageSide
 }
+
