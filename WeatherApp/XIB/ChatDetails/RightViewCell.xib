@@ -54,16 +54,25 @@
                             <constraint firstAttribute="bottom" secondItem="HvM-fS-Xkm" secondAttribute="bottom" constant="8" id="xrY-i8-ATS"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJk-PH-EaJ">
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="52"/>
+                        <color key="backgroundColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="QJk-PH-EaJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5R1-sM-gxz"/>
                     <constraint firstAttribute="bottom" secondItem="orZ-GS-mTp" secondAttribute="bottom" constant="4" id="Aaf-VS-ky4"/>
+                    <constraint firstItem="QJk-PH-EaJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Cdd-bz-g6J"/>
                     <constraint firstItem="orZ-GS-mTp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="64" id="WVf-e2-tpV"/>
                     <constraint firstItem="orZ-GS-mTp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="Yjr-LH-U5O"/>
+                    <constraint firstAttribute="bottom" secondItem="QJk-PH-EaJ" secondAttribute="bottom" id="ZKd-jf-pgp"/>
+                    <constraint firstAttribute="trailing" secondItem="QJk-PH-EaJ" secondAttribute="trailing" id="g23-Nw-XR8"/>
                     <constraint firstAttribute="trailing" secondItem="orZ-GS-mTp" secondAttribute="trailing" constant="16" id="uHq-SN-HyO"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="greenView" destination="QJk-PH-EaJ" id="tHv-c8-JeJ"/>
                 <outlet property="messageContainerView" destination="orZ-GS-mTp" id="st8-wK-WVY"/>
                 <outlet property="textMessageLabel" destination="HvM-fS-Xkm" id="mjS-IB-uYL"/>
             </connections>

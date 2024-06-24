@@ -25,6 +25,7 @@ class Two_step_verificationVC: UIViewController {
     @IBOutlet weak var lblTitleTowStep: UILabel!
     @IBOutlet weak var lblForExtra: UILabel!
     @IBOutlet weak var btnTurnOn: UIButton!
+    @IBOutlet weak var trunOfViewHeightLayout: NSLayoutConstraint!
     
     var isFromScreen = ""
     class func getInstance()-> Two_step_verificationVC {
@@ -33,14 +34,20 @@ class Two_step_verificationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("dismiss"), object: nil)
         SetUpUI()
         changeUI()
+        turnOfView.isHidden = true
+        trunOfViewHeightLayout.constant = 0
         // Do any additional setup after loading the view.
         
     }
     
-    
-    
+    @objc func methodOfReceivedNotification(notification: Notification) {
+        self.dismiss(animated: true){
+          //  self.showTabbar?()
+        }
+    }
     func changeUI()
     {
         if isFromScreen == "Account"

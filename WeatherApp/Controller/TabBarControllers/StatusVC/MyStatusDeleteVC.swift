@@ -17,7 +17,6 @@ class MyStatusDeleteVC: UIViewController {
     @IBOutlet weak var lblMyStatus: UILabel!
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var tableViewHeightLayout: NSLayoutConstraint!
-    
     var myStorys:[StoryResultModel]?
     var showTabBar: (() -> Void )?
     var callback : (() -> Void)?
@@ -208,6 +207,7 @@ extension MyStatusDeleteVC:UITableViewDataSource & UITableViewDelegate
 
         cell.callBack = {
             self.StoryList()
+            self.tableView.reloadData()
         }
         return cell
     }
@@ -291,10 +291,12 @@ extension MyStatusDeleteVC {
                 if filteredStories?.isEmpty ?? true {
                     self?.dismiss(animated: true, completion: nil)
                     self?.showTabBar?()
+                    self?.tableView.reloadData()
+                    self?.callback?()
                 } else {
                     self?.tableView.reloadData()
                 }
-
+                self?.tableView.reloadData()
             case .failure(let apiError):
                 print("Error ", apiError.localizedDescription)
                 // Handle the error appropriately, e.g., show an alert to the user

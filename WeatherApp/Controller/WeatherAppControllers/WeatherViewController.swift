@@ -177,7 +177,7 @@ class WeatherViewController: WhiteColorNoneNavigation {
         let CitysPopUPVC = CitysPopUPVC.getInstance()
         CitysPopUPVC.modalPresentationStyle = .overCurrentContext
         CitysPopUPVC.callback = {
-            self.getWeatherData()
+          //  self.getWeatherData()
             self.bindDatareset()
             self.tableView.reloadData()
             self.collectionView.reloadData()

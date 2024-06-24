@@ -10,6 +10,8 @@
 		14036C9C2C0DA0CC00CA5BFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14036C9B2C0DA0CC00CA5BFC /* GoogleService-Info.plist */; };
 		1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */; };
 		1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */; };
+		140765F22C29A09A000236EC /* FooterViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140765F12C29A09A000236EC /* FooterViewTableViewCell.xib */; };
+		140765F32C29A09A000236EC /* FooterViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140765F02C29A09A000236EC /* FooterViewTableViewCell.swift */; };
 		140B20DD2C08517200BDCFAC /* addStoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B20DC2C08517200BDCFAC /* addStoryModel.swift */; };
 		1417D8A82BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */; };
 		1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */; };
@@ -24,7 +26,6 @@
 		144063E62C187B3A007E9A52 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 144063E52C187B3A007E9A52 /* MCEmojiPicker */; };
 		145750DE2C04984B0001E286 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */; };
 		145750DF2C04984B0001E286 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */; };
-		145750E22C04A7700001E286 /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750E12C04A7700001E286 /* AccountVC.swift */; };
 		145750E52C04AB960001E286 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145750E42C04AB960001E286 /* AccountTableViewCell.xib */; };
 		145750E62C04AB960001E286 /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750E32C04AB960001E286 /* AccountTableViewCell.swift */; };
 		145750E82C04B4AA0001E286 /* LogOutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750E72C04B4AA0001E286 /* LogOutModel.swift */; };
@@ -155,6 +156,8 @@
 		14036C9B2C0DA0CC00CA5BFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1404D6792C0458AB008E9CDE /* CheckTwoFactorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckTwoFactorModel.swift; sourceTree = "<group>"; };
 		1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		140765F02C29A09A000236EC /* FooterViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterViewTableViewCell.swift; sourceTree = "<group>"; };
+		140765F12C29A09A000236EC /* FooterViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterViewTableViewCell.xib; sourceTree = "<group>"; };
 		140B20DC2C08517200BDCFAC /* addStoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addStoryModel.swift; sourceTree = "<group>"; };
 		1417D8A72BFDB99500D77EB6 /* WelcomeToTheWeatherAppVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeToTheWeatherAppVC.swift; sourceTree = "<group>"; };
 		1417D8A92BFDEBA900D77EB6 /* VerifyNumberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyNumberVC.swift; sourceTree = "<group>"; };
@@ -168,7 +171,6 @@
 		14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DashBoard.storyboard; sourceTree = "<group>"; };
 		145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
-		145750E12C04A7700001E286 /* AccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
 		145750E32C04AB960001E286 /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
 		145750E42C04AB960001E286 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
 		145750E72C04B4AA0001E286 /* LogOutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutModel.swift; sourceTree = "<group>"; };
@@ -340,7 +342,6 @@
 			isa = PBXGroup;
 			children = (
 				1404D67B2C0487C4008E9CDE /* SettingsViewController.swift */,
-				145750E12C04A7700001E286 /* AccountVC.swift */,
 				14CB05132C21BEE000E69A94 /* EditProfileVC.swift */,
 				14C02AF82C22EEAA00D1AD62 /* AboutVC.swift */,
 			);
@@ -419,6 +420,8 @@
 			children = (
 				14A3E29D2C00557900417919 /* optionHeaderTblvCell.swift */,
 				14A3E29E2C00557900417919 /* optionHeaderTblvCell.xib */,
+				140765F02C29A09A000236EC /* FooterViewTableViewCell.swift */,
+				140765F12C29A09A000236EC /* FooterViewTableViewCell.xib */,
 			);
 			path = OptionHeaderCell;
 			sourceTree = "<group>";
@@ -904,6 +907,7 @@
 				14BD6B572C05DD4200D76C36 /* InnerChatTblvCell.xib in Resources */,
 				14AF4BC02BFC80940042CB95 /* CitysCollectionViewCell.xib in Resources */,
 				1463100F2C00C1DD0034896A /* AttachmentCLvCell.xib in Resources */,
+				140765F22C29A09A000236EC /* FooterViewTableViewCell.xib in Resources */,
 				14F11F8E2C0F186F00F29729 /* font2.ttf in Resources */,
 				145750DE2C04984B0001E286 /* SettingsTableViewCell.xib in Resources */,
 				14F11F942C0F186F00F29729 /* font3.ttf in Resources */,
@@ -1043,13 +1047,13 @@
 				145750E62C04AB960001E286 /* AccountTableViewCell.swift in Sources */,
 				14F11F862C0EE95000F29729 /* TextStatusVC.swift in Sources */,
 				14C02AF92C22EEAA00D1AD62 /* AboutVC.swift in Sources */,
-				145750E22C04A7700001E286 /* AccountVC.swift in Sources */,
 				14AFB24C2C0073D200F0D93D /* ChatsTBlvCell.swift in Sources */,
 				140B20DD2C08517200BDCFAC /* addStoryModel.swift in Sources */,
 				14D3CE512BFB68E000E700CB /* APILogs.swift in Sources */,
 				1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */,
 				14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */,
 				14F7ACC42C1FFD4900FA2BBD /* CommunitiesVC.swift in Sources */,
+				140765F32C29A09A000236EC /* FooterViewTableViewCell.swift in Sources */,
 				147DA46B2C181D7600D616E7 /* Message.swift in Sources */,
 				14EFF3512C1C4ACB00671970 /* DeleteStoryModel.swift in Sources */,
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,

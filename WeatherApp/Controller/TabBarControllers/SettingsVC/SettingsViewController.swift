@@ -6,7 +6,9 @@
 //
 
 import UIKit
+import Toast_Swift
 import SDWebImage
+
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var btnEditProfile: UIButton!
@@ -15,14 +17,13 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var btnback: UIButton!
     @IBOutlet weak var lblSettings: UILabel!
-    @IBOutlet weak var btnSearch: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    
+    var LogoutData:LogOutModel?
     var showTabbar: (() -> Void )?
-    var settingTitles = ["Account","Privacy","Avtar","Chats","Notification","Storage and data","App Language","Help"]
-    var settingSubtitle = ["Security notifications,change number","Block contacts,disappearing messages","Create ‚edit, profile photo","Theme,wallpapers,chat history","Message,group & call tones","Network usage,auto-download","English(device's language)","Help center,contact us, privicy policy"]
-    var settingImages = ["AccountImg","PrivacyImg","AvatarImg","ChatsImg","NotificationImg","StorageandDataImg","AppLanguageImg","HelpImg"]
+    var settingTitles = ["Two-step verification","Notifications","Storage and data","Logout"]
+    var settingSubtitle = ["","Message,group & call tones","Network usage,auto-download",""]
+    var settingImages = ["twoStepverificationImg","NotificationImg","StorageandDataImg","LogoutImg"]
     
     class func getInstance()-> SettingsViewController {
         return SettingsViewController.viewController(storyboard: Constants.Storyboard.DashBoard)
@@ -57,9 +58,7 @@ class SettingsViewController: UIViewController {
     {
         if Singleton.sharedInstance.EditProfileData?.result?.name?.count ?? 0 > 0
         {
-            
-           
-            
+          
             let userdata = Singleton.sharedInstance.EditProfileData?.result
             let name = userdata?.name ?? ""
             let imageURLString = userdata?.userImage ?? ""
@@ -137,32 +136,93 @@ extension SettingsViewController:UITableViewDataSource & UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell") as! SettingsTableViewCell
+        
+        // Set the title label
         cell.lblTitle.text = settingTitles[indexPath.row]
-        cell.lblsubTitle.text = settingSubtitle[indexPath.row]
+        
+        // Check if indexPath is 0 or 3 to hide subtitle label
+        if indexPath.row == 0 || indexPath.row == 3 {
+            cell.titleTopLayout.constant = 20
+            cell.lblsubTitle.isHidden = true
+        } else {
+            cell.lblsubTitle.isHidden = false
+            cell.lblsubTitle.text = settingSubtitle[indexPath.row]
+        }
+        
+        // Set the image
         let imageName = settingImages[indexPath.row]
         cell.userImageView.image = UIImage(named: imageName)
         
-        
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-            let selectedOption = settingTitles[indexPath.row]
-            if selectedOption == "Account" {
-                
-                DispatchQueue.main.async {
-                    
-                    let AccountVC = AccountVC.getInstance()
-                    AccountVC.modalPresentationStyle = .overCurrentContext
-                    self.present(AccountVC, animated: true)
-                }
+        
+        let selectedOption = settingTitles[indexPath.row]
+        if selectedOption == "Logout" {
+            DispatchQueue.main.async {
+                self.Logout()
             }
+        }else if selectedOption == "Two-step verification"{
+            DispatchQueue.main.async {
+                let controller =  Two_step_verificationVC.getInstance()
+                controller.modalPresentationStyle = .fullScreen
+                controller.isFromScreen = "Account"
+                self.present(controller, animated: true)
+            }
+        }
+ 
 }
     
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+}
+extension SettingsViewController {
+    // MARK: Call Api
+    func Logout() {
+        let param = ["RegisterId": getString(key: userDefaultsKeys.RegisterId.rawValue),
+                     "HashToken": getString(key: userDefaultsKeys.token.rawValue)]
+        
+        DataManager.shared.Logout(params: param, isLoader: false, view: view) { [weak self] (result) in
+            switch result {
+            case .success(let Logout):
+                print("Logout ", Logout)
+                self?.LogoutData = Logout
+                
+                if Logout.statusMessage?.lowercased() == "logged out successfully" {
+                    removeUserDefaultsKey(key: userDefaultsKeys.userdata.rawValue)
+                    removeUserDefaultsKey(key: userDefaultsKeys.RegisterId.rawValue)
+                    DispatchQueue.main.async {
+                        var toastStyle = ToastStyle()
+                        toastStyle.backgroundColor = appThemeColor.CommonBlack
+                        toastStyle.messageFont = UIFont.systemFont(ofSize: 13.0) // Adjust the font size to make the text smaller
+                        
+                        self?.view.makeToast(Logout.statusMessage, duration: 1.0, position: .bottom, style: toastStyle)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            self?.restartApp()
+                        }
+                    }
+                }
+            case .failure(let apiError):
+                print("Error ", apiError.localizedDescription)
+            }
+        }
+    }
+    
+    func restartApp() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+        
+        let rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        window.rootViewController = rootViewController
+        window.makeKeyAndVisible()
+        
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
     }
 }

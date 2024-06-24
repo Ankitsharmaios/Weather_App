@@ -9,6 +9,7 @@ import UIKit
 
 class SettingsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var titleTopLayout: NSLayoutConstraint!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblsubTitle: UILabel!

@@ -67,6 +67,7 @@
                 <outlet property="lblTitle" destination="qbr-AP-eXR" id="FSx-sj-FYW"/>
                 <outlet property="lblsubTitle" destination="4Rb-Qp-vjg" id="j3q-R3-RTb"/>
                 <outlet property="mainView" destination="395-eX-Gl3" id="xYh-8z-c4V"/>
+                <outlet property="titleTopLayout" destination="zsA-JN-aSl" id="zvO-ra-MU3"/>
                 <outlet property="userImageView" destination="h7d-B0-mN9" id="4Je-ld-don"/>
             </connections>
             <point key="canvasLocation" x="-41.221374045801525" y="-10.563380281690142"/>

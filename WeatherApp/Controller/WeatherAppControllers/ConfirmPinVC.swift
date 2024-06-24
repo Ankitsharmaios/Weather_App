@@ -170,10 +170,9 @@ extension ConfirmPinVC
                     }
                 } else if AddTwoStepVerificationcode.statusMessage?.lowercased() == "Edit successully".lowercased() {
                     DispatchQueue.main.async {
-                        let controller =  Two_step_verificationVC.getInstance()
-                        controller.modalPresentationStyle = .fullScreen
-                        controller.isFromScreen = "Account"
-                        self?.present(controller, animated: true)
+                        NotificationCenter.default.post(name: Notification.Name("dismiss"), object: nil)
+                        self?.dismiss(animated: true)
+
                     }
                 }
                 

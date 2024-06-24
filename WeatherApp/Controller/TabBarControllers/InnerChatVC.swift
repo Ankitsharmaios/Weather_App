@@ -16,8 +16,10 @@ import FirebaseMessaging
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     
 
+    @IBOutlet weak var lblSelectedMsgCount: UILabel!
+    @IBOutlet weak var viewInnerBackBtn: UIButton!
+    @IBOutlet weak var topHideShowView: UIView!
     @IBOutlet weak var stackViewtrailingLayout: NSLayoutConstraint!
-    @IBOutlet weak var stackViewWidthLayout: NSLayoutConstraint!
     @IBOutlet weak var maintableView: UITableView!
     @IBOutlet weak var bottomCollectionView: UICollectionView!
     @IBOutlet weak var topTableHeightLayout: NSLayoutConstraint!
@@ -49,6 +51,10 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var ref: DatabaseReference!
     var LastChatData:LiveChatDataModel?
     var communitiesData:CommunitiesListModel?
+  
+    var longPressedIndexPath: IndexPath?
+    private var selectedMessages: Set<IndexPath> = [] // Track selected messages
+
     
     var chatDataArray: [ChatModel] = []
     var messages = [Message]()
@@ -65,6 +71,10 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         ref = Database.database().reference()
        
         fetchFirebaseData()
+      
+        
+        topHideShowView.isHidden = true
+        
         if LastChatData != nil
         {
             setChatData()
@@ -80,7 +90,8 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         
         setupTable()
         setupUI()
-  
+        
+      
     }
     override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
@@ -91,6 +102,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         // config tableView
         maintableView.rowHeight = UITableView.automaticDimension
         maintableView.dataSource = self
+        maintableView.delegate = self
         // cell setup
         maintableView.register(UINib(nibName: "RightViewCell", bundle: nil), forCellReuseIdentifier: "RightViewCell")
         maintableView.register(UINib(nibName: "LeftViewCell", bundle: nil), forCellReuseIdentifier: "LeftViewCell")
@@ -183,7 +195,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
        
         vcallBtn.isHidden = false
         callBtn.isHidden = false
-        stackViewWidthLayout.constant = 115
+      //  stackViewWidthLayout.constant = 115
         userImageView.layer.cornerRadius = userImageView.layer.bounds.height / 2
         nameLbl.text = LastChatData?.senderName ?? ""
     
@@ -200,7 +212,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     {
         vcallBtn.isHidden = false
         callBtn.isHidden = false
-        stackViewWidthLayout.constant = 115
+    //    stackViewWidthLayout.constant = 115
         userImageView.layer.cornerRadius = userImageView.layer.bounds.height / 2
         nameLbl.text = contactUserData?.name ?? ""
     
@@ -217,7 +229,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     {
         vcallBtn.isHidden = true
         callBtn.isHidden = true
-        stackViewWidthLayout.constant = 25
+    //    stackViewWidthLayout.constant = 25
         userImageView.layer.cornerRadius = 10
         nameLbl.text = communitiesData?.groupName ?? ""
     
@@ -231,6 +243,25 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         }
     }
     
+    @IBAction func viewInnerBackAction(_ sender: Any)
+    {
+        // Hide all green views and clear selection
+           for indexPath in selectedMessages {
+               if let rightCell = maintableView.cellForRow(at: indexPath) as? RightViewCell {
+                   rightCell.greenView.isHidden = true
+               } else if let leftCell = maintableView.cellForRow(at: indexPath) as? LeftViewCell {
+                   leftCell.greenView.isHidden = true
+               }
+           }
+           
+           selectedMessages.removeAll()
+           updateSelectedCountLabel() // Update count label
+           
+           // Hide topHideShowView if needed
+           topHideShowView.isHidden = true
+           
+          
+    }
     @IBAction func sendMgsAction(_ sender: Any) 
     {
         // Fetch current date and time
@@ -376,31 +407,106 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
         }
         return 0
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if optionTableView == tableView {
-            if let cell = optionTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell {
-                cell.nameLbl.text = optionNames[indexPath.row]
+            if optionTableView == tableView {
+                if let cell = optionTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell {
+                    cell.nameLbl.text = optionNames[indexPath.row]
+                    return cell
+                }
+            } else if maintableView == tableView {
+                let message = messages[indexPath.row]
+                let cell: UITableViewCell
+                if message.side == .left {
+                    cell = maintableView.dequeueReusableCell(withIdentifier: "LeftViewCell", for: indexPath) as! LeftViewCell
+                    addLongPressGesture(to: cell, indexPath: indexPath)
+                    (cell as! LeftViewCell).configureCell(message: message)
+                } else {
+                    cell = maintableView.dequeueReusableCell(withIdentifier: "RightViewCell", for: indexPath) as! RightViewCell
+                    addLongPressGesture(to: cell, indexPath: indexPath)
+                    (cell as! RightViewCell).configureCell(message: message)
+                }
                 return cell
             }
-        } else if maintableView == tableView {
-            let message = messages[indexPath.row]
-            if message.side == .left {
-                let cell = maintableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
-                cell.configureCell(message: message)
-                return cell
-            } else {
-                let cell = maintableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
-                cell.configureCell(message: message)
-                return cell
+            return UITableViewCell()
+        }
+
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return UITableView.automaticDimension
+        }
+
+        // Add long press gesture recognizer to cell
+        func addLongPressGesture(to cell: UITableViewCell, indexPath: IndexPath) {
+            let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+            longGesture.minimumPressDuration = 0.5 // Adjust the duration as needed
+            cell.addGestureRecognizer(longGesture)
+        }
+
+    // Inside InnerChatVC
+
+    // Handle long press gesture
+    @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            if let indexPath = maintableView.indexPathForRow(at: gesture.location(in: maintableView)) {
+                // Mark the current index path as long-pressed
+                longPressedIndexPath = indexPath
+                toggleGreenView(for: indexPath)
+                topHideShowView.isHidden = false
             }
         }
-        
-        return UITableViewCell()
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+    private func toggleGreenView(for indexPath: IndexPath) {
+        if let rightCell = maintableView.cellForRow(at: indexPath) as? RightViewCell {
+            rightCell.greenView.isHidden = !rightCell.greenView.isHidden
+        } else if let leftCell = maintableView.cellForRow(at: indexPath) as? LeftViewCell {
+            leftCell.greenView.isHidden = !leftCell.greenView.isHidden
+        }
+        
+        // Toggle selection in the set
+        if selectedMessages.contains(indexPath) {
+            selectedMessages.remove(indexPath)
+        } else {
+            selectedMessages.insert(indexPath)
+        }
+        
+        // Update selected count label
+        updateSelectedCountLabel()
     }
+
+    private func updateSelectedCountLabel() {
+        lblSelectedMsgCount.text = "\(selectedMessages.count)"
+        if selectedMessages.count == 0
+        {
+            
+            topHideShowView.isHidden = true
+            // Hide all green views and clear selection
+               for indexPath in selectedMessages {
+                   if let rightCell = maintableView.cellForRow(at: indexPath) as? RightViewCell {
+                       rightCell.greenView.isHidden = true
+                   } else if let leftCell = maintableView.cellForRow(at: indexPath) as? LeftViewCell {
+                       leftCell.greenView.isHidden = true
+                   }
+               }
+            
+        }else
+        {
+            
+        }
+    }
+
+    // UITableViewDelegate method
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Show green view if no cell is long-pressed or if this cell matches the long-pressed cell
+        if longPressedIndexPath == nil || indexPath == longPressedIndexPath {
+            toggleGreenView(for: indexPath)
+            longPressedIndexPath = nil // Clear long-pressed state after showing green view
+        } else {
+            // Optionally handle tapping on other cells when one is already long-pressed
+            toggleGreenView(for: indexPath)
+        }
+    }
+
 }
 // MARK: CollectionView Methods
 extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
@@ -484,41 +590,43 @@ extension InnerChatVC {
                            let unReadMessageCount = nestedValueDict["unReadMessageCount"] as? String ?? ""
                            let videoCallLink = nestedValueDict["videoCallLink"] as? String ?? ""
                            let videoCallStatus = nestedValueDict["videoCallStatus"] as? String ?? ""
-
-
+                           
+                           
                            // Create a dictionary for ChatModel
                            let tempDic: [String: String] = [
-                               "attachmentUploadFrom": attachmentUploadFrom,
-                               "date": date,
-                               "deleted": deleted,
-                               "id": id,
-                               "indexId": indexId,
-                               "mediatype": mediatype,
-                               "mediaurl": mediaurl,
-                               "message": message,
-                               "messageStatus": messageStatus,
-                               "receiverID": receiverID,
-                               "receiverImage": receiverImage,
-                               "receiverName": receiverName,
-                               "receiverToken": receiverToken,
-                               "replyMessage": replyMessage,
-                               "replySendUserId": replySendUserId,
-                               "sendType": sendType,
-                               "senderFcmToken": senderFcmToken,
-                               "senderImage": senderImage,
-                               "senderName": senderName,
-                               "sentID": sentID,
-                               "time": time,
-                               "unReadMessageCount": unReadMessageCount,
-                               "videoCallLink": videoCallLink,
-                               "videoCallStatus": videoCallStatus
+                            "attachmentUploadFrom": attachmentUploadFrom,
+                            "date": date,
+                            "deleted": deleted,
+                            "id": id,
+                            "indexId": indexId,
+                            "mediatype": mediatype,
+                            "mediaurl": mediaurl,
+                            "message": message,
+                            "messageStatus": messageStatus,
+                            "receiverID": receiverID,
+                            "receiverImage": receiverImage,
+                            "receiverName": receiverName,
+                            "receiverToken": receiverToken,
+                            "replyMessage": replyMessage,
+                            "replySendUserId": replySendUserId,
+                            "sendType": sendType,
+                            "senderFcmToken": senderFcmToken,
+                            "senderImage": senderImage,
+                            "senderName": senderName,
+                            "sentID": sentID,
+                            "time": time,
+                            "unReadMessageCount": unReadMessageCount,
+                            "videoCallLink": videoCallLink,
+                            "videoCallStatus": videoCallStatus
                            ]
-
-                           // Check if the id matches lastChatdataId and create ChatModel instance
-                           if id == LastChatData?.id, let chatModel = ChatModel(JSON: tempDic) {
-                               self.chatDataArray.append(chatModel)
-                           } else {
-                               print("ID does not match or failed to initialize ChatModel with dictionary:")
+                           
+                           if deleted.lowercased() != "yes".lowercased(){
+                               // Check if the id matches lastChatdataId and create ChatModel instance
+                               if id == LastChatData?.id, let chatModel = ChatModel(JSON: tempDic) {
+                                   self.chatDataArray.append(chatModel)
+                               } else {
+                                   print("ID does not match or failed to initialize ChatModel with dictionary:")
+                               }
                            }
                        }
                    }

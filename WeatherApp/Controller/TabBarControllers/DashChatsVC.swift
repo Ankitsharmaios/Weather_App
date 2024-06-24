@@ -13,11 +13,10 @@ import Firebase
 import SDWebImage
 class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate & UITableViewDataSource & UITableViewDelegate{
 
+    @IBOutlet weak var footerLblYourPersonal: UILabel!
+    @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var btnAddChat: UIButton!
     @IBOutlet weak var chatTableView: UITableView!
-    @IBOutlet weak var toptableHeightLayout: NSLayoutConstraint!
-    @IBOutlet weak var topTableView: UITableView!
-    @IBOutlet weak var toptablebgView: UIView!
     @IBOutlet weak var addBtn: UIButton!
     @IBOutlet weak var addbtnbgView: UIView!
     @IBOutlet weak var searchImg: UIImageView!
@@ -29,7 +28,6 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     @IBOutlet weak var weatherLbl: UILabel!
     @IBOutlet weak var bgView: UIView!
     var AppConfigData:AppConfigModel?
-    var isTopTableHide = false
     var showTabbar: (() -> Void )?
     var ref: DatabaseReference!
     var LastChatData:[LiveChatDataModel]?
@@ -42,44 +40,38 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         super.viewDidLoad()
         getCityWeatherData()
         setupUI()
+       
         fetchFirebaseData()
         navigationController?.navigationBar.isHidden = true
-        topTableView.isHidden = true
+    
         tabBarController?.tabBar.barTintColor = appThemeColor.CommonBlack
+    
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        self.isTopTableHide = false
-        self.topTableView.isHidden = true
-    }
-
-    func setupUI(){
-        topTableView.register(UINib(nibName: "optionHeaderTblvCell", bundle: nil),forCellReuseIdentifier: "optionHeaderTblvCell")
-        chatTableView.register(UINib(nibName: "ChatsTBlvCell", bundle: nil),forCellReuseIdentifier: "ChatsTBlvCell")
-         topTableView.dataSource = self
-        topTableView.delegate = self
-        chatTableView.dataSource = self
-        chatTableView.delegate = self
-        chatTableView.separatorStyle = .none
-        toptableHeightLayout.constant = CGFloat(CGFloat((OptionNames.count)) * (40))
-        topTableView.separatorStyle = .none
-        weatherLbl.font = Helvetica.helvetica_bold.font(size: 24)
-        
-        searchbgView.layer.cornerRadius = 20
-        searchbgView.backgroundColor = appThemeColor.searchbgView
-        addbtnbgView.backgroundColor = appThemeColor.text_Weather
-        addbtnbgView.layer.cornerRadius = 13
-        topTableView.layer.cornerRadius = 8
-        topTableView.layer.masksToBounds = false
-        topTableView.addShadowToTableView(view: topTableView, value: 2)
-    }
     
+    func setupUI() {
+            chatTableView.register(UINib(nibName: "ChatsTBlvCell", bundle: nil), forCellReuseIdentifier: "ChatsTBlvCell")
+            chatTableView.register(UINib(nibName: "FooterViewTableViewCell", bundle: nil), forCellReuseIdentifier: "FooterViewTableViewCell")
+            chatTableView.dataSource = self
+            chatTableView.delegate = self
+            chatTableView.separatorStyle = .none
+            weatherLbl.font = Helvetica.helvetica_bold.font(size: 24)
+            searchbgView.layer.cornerRadius = 20
+            searchbgView.backgroundColor = appThemeColor.searchbgView
+            addbtnbgView.backgroundColor = appThemeColor.text_Weather
+            addbtnbgView.layer.cornerRadius = 13
+        }
+   
     @IBAction func optionsBtn(_ sender: Any) {
-        isTopTableHide.toggle()
-        if isTopTableHide == true{
-            self.topTableView.isHidden = false
-        }else{
-            self.topTableView.isHidden = true
+        DispatchQueue.main.async {
+            let ContactVc = SettingsViewController.getInstance()
+            ContactVc.modalPresentationStyle = .overCurrentContext
+            ContactVc.showTabbar = {
+                self.showTabBar(animated: true)
+            }
+           
+            self.hideTabBar(animated: true)
+            self.present(ContactVc, animated: true)
         }
     }
     
@@ -91,7 +83,7 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             ContactVc.showTabbar = {
                 self.showTabBar(animated: true)
             }
-            self.topTableView.isHidden = true
+           
             self.hideTabBar(animated: true)
             self.present(ContactVc, animated: true)
         }
@@ -120,94 +112,103 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
 // MARK: TableView Methods
 extension DashChatsVC{
     func numberOfSections(in tableView: UITableView) -> Int {
-        if tableView == chatTableView{
-            return 1
-        }else if tableView == topTableView{
-            return 1
-        }
-        return 0
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == chatTableView{
-            if LastChatData?.count ?? 0 > 0 {
-                return LastChatData?.count ?? 0
-            }else{
-                return 0
-            }
-        }else if tableView == topTableView{
-            return OptionNames.count
-        }
-      return 0
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == chatTableView{
-            if let cell = chatTableView .dequeueReusableCell(withIdentifier: "ChatsTBlvCell", for: indexPath) as? ChatsTBlvCell{
-                cell.usernameLbl.text = LastChatData?[indexPath.row].senderName ?? ""
-                cell.messageLbl.text = LastChatData?[indexPath.row].message ?? ""
-                cell.timeLbl.text =  Converter.convertApiTimeToAMPM(apiTime: LastChatData?[indexPath.row].time ?? "")
-                cell.timeLbl.textColor = appThemeColor.text_Weather
-                cell.msgLeadingLayout.constant = -13
-                cell.msgCountLbl.text = LastChatData?[indexPath.row].unReadMessageCount ?? ""
-                cell.ViewStatusImage.isHidden = true
-                
-                if let imageUrl2 = URL(string: LastChatData?[indexPath.row].senderImage ?? "") {
-                    cell.userImageView?.sd_setImage(with: imageUrl2, placeholderImage: UIImage(named: "Place_Holder"))
-
-                }
-                return cell
-            }
-        }else if tableView == topTableView{
-            if let cell = topTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
-                cell.nameLbl.text = OptionNames[indexPath.row]
-               
-                return cell
-            }
-        }
-        return UITableViewCell()
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == chatTableView{
-            return 70
-        }else if tableView == topTableView{
-            return 43
-        }
-        return CGFloat()
-    }
+           return 2
+       }
+       
+       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+           switch section {
+           case 0:
+               return LastChatData?.count ?? 1 // Return 1 if no chat data available
+           case 1:
+               return 1 // Footer view cell
+           default:
+               return 0
+           }
+       }
+       
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           if indexPath.section == 0 {
+               // Section 0: Chat cells
+               if let cell = chatTableView.dequeueReusableCell(withIdentifier: "ChatsTBlvCell", for: indexPath) as? ChatsTBlvCell {
+                   if let chatData = LastChatData?[indexPath.row] {
+                       cell.usernameLbl.text = chatData.senderName ?? ""
+                       cell.messageLbl.text = chatData.message ?? ""
+                       cell.timeLbl.text = Converter.convertApiTimeToAMPM(apiTime: chatData.time ?? "")
+                       cell.timeLbl.textColor = appThemeColor.text_Weather
+                       cell.msgLeadingLayout.constant = -13
+                       
+                       if let unReadCountString = chatData.unReadMessageCount,
+                          let unReadCount = Int(unReadCountString) {
+                           if unReadCount > 0 {
+                               cell.msgCountLbl.text = "\(unReadCount)"
+                           } else {
+                               cell.msgCountLbl.isHidden = true
+                           }
+                       } else {
+                           cell.msgCountLbl.isHidden = true
+                       }
+                       
+                       // Assuming ViewStatusImage and userImageView setup as per your cell design
+                       cell.ViewStatusImage.isHidden = true
+                       if let imageUrl = URL(string: chatData.senderImage ?? "") {
+                           cell.userImageView?.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "Place_Holder"))
+                       }
+                   }
+                   return cell
+               }
+           } else if indexPath.section == 1 {
+               // Section 1: Footer view cell
+               if let cell = chatTableView.dequeueReusableCell(withIdentifier: "FooterViewTableViewCell", for: indexPath) as? FooterViewTableViewCell {
+                   // Configure your footer cell here if needed
+                   return cell
+               }
+           }
+           
+           // Return a default cell if none matched
+           return UITableViewCell()
+       }
+       
+       func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+           if indexPath.section == 1 {
+               // Adjust height for your footer view cell if needed
+               return 50
+           }
+           return UITableView.automaticDimension // Default height for chat cells
+       }
+       
+       func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+           // Return nil for section 0 to avoid any footer view there
+           if section == 1 {
+               // Provide a custom footer view if needed
+               let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
+               footerView.backgroundColor = .clear
+               // Add any subviews or configure as needed
+               return footerView
+           }
+           return nil
+       }
+       
+       func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+           // Return height for footer view in section 1
+           if section == 1 {
+               return 50
+           }
+           return CGFloat.leastNonzeroMagnitude // Hide footer for section 0
+       }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     
-        if tableView == chatTableView {
+       
             let controller = InnerChatVC.getInstance()
             controller.modalPresentationStyle = .overFullScreen
             controller.UserName = LastChatData?[indexPath.row].senderName ?? ""
             if let selectedChat = LastChatData?[indexPath.row] {
-                     
+                
                 controller.LastChatData = selectedChat
-        
+                
             }
-
+            
             self.present(controller, animated: true)
         }
-        
-        
-        
-        if tableView == topTableView {
-            let selectedOption = OptionNames[indexPath.row]
-            if selectedOption == "Settings" {
-                
-                DispatchQueue.main.async {
-                    let settingVC = SettingsViewController.getInstance()
-                    settingVC.modalPresentationStyle = .overCurrentContext
-                    settingVC.showTabbar = {
-                        self.showTabBar(animated: true)
-                    }
-                    self.topTableView.isHidden = true
-                    self.hideTabBar(animated: true)
-                    self.present(settingVC, animated: true)
-                }
-            }
-        }
-    }
-   
+    
 }
 extension DashChatsVC
 {
