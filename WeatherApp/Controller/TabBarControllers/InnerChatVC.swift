@@ -13,8 +13,10 @@ import ObjectMapper
 import Firebase
 import FirebaseMessaging
 
-class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate{
-    
+class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate & UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+           return .none
+       }
 
     @IBOutlet weak var lblSelectedMsgCount: UILabel!
     @IBOutlet weak var viewInnerBackBtn: UIButton!
@@ -55,10 +57,12 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var longPressedIndexPath: IndexPath?
     private var selectedMessages: Set<IndexPath> = [] // Track selected messages
 
+    private var reactionPopUpVC: ReactionPopUpVC?
     
     var chatDataArray: [ChatModel] = []
     var messages = [Message]()
     var isfrom = ""
+    var customID = ""
     var showTabbar : (() -> Void )?
     var contactUserData:UserResultModel?
    var pathKey = ""
@@ -262,85 +266,155 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
            
           
     }
-    @IBAction func sendMgsAction(_ sender: Any) 
+    
+    
+    
+    
+    @IBAction func sendMgsAction(_ sender: Any)
     {
-        // Fetch current date and time
-           let currentDate = Date()
-           let dateFormatter = DateFormatter()
-           
-           // Date format for "20-06-2024"
-           dateFormatter.dateFormat = "dd-MM-yyyy"
-           let presentDate = dateFormatter.string(from: currentDate)
-           
-           // Date format for "11:31:14"
-           dateFormatter.dateFormat = "hh:mm:ss"
-           let presentTime = dateFormatter.string(from: currentDate)
-           
-           guard let text = textView.text, !text.isEmpty else {
+        guard let text = textView.text, !text.isEmpty else {
                print("Text field is empty")
                return
            }
+
            
-           guard let chatRoomId = LastChatData?.id else {
-               print("Chat room ID is nil")
-               return
-           }
-           
-           // Generate a unique key for each path
-           let chatPathKey = ref.child("Chat").child(chatRoomId).childByAutoId().key ?? ""
-           let LastChatPathKey = ref.child("LastChat").child(chatRoomId).childByAutoId().key ?? ""
-           
+
            let userData = getUserData()
            
-           // Create a dictionary to hold the data
-           let data: [String: Any] = [
-               "attachmentUploadFrom":"",
-               "date": presentDate,
-               "deleted":"",
-               "id":"\(LastChatData?.id ?? "")",
-               "indexId": chatPathKey,
-               "mediatype":"M",
-               "mediaurl":"",
-               "message": text,
-               "messageStatus":"",
-               "receiverID":"\(LastChatData?.sentID ?? "")",
-               "receiverImage":"\(LastChatData?.senderImage ?? "")",
-               "receiverName":"\(LastChatData?.senderName ?? "")",
-               "receiverToken":"\(LastChatData?.senderFcmToken ?? "")",
-               "replyMessage":"",
-               "replySendUserId":"\(getString(key: userDefaultsKeys.RegisterId.rawValue))",
-               "sendType":"Send",
-               "senderFcmToken":"\(AppSetting.FCMTokenString)",
-               "senderImage":"\(userData?.result?.image ?? "")",
-               "senderName":"\(userData?.result?.name ?? "")",
-               "sentID":"\(getString(key: userDefaultsKeys.RegisterId.rawValue))",
-               "time": presentTime,
-               "unReadMessageCount":"1"
-           ]
-           
-           // Post data to Firebase under the Chat path
-           let chatPath = ref.child("Chat").child(chatRoomId).child(chatPathKey)
-           chatPath.setValue(data) { error, ref in
-               if let error = error {
-                   print("Error posting data to Chat path: \(error.localizedDescription)")
-               } else {
-                   print("Data posted successfully to Chat path")
+           // Check if sentID is not empty
+           let sentID = getString(key: userDefaultsKeys.RegisterId.rawValue)
+           if sentID.isEmpty {
+               print("Required data is missing")
+               return
+           }
+
+           if let LastChatData = LastChatData {
+               
+               guard let chatRoomId = LastChatData.id else {
+                   print("Chat room ID is nil")
+                   return
                }
+               
+               // Ensure that all required data is available
+               guard let receiverID = LastChatData.sentID,
+                     let receiverImage = LastChatData.senderImage,
+                     let receiverName = LastChatData.senderName,
+                     let receiverToken = LastChatData.senderFcmToken,
+                     let senderImage = userData?.result?.image,
+                     let senderName = userData?.result?.name else {
+                   print("Required data is missing")
+                   return
+               }
+               
+               // Call the refactored function with the parameters
+               sendMessage(chatRoomId: chatRoomId,
+                           message: text,
+                           receiverID: String(receiverID), // Convert Int to String
+                           receiverImage: receiverImage,
+                           receiverName: receiverName,
+                           receiverToken: receiverToken,
+                           senderImage: senderImage,
+                           senderName: senderName,
+                           senderFcmToken: AppSetting.FCMTokenString,
+                           sentID: sentID)
            }
            
-           // Post data to Firebase under the Messages path
-           let messagesPath = ref.child("LastChat").child(chatRoomId).child(LastChatPathKey)
-           messagesPath.setValue(data) { error, ref in
-               if let error = error {
-                   print("Error posting data to Messages path: \(error.localizedDescription)")
-               } else {
-                   self.textView.text = ""
-                   print("Data posted successfully to Messages path")
+           if let contactUserData = contactUserData {
+               // Ensure that all required data is available
+               guard let receiverID = contactUserData.id,
+                     let receiverImage = contactUserData.image,
+                     let receiverName = contactUserData.name,
+                     let receiverToken = contactUserData.deviceToken,
+                     let senderImage = userData?.result?.image,
+                     let senderName = userData?.result?.name else {
+                   print("Required data is missing")
+                   return
                }
+               
+               // Call the refactored function with the parameters
+               sendMessage(chatRoomId: self.customID,
+                           message: text,
+                           receiverID: String(receiverID), // Convert Int to String
+                           receiverImage: receiverImage,
+                           receiverName: receiverName,
+                           receiverToken: receiverToken,
+                           senderImage: senderImage,
+                           senderName: senderName,
+                           senderFcmToken: AppSetting.FCMTokenString,
+                           sentID: sentID)
            }
+       
     }
         
-            
+    func sendMessage(chatRoomId: String, message: String, receiverID: String, receiverImage: String, receiverName: String, receiverToken: String, senderImage: String, senderName: String, senderFcmToken: String, sentID: String) {
+        // Fetch current date and time
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        
+        // Date format for "20-06-2024"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let presentDate = dateFormatter.string(from: currentDate)
+        
+        // Date format for "11:31:14"
+        dateFormatter.dateFormat = "hh:mm:ss"
+        let presentTime = dateFormatter.string(from: currentDate)
+        
+        // Generate a unique key for each path
+        let chatPathKey = ref.child("Chat").child(chatRoomId).childByAutoId().key ?? ""
+        let lastChatPathKey = ref.child("LastChat").child(chatRoomId).childByAutoId().key ?? ""
+        
+        // Create a dictionary to hold the data
+        let data: [String: Any] = [
+            "attachmentUploadFrom": "",
+            "date": presentDate,
+            "deleted": "",
+            "id": chatRoomId,
+            "indexId": chatPathKey,
+            "mediatype": "M",
+            "mediaurl": "",
+            "message": message,
+            "messageStatus": "",
+            "receiverID": receiverID,
+            "receiverImage": receiverImage,
+            "receiverName": receiverName,
+            "receiverToken": receiverToken,
+            "replyMessage": "",
+            "replySendUserId": sentID,
+            "sendType": "Send",
+            "senderFcmToken": senderFcmToken,
+            "senderImage": senderImage,
+            "senderName": senderName,
+            "sentID": sentID,
+            "time": presentTime,
+            "unReadMessageCount": "1"
+        ]
+        
+        // Post data to Firebase under the Chat path
+        let chatPath = ref.child("Chat").child(chatRoomId).child(chatPathKey)
+        chatPath.setValue(data) { error, ref in
+            if let error = error {
+                print("Error posting data to Chat path: \(error.localizedDescription)")
+            } else {
+                print("Data posted successfully to Chat path")
+                
+                self.fetchFirebaseData()
+                self.fetchData()
+            }
+        }
+        
+        // Post data to Firebase under the LastChat path
+        let messagesPath = ref.child("LastChat").child(chatRoomId).child(lastChatPathKey)
+        messagesPath.setValue(data) { error, ref in
+            if let error = error {
+                print("Error posting data to LastChat path: \(error.localizedDescription)")
+            } else {
+                self.textView.text = ""
+                print("Data posted successfully to LastChat path")
+                
+            }
+        }
+    }
+
     
     
     @IBAction func backBtn(_ sender: Any) {
@@ -434,6 +508,23 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return UITableView.automaticDimension
         }
+    
+    // UITableViewDelegate method
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Show green view if no cell is long-pressed or if this cell matches the long-pressed cell
+        if longPressedIndexPath == nil || indexPath == longPressedIndexPath {
+            toggleGreenView(for: indexPath)
+            longPressedIndexPath = nil // Clear long-pressed state after showing green view
+           
+        } else {
+            // Optionally handle tapping on other cells when one is already long-pressed
+            toggleGreenView(for: indexPath)
+        }
+    }
+
+    
+    
+    
 
         // Add long press gesture recognizer to cell
         func addLongPressGesture(to cell: UITableViewCell, indexPath: IndexPath) {
@@ -442,25 +533,32 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
             cell.addGestureRecognizer(longGesture)
         }
 
-    // Inside InnerChatVC
-
-    // Handle long press gesture
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            if let indexPath = maintableView.indexPathForRow(at: gesture.location(in: maintableView)) {
-                // Mark the current index path as long-pressed
-                longPressedIndexPath = indexPath
-                toggleGreenView(for: indexPath)
-                topHideShowView.isHidden = false
-            }
+        guard gesture.state == .began else { return }
+        
+        // Find the indexPath of the long-pressed cell
+        guard let indexPath = maintableView.indexPathForRow(at: gesture.location(in: maintableView)) else {
+            return
         }
+        
+        // Update the longPressedIndexPath
+        longPressedIndexPath = indexPath
+        toggleGreenView(for: indexPath)
+        topHideShowView.isHidden = false
+        // Show or hide the green view
+        handleGreenViewVisibility(isHidden: false)
     }
-
+    
     private func toggleGreenView(for indexPath: IndexPath) {
+        // Check if the cell is a RightViewCell or LeftViewCell and toggle greenView visibility
         if let rightCell = maintableView.cellForRow(at: indexPath) as? RightViewCell {
-            rightCell.greenView.isHidden = !rightCell.greenView.isHidden
+            let isHidden = !rightCell.greenView.isHidden
+            rightCell.greenView.isHidden = isHidden
+            handleGreenViewVisibility(isHidden: isHidden)
         } else if let leftCell = maintableView.cellForRow(at: indexPath) as? LeftViewCell {
-            leftCell.greenView.isHidden = !leftCell.greenView.isHidden
+            let isHidden = !leftCell.greenView.isHidden
+            leftCell.greenView.isHidden = isHidden
+            handleGreenViewVisibility(isHidden: isHidden)
         }
         
         // Toggle selection in the set
@@ -474,6 +572,57 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
         updateSelectedCountLabel()
     }
 
+    private func handleGreenViewVisibility(isHidden: Bool) {
+           if isHidden {
+               dismissReactionPopUpIfNeeded()
+           } else {
+               if reactionPopUpVC == nil { // Check if reactionPopUpVC is not already presented
+                   if let indexPath = longPressedIndexPath {
+                       presentReactionPopUp(at: indexPath)
+                   } else {
+                       print("Error: longPressedIndexPath is nil")
+                   }
+               }
+           }
+       }
+       
+    private func presentReactionPopUp(at indexPath: IndexPath) {
+        guard let cell = maintableView.cellForRow(at: indexPath) else { return }
+        
+        // Create the ReactionPopUpVC instance
+        let reactionPopUpVC = ReactionPopUpVC.getInstance()
+        reactionPopUpVC.modalPresentationStyle = .popover
+        
+        // Set the preferred size and position of the popover
+        let preferredSize = CGSize(width: 200, height: 40) // Adjust as needed
+        reactionPopUpVC.preferredContentSize = preferredSize
+        
+        // Calculate the sourceRect to position the popover at the bottom of the cell
+        let cellRect = maintableView.rectForRow(at: indexPath)
+        let popoverOrigin = CGPoint(x: cellRect.midX, y: cellRect.maxY)
+        
+        // Configure the popover presentation controller
+        let popoverPresentationController = reactionPopUpVC.popoverPresentationController
+        popoverPresentationController?.permittedArrowDirections = .any
+        popoverPresentationController?.sourceView = maintableView
+        popoverPresentationController?.sourceRect = CGRect(origin: popoverOrigin, size: .zero)
+        popoverPresentationController?.delegate = self
+        
+        // Present the popover
+        present(reactionPopUpVC, animated: true, completion: nil)
+        
+        // Set the reactionPopUpVC instance
+        self.reactionPopUpVC = reactionPopUpVC
+    }
+       private func dismissReactionPopUpIfNeeded() {
+           guard let controller = reactionPopUpVC else { return }
+           
+           DispatchQueue.main.async {
+               controller.dismiss(animated: true) {
+                   self.reactionPopUpVC = nil // Reset reactionPopUpVC instance after dismissal
+               }
+           }
+       }
     private func updateSelectedCountLabel() {
         lblSelectedMsgCount.text = "\(selectedMessages.count)"
         if selectedMessages.count == 0
@@ -492,18 +641,6 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
         }else
         {
             
-        }
-    }
-
-    // UITableViewDelegate method
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Show green view if no cell is long-pressed or if this cell matches the long-pressed cell
-        if longPressedIndexPath == nil || indexPath == longPressedIndexPath {
-            toggleGreenView(for: indexPath)
-            longPressedIndexPath = nil // Clear long-pressed state after showing green view
-        } else {
-            // Optionally handle tapping on other cells when one is already long-pressed
-            toggleGreenView(for: indexPath)
         }
     }
 
@@ -622,7 +759,7 @@ extension InnerChatVC {
                            
                            if deleted.lowercased() != "yes".lowercased(){
                                // Check if the id matches lastChatdataId and create ChatModel instance
-                               if id == LastChatData?.id, let chatModel = ChatModel(JSON: tempDic) {
+                               if id == LastChatData?.id || id == self.customID, let chatModel = ChatModel(JSON: tempDic) {
                                    self.chatDataArray.append(chatModel)
                                } else {
                                    print("ID does not match or failed to initialize ChatModel with dictionary:")

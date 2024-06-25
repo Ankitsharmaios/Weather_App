@@ -18,10 +18,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4c7-BM-Ggr">
-                        <rect key="frame" x="16" y="4" width="277" height="44"/>
+                        <rect key="frame" x="16" y="4" width="266" height="44"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2:54 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7x-eK-wIm">
-                                <rect key="frame" x="215" y="21.5" width="50" height="14.5"/>
+                                <rect key="frame" x="204" y="23.5" width="50" height="14.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="ujX-Td-tWc"/>
                                 </constraints>
@@ -37,12 +37,12 @@
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="z7x-eK-wIm" secondAttribute="bottom" constant="8" id="44W-89-hCP"/>
+                            <constraint firstAttribute="bottom" secondItem="z7x-eK-wIm" secondAttribute="bottom" constant="6" id="44W-89-hCP"/>
                             <constraint firstAttribute="trailing" secondItem="z7x-eK-wIm" secondAttribute="trailing" constant="12" id="80M-eD-dG4"/>
                             <constraint firstItem="bNz-by-izB" firstAttribute="leading" secondItem="4c7-BM-Ggr" secondAttribute="leading" constant="12" id="C8v-jb-05n"/>
                             <constraint firstAttribute="bottom" secondItem="bNz-by-izB" secondAttribute="bottom" constant="8" id="Pr1-wu-I1F"/>
                             <constraint firstItem="bNz-by-izB" firstAttribute="top" secondItem="4c7-BM-Ggr" secondAttribute="top" constant="8" id="cIq-wQ-G4o"/>
-                            <constraint firstItem="z7x-eK-wIm" firstAttribute="leading" secondItem="bNz-by-izB" secondAttribute="trailing" constant="16" id="ge4-bA-owg"/>
+                            <constraint firstItem="z7x-eK-wIm" firstAttribute="leading" secondItem="bNz-by-izB" secondAttribute="trailing" constant="5" id="ge4-bA-owg"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4T1-88-7PU">

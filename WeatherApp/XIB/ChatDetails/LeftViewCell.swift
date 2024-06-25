@@ -10,6 +10,7 @@ import UIKit
 
 class LeftViewCell: UITableViewCell {
 
+    
     @IBOutlet weak var greenView: UIView!
     @IBOutlet weak var messageContainerView: UIView!
     @IBOutlet weak var textMessageLabel: UILabel!
@@ -18,6 +19,7 @@ class LeftViewCell: UITableViewCell {
         super.awakeFromNib()
         messageContainerView.rounded(radius: 12)
         messageContainerView.backgroundColor = .white
+        
         
         contentView.backgroundColor = .clear
         backgroundColor = .clear
@@ -30,6 +32,9 @@ class LeftViewCell: UITableViewCell {
     }
     
 }
+
+
+
 extension UIView {
     func rounded(radius: CGFloat) {
         self.layer.cornerRadius = radius

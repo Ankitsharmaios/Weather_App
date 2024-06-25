@@ -251,9 +251,14 @@ extension ContactsViewController:UITableViewDataSource & UITableViewDelegate
                 guard let userData = UserListData?.result?[indexPath.row] else { return }
                 
                 
+                
+                
+                let customID = generateCustomID(registerId: getString(key: userDefaultsKeys.RegisterId.rawValue), userId: "\(String(describing: userData.id!))")
+                
                 let InnerChatVC = InnerChatVC.getInstance()
                 InnerChatVC.modalPresentationStyle = .fullScreen
                 InnerChatVC.contactUserData = userData
+                InnerChatVC.customID = customID
                 InnerChatVC.isfrom = "SelectContect"
                 InnerChatVC.showTabbar = {
                     self.showTabBar(animated: true)
@@ -266,30 +271,25 @@ extension ContactsViewController:UITableViewDataSource & UITableViewDelegate
             
         }
         
-        if tableView == topTableView {
-            let selectedOption = OptionNames[indexPath.row]
-            if selectedOption == "Invite a friend" || selectedOption == "Contacts" || selectedOption == "Refresh" || selectedOption == "Help"{
-                
-                DispatchQueue.main.async {
-                    //                    let settingVC = SettingsViewController.getInstance()
-                    //                    settingVC.modalPresentationStyle = .overCurrentContext
-                    //                    settingVC.showTabbar = {
-                    //                        self.showTabBar(animated: true)
-                    //                    }
-                    //                    self.topTableView.isHidden = true
-                    //                    self.hideTabBar(animated: true)
-                    //                    self.present(settingVC, animated: true)
-                    //                }
-                    self.topTableView.isHidden = true
-                }
-            }
-            
-            
-        }
         
     }
            
- 
+    func generateCustomID(registerId: String?, userId: String?) -> String {
+        let safeRegisterId = registerId ?? ""
+        let safeUserId = userId ?? ""
+
+        let customID = "\(safeRegisterId)_\(safeUserId)"
+        let reverseCustomID = "\(safeUserId)_\(safeRegisterId)"
+        
+        if !Singleton.sharedInstance.firebaseIdsArray.contains(customID) &&
+           !Singleton.sharedInstance.firebaseIdsArray.contains(reverseCustomID) {
+            // Add the new unique customID to the firebaseIdsArray
+            return reverseCustomID
+        } else {
+            // Return an empty string or handle the case where the ID already exists
+            return "Id alrady added in firebase Id Array "
+        }
+    }
 }
 extension ContactsViewController
 {

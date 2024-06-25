@@ -17,5 +17,6 @@ class Singleton {
     var networkStatus = ""
     var storyId : Int?
     var verifyOTPDATA:verifyOTPModel?
+    var firebaseIdsArray = [""]
 }
 

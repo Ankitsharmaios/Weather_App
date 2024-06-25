@@ -82,6 +82,7 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             ContactVc.modalPresentationStyle = .overCurrentContext
             ContactVc.showTabbar = {
                 self.showTabBar(animated: true)
+                self.fetchFirebaseData()
             }
            
             self.hideTabBar(animated: true)
@@ -118,7 +119,7 @@ extension DashChatsVC{
        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
            switch section {
            case 0:
-               return LastChatData?.count ?? 1 // Return 1 if no chat data available
+               return LastChatData?.count ?? 0
            case 1:
                return 1 // Footer view cell
            default:
@@ -234,67 +235,71 @@ extension DashChatsVC
         }
     }
     // MARK: FireBase Data Method LastChat
-    func fetchFirebaseData() {
-        ref = Database.database().reference()
-        ref.getData { [self] error, snap in
-            if let error = error {
-                print("Error in fetching from firebase: \(error)")
-                fetchFirebaseData()
-            }else if ((snap?.exists()) != nil) {
-                
-                ref.child("\(firebaseTableName.LastChat)").observe(.value, with: { [self] (snapshot) in
-                    //agoraArr1 = []
-                    self.LastChatData = []
-                    //                    for snap in snapshot.children {
-                    //                        let userSnap = snap as! DataSnapshot
-                    //                        _ = userSnap.key //the uid of each user
-                    //                        let userDict = userSnap.value as! [String:AnyObject] //child data
-                    
-                    _ = snapshot.key //the uid of each user
-                   // let userDict = snapshot.value as! [String:AnyObject] //child data
-                    for child in snapshot.children{
+
+        func fetchFirebaseData() {
+            ref = Database.database().reference()
+            ref.getData { [self] error, snap in
+                if let error = error {
+                    print("Error in fetching from firebase: \(error)")
+                    fetchFirebaseData()
+                } else if ((snap?.exists()) != nil) {
+                    ref.child("\(firebaseTableName.LastChat)").observe(.value, with: { [self] (snapshot) in
+                        self.LastChatData = []
+                        var firebaseIdsArray: [String] = [] // Array to store Firebase IDs
                         
-                        let childSnap = child as! DataSnapshot
-                        let userDict = childSnap.value as! [String: Any]
-                        let date = userDict["date"] as? String
-                        let id = userDict["id"] as? String
-                        let indexId = userDict["indexId"] as? String
-                        let isDeleted = userDict["isDeleted"] as? String
-                        let message = userDict["message"] as? String
-                        let messageStatus = userDict["messageStatus"] as? String
-                        let receiverID = userDict["receiverID"] as? String
-                        let receiverImage = userDict["receiverImage"] as? String
-                        let receiverName = userDict["receiverName"] as? String
-                        let receiverToken = userDict["receiverToken"] as? String
-                        let senderFcmToken = userDict["senderFcmToken"] as? String
-                        let senderImage = userDict["senderImage"] as? String
-                        let senderName = userDict["senderName"] as? String
-                        let sentID = userDict["sentID"] as? String
-                        let time = userDict["time"] as? String
-                        let videoCallLink = userDict["videoCallLink"] as? String
-                        let videoCallStatus = userDict["videoCallStatus"] as? String
-                        print("Ids-->",sentID,receiverID)
-                        print("RegisterId",getString(key: userDefaultsKeys.RegisterId.rawValue))
-                        if isDeleted?.lowercased() != "yes".lowercased(){
-                        if receiverID == getString(key: userDefaultsKeys.RegisterId.rawValue){
-                            if let chatData = LiveChatDataModel(JSON: userDict) {
-                                self.LastChatData?.append(chatData)
-                                print("LastChat",LastChatData ?? [])
-                                self.chatTableView.reloadData()
-                           }
+                        for child in snapshot.children {
+                            let childSnap = child as! DataSnapshot
+                            let userDict = childSnap.value as! [String: Any]
+                            
+                            let date = userDict["date"] as? String
+                            let id = userDict["id"] as? String
+                            let indexId = userDict["indexId"] as? String
+                            let isDeleted = userDict["isDeleted"] as? String
+                            let message = userDict["message"] as? String
+                            let messageStatus = userDict["messageStatus"] as? String
+                            let receiverID = userDict["receiverID"] as? String
+                            let receiverImage = userDict["receiverImage"] as? String
+                            let receiverName = userDict["receiverName"] as? String
+                            let receiverToken = userDict["receiverToken"] as? String
+                            let senderFcmToken = userDict["senderFcmToken"] as? String
+                            let senderImage = userDict["senderImage"] as? String
+                            let senderName = userDict["senderName"] as? String
+                            let sentID = userDict["sentID"] as? String
+                            let time = userDict["time"] as? String
+                            let videoCallLink = userDict["videoCallLink"] as? String
+                            let videoCallStatus = userDict["videoCallStatus"] as? String
+                            
+                            print("Ids-->", sentID, receiverID)
+                            // Store the Firebase ID in the array
+                            firebaseIdsArray.append(id ?? "")
+                           
+                            
+                            if isDeleted?.lowercased() != "yes".lowercased() {
+                                if receiverID == getString(key: userDefaultsKeys.RegisterId.rawValue) || sentID == getString(key: userDefaultsKeys.RegisterId.rawValue){
+                                    if let chatData = LiveChatDataModel(JSON: userDict) {
+                                        self.LastChatData?.append(chatData)
+                                        print("LastChat", LastChatData ?? [])
+                                        self.chatTableView.reloadData()
+                                        
+                                        
+                                    }
+                                }
+                            }
                         }
-                    }
                         
-                    }
-                    
-                })
-            }else {
-                print("No data available")
+                        // Assign the array of Firebase IDs to the singleton
+                        Singleton.sharedInstance.firebaseIdsArray = firebaseIdsArray
+                        print("=====>",Singleton.sharedInstance.firebaseIdsArray)
+                    })
+                } else {
+                    print("No data available")
+                }
             }
         }
-    }
-    
+ 
 }
+   
+
 extension DashChatsVC
 {
     
