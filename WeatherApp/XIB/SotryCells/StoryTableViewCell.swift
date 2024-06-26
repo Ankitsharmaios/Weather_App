@@ -87,11 +87,11 @@ class StoryTableViewCell: UITableViewCell {
           if let imageURLStrings = detail.media?.compactMap({ $0.uRL }),
              let firstImageURLString = imageURLStrings.last, !firstImageURLString.isEmpty,
              let imageURL = URL(string: firstImageURLString) {
-              userimageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+              userimageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
               userimageView.backgroundColor = .clear // Reset background color
               lbltextStatusShow.isHidden = true // Hide text status
           } else {
-              userimageView.image = UIImage(named: "placeholder")
+              userimageView.image = UIImage(named: "Place_Holder")
               // Set background color if image URL is empty
               if let media = detail.media?.last, let backgroundColorString = media.textBackground, let backgroundColor = UIColor(hex: backgroundColorString) {
                   userimageView.backgroundColor = backgroundColor

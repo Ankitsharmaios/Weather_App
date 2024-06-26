@@ -2,9 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -461,133 +459,9 @@
             </objects>
             <point key="canvasLocation" x="948.85496183206101" y="-39.436619718309863"/>
         </scene>
-        <!--Reaction Pop UpVC-->
-        <scene sceneID="skd-QA-LaV">
-            <objects>
-                <viewController storyboardIdentifier="ReactionPopUpVC" id="bKd-nY-KDk" customClass="ReactionPopUpVC" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hnb-8C-Ntd">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIg-wb-JmT">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <connections>
-                                    <action selector="backAction:" destination="bKd-nY-KDk" eventType="touchUpInside" id="yAT-2z-G0p"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0cm-xi-Ng7">
-                                <rect key="frame" x="0.0" y="413.66666666666669" width="393" height="50"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="AjF-tc-0Ij">
-                                        <rect key="frame" x="10" y="10" width="373" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G98-hl-ehK">
-                                                <rect key="frame" x="0.0" y="0.0" width="54" height="30"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="like"/>
-                                                <connections>
-                                                    <action selector="likeAction:" destination="bKd-nY-KDk" eventType="touchUpInside" id="CoT-wK-fko"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZJa-x9-Pxu">
-                                                <rect key="frame" x="64" y="0.0" width="53.666666666666657" height="30"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="love"/>
-                                                <connections>
-                                                    <action selector="loveAction:" destination="bKd-nY-KDk" eventType="touchUpInside" id="Fmp-DD-9Rk"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j5P-9i-1EP">
-                                                <rect key="frame" x="127.66666666666666" y="0.0" width="54" height="30"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Button" image="haha"/>
-                                                <connections>
-                                                    <action selector="hahaAction:" destination="bKd-nY-KDk" eventType="touchUpInside" id="zw4-dP-j4e"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wyn-zk-QLF">
-                                                <rect key="frame" x="191.66666666666666" y="0.0" width="53.666666666666657" height="30"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="wow"/>
-                                                <connections>
-                                                    <action selector="wowAction:" destination="bKd-nY-KDk" eventType="touchUpInside" id="In1-Ww-UNC"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XbE-Sk-nUR">
-                                                <rect key="frame" x="255.33333333333331" y="0.0" width="54" height="30"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="sad"/>
-                                                <connections>
-                                                    <action selector="sadAction:" destination="bKd-nY-KDk" eventType="touchUpInside" id="S2h-ay-NTb"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8uY-xx-K5O">
-                                                <rect key="frame" x="319.33333333333331" y="0.0" width="53.666666666666686" height="30"/>
-                                                <color key="tintColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal">
-                                                    <imageReference key="image" image="plus.circle.fill" catalog="system" symbolScale="large"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="addAction:" destination="bKd-nY-KDk" eventType="touchUpInside" id="LvO-TU-m53"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="bH2-wo-uKN"/>
-                                        </constraints>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="8KK-Jd-KhP"/>
-                                    <constraint firstItem="AjF-tc-0Ij" firstAttribute="centerX" secondItem="0cm-xi-Ng7" secondAttribute="centerX" id="AUc-vv-jCU"/>
-                                    <constraint firstAttribute="trailing" secondItem="AjF-tc-0Ij" secondAttribute="trailing" constant="10" id="M2x-2h-Mhz"/>
-                                    <constraint firstItem="AjF-tc-0Ij" firstAttribute="centerY" secondItem="0cm-xi-Ng7" secondAttribute="centerY" id="Tds-al-ygX"/>
-                                    <constraint firstItem="AjF-tc-0Ij" firstAttribute="leading" secondItem="0cm-xi-Ng7" secondAttribute="leading" constant="10" id="bSK-7g-Bcz"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="YMS-YS-9gB"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="WIg-wb-JmT" firstAttribute="leading" secondItem="YMS-YS-9gB" secondAttribute="leading" id="OM6-4B-vlb"/>
-                            <constraint firstItem="YMS-YS-9gB" firstAttribute="trailing" secondItem="WIg-wb-JmT" secondAttribute="trailing" id="af2-2M-WmM"/>
-                            <constraint firstItem="YMS-YS-9gB" firstAttribute="trailing" secondItem="0cm-xi-Ng7" secondAttribute="trailing" id="glF-rF-KeB"/>
-                            <constraint firstItem="YMS-YS-9gB" firstAttribute="bottom" secondItem="WIg-wb-JmT" secondAttribute="bottom" id="hFt-sI-roc"/>
-                            <constraint firstItem="WIg-wb-JmT" firstAttribute="top" secondItem="YMS-YS-9gB" secondAttribute="top" id="kUL-Lo-Wxz"/>
-                            <constraint firstItem="0cm-xi-Ng7" firstAttribute="centerY" secondItem="YMS-YS-9gB" secondAttribute="centerY" id="pMd-ir-4Bv"/>
-                            <constraint firstItem="0cm-xi-Ng7" firstAttribute="centerX" secondItem="YMS-YS-9gB" secondAttribute="centerX" id="weU-l1-IPv"/>
-                            <constraint firstItem="0cm-xi-Ng7" firstAttribute="leading" secondItem="YMS-YS-9gB" secondAttribute="leading" id="yof-x8-EPe"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="btnAdd" destination="8uY-xx-K5O" id="VQI-vG-r2r"/>
-                        <outlet property="btnHaha" destination="j5P-9i-1EP" id="w8p-oF-Wyb"/>
-                        <outlet property="btnLike" destination="G98-hl-ehK" id="DBE-P4-2nq"/>
-                        <outlet property="btnLove" destination="ZJa-x9-Pxu" id="CvK-Sa-w1A"/>
-                        <outlet property="btnSad" destination="XbE-Sk-nUR" id="Eve-2N-KZW"/>
-                        <outlet property="btnWow" destination="Wyn-zk-QLF" id="uLJ-bC-0e5"/>
-                        <outlet property="reacionView" destination="0cm-xi-Ng7" id="jHm-5c-Ube"/>
-                        <outlet property="stackView" destination="AjF-tc-0Ij" id="Q6a-s8-Q1Q"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QEM-iL-klZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1597.709923664122" y="-39.436619718309863"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="haha" width="81" height="81"/>
-        <image name="like" width="81" height="81"/>
-        <image name="love" width="81" height="81"/>
-        <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
-        <image name="sad" width="81" height="81"/>
         <image name="smileyImage" width="58" height="58"/>
-        <image name="wow" width="81" height="81"/>
         <namedColor name="RedColor_D62323">
             <color red="0.83921568627450982" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

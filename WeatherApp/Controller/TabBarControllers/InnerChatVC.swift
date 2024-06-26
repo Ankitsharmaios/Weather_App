@@ -12,11 +12,11 @@ import FirebaseDatabase
 import ObjectMapper
 import Firebase
 import FirebaseMessaging
+import iRecordView
+import MGSwipeTableCell
 
-class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate & UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-           return .none
-       }
+class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate & RecordViewDelegate {
+    
 
     @IBOutlet weak var lblSelectedMsgCount: UILabel!
     @IBOutlet weak var viewInnerBackBtn: UIButton!
@@ -57,7 +57,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var longPressedIndexPath: IndexPath?
     private var selectedMessages: Set<IndexPath> = [] // Track selected messages
 
-    private var reactionPopUpVC: ReactionPopUpVC?
+    
     
     var chatDataArray: [ChatModel] = []
     var messages = [Message]()
@@ -65,13 +65,49 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var customID = ""
     var showTabbar : (() -> Void )?
     var contactUserData:UserResultModel?
-   var pathKey = ""
+    var pathKey = ""
     var categoriesArr:[ChatModel] = []
+    
+    var recordButton:RecordButton!
+    var recordView:RecordView!
+    var stateLabel:UILabel!
+
+    
     class func getInstance()-> InnerChatVC {
         return InnerChatVC.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        
+        
+        let recordButton = RecordButton()
+        recordButton.translatesAutoresizingMaskIntoConstraints = false
+        recordButton.tintColor = .clear
+        let recordView = RecordView()
+        recordView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(recordButton)
+        view.addSubview(recordView)
+
+        recordButton.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        recordButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
+
+        recordButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+        recordButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: 10).isActive = true
+        
+
+        recordView.trailingAnchor.constraint(equalTo: recordButton.leadingAnchor, constant: -20).isActive = true
+        recordView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        recordView.centerYAnchor.constraint(equalTo: recordButton.centerYAnchor).isActive = true
+        recordButton.recordView = recordView
+
+        recordView.delegate = self
+        
+        
+        
+        
+        
         ref = Database.database().reference()
        
         fetchFirebaseData()
@@ -194,24 +230,33 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             let lastIndexPath = IndexPath(row: messages.count - 1, section: 0)
             maintableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: false)
         }
-    func setChatData()
-    {
-       
+    func setChatData() {
         vcallBtn.isHidden = false
         callBtn.isHidden = false
-      //  stackViewWidthLayout.constant = 115
-        userImageView.layer.cornerRadius = userImageView.layer.bounds.height / 2
-        nameLbl.text = LastChatData?.senderName ?? ""
-    
-        let imageURLStrings = LastChatData?.senderImage
-
-        // Safely get the last URL string if it exists
-        if let lastImageURLString = imageURLStrings, let imageURL = URL(string: lastImageURLString) {
-            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
-        } else {
-            userImageView.image = UIImage(named: "placeholder")
+        // stackViewWidthLayout.constant = 115  // Uncomment if you need to adjust stack view width
+        userImageView.layer.cornerRadius = userImageView.bounds.height / 2
+        
+        // Safely unwrap LastChatData and set values
+        if let selectedChat = LastChatData {
+            let userId = getString(key: userDefaultsKeys.RegisterId.rawValue)
+            let isReceiver = selectedChat.receiverID == userId
+            
+            let receiverName = (selectedChat.receiverName ?? "").isEmpty ? selectedChat.receiverID : selectedChat.receiverName!
+            let senderName = (selectedChat.senderName ?? "").isEmpty ? selectedChat.sentID : selectedChat.senderName!
+            
+            // Set user name
+            nameLbl.text = isReceiver ? senderName : receiverName
+            
+            // Load user image using SDWebImage
+            let imageURLString = isReceiver ? selectedChat.senderImage : selectedChat.receiverImage
+            if let imageURL = URL(string: imageURLString ?? "") {
+                userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
+            } else {
+                userImageView.image = UIImage(named: "Place_Holder")
+            }
         }
     }
+
     func contactUserDataSet()
     {
         vcallBtn.isHidden = false
@@ -224,9 +269,9 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
 
         // Safely get the last URL string if it exists
         if let lastImageURLString = imageURLStrings, let imageURL = URL(string: lastImageURLString) {
-            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
         } else {
-            userImageView.image = UIImage(named: "placeholder")
+            userImageView.image = UIImage(named: "Place_Holder")
         }
     }
     func setGroupData()
@@ -241,9 +286,9 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
 
         // Safely get the last URL string if it exists
         if let lastImageURLString = imageURLStrings, let imageURL = URL(string: lastImageURLString) {
-            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
         } else {
-            userImageView.image = UIImage(named: "placeholder")
+            userImageView.image = UIImage(named: "Place_Holder")
         }
     }
     
@@ -295,10 +340,16 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
                    return
                }
                
+               let userId = getString(key: userDefaultsKeys.RegisterId.rawValue)
+               let isReceiver = LastChatData.receiverID == userId
+                              
+               let imageURLString = isReceiver ? LastChatData.senderImage : LastChatData.receiverImage
+            
+               
                // Ensure that all required data is available
-               guard let receiverID = LastChatData.sentID,
-                     let receiverImage = LastChatData.senderImage,
-                     let receiverName = LastChatData.senderName,
+               guard let receiverID = LastChatData.receiverID,
+                     let receiverImage = imageURLString,
+                     let receiverName = self.nameLbl.text,
                      let receiverToken = LastChatData.senderFcmToken,
                      let senderImage = userData?.result?.image,
                      let senderName = userData?.result?.name else {
@@ -403,7 +454,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         }
         
         // Post data to Firebase under the LastChat path
-        let messagesPath = ref.child("LastChat").child(chatRoomId).child(lastChatPathKey)
+        let messagesPath = ref.child("LastChat").child(chatRoomId)
         messagesPath.setValue(data) { error, ref in
             if let error = error {
                 print("Error posting data to LastChat path: \(error.localizedDescription)")
@@ -493,11 +544,13 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
                 let cell: UITableViewCell
                 if message.side == .left {
                     cell = maintableView.dequeueReusableCell(withIdentifier: "LeftViewCell", for: indexPath) as! LeftViewCell
+                    
                     addLongPressGesture(to: cell, indexPath: indexPath)
                     (cell as! LeftViewCell).configureCell(message: message)
                 } else {
                     cell = maintableView.dequeueReusableCell(withIdentifier: "RightViewCell", for: indexPath) as! RightViewCell
                     addLongPressGesture(to: cell, indexPath: indexPath)
+                    
                     (cell as! RightViewCell).configureCell(message: message)
                 }
                 return cell
@@ -508,141 +561,65 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return UITableView.automaticDimension
         }
-    
-    // UITableViewDelegate method
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Show green view if no cell is long-pressed or if this cell matches the long-pressed cell
-        if longPressedIndexPath == nil || indexPath == longPressedIndexPath {
-            toggleGreenView(for: indexPath)
-            longPressedIndexPath = nil // Clear long-pressed state after showing green view
-           
-        } else {
-            // Optionally handle tapping on other cells when one is already long-pressed
-            toggleGreenView(for: indexPath)
+            if longPressedIndexPath == nil || indexPath == longPressedIndexPath {
+                toggleGreenView(for: indexPath)
+                longPressedIndexPath = nil
+            } else {
+                toggleGreenView(for: indexPath)
+            }
         }
-    }
 
-    
-    
-    
-
-        // Add long press gesture recognizer to cell
         func addLongPressGesture(to cell: UITableViewCell, indexPath: IndexPath) {
             let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-            longGesture.minimumPressDuration = 0.5 // Adjust the duration as needed
+            longGesture.minimumPressDuration = 0.5
             cell.addGestureRecognizer(longGesture)
         }
 
-    @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        guard gesture.state == .began else { return }
-        
-        // Find the indexPath of the long-pressed cell
-        guard let indexPath = maintableView.indexPathForRow(at: gesture.location(in: maintableView)) else {
-            return
+        @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
+            guard gesture.state == .began else { return }
+            guard let indexPath = maintableView.indexPathForRow(at: gesture.location(in: maintableView)) else { return }
+            longPressedIndexPath = indexPath
+            toggleGreenView(for: indexPath)
+            topHideShowView.isHidden = false
         }
-        
-        // Update the longPressedIndexPath
-        longPressedIndexPath = indexPath
-        toggleGreenView(for: indexPath)
-        topHideShowView.isHidden = false
-        // Show or hide the green view
-        handleGreenViewVisibility(isHidden: false)
-    }
-    
-    private func toggleGreenView(for indexPath: IndexPath) {
-        // Check if the cell is a RightViewCell or LeftViewCell and toggle greenView visibility
-        if let rightCell = maintableView.cellForRow(at: indexPath) as? RightViewCell {
-            let isHidden = !rightCell.greenView.isHidden
-            rightCell.greenView.isHidden = isHidden
-            handleGreenViewVisibility(isHidden: isHidden)
-        } else if let leftCell = maintableView.cellForRow(at: indexPath) as? LeftViewCell {
-            let isHidden = !leftCell.greenView.isHidden
-            leftCell.greenView.isHidden = isHidden
-            handleGreenViewVisibility(isHidden: isHidden)
-        }
-        
-        // Toggle selection in the set
-        if selectedMessages.contains(indexPath) {
-            selectedMessages.remove(indexPath)
-        } else {
-            selectedMessages.insert(indexPath)
-        }
-        
-        // Update selected count label
-        updateSelectedCountLabel()
-    }
 
-    private func handleGreenViewVisibility(isHidden: Bool) {
-           if isHidden {
-               dismissReactionPopUpIfNeeded()
-           } else {
-               if reactionPopUpVC == nil { // Check if reactionPopUpVC is not already presented
-                   if let indexPath = longPressedIndexPath {
-                       presentReactionPopUp(at: indexPath)
-                   } else {
-                       print("Error: longPressedIndexPath is nil")
-                   }
-               }
-           }
-       }
-       
-    private func presentReactionPopUp(at indexPath: IndexPath) {
-        guard let cell = maintableView.cellForRow(at: indexPath) else { return }
-        
-        // Create the ReactionPopUpVC instance
-        let reactionPopUpVC = ReactionPopUpVC.getInstance()
-        reactionPopUpVC.modalPresentationStyle = .popover
-        
-        // Set the preferred size and position of the popover
-        let preferredSize = CGSize(width: 200, height: 40) // Adjust as needed
-        reactionPopUpVC.preferredContentSize = preferredSize
-        
-        // Calculate the sourceRect to position the popover at the bottom of the cell
-        let cellRect = maintableView.rectForRow(at: indexPath)
-        let popoverOrigin = CGPoint(x: cellRect.midX, y: cellRect.maxY)
-        
-        // Configure the popover presentation controller
-        let popoverPresentationController = reactionPopUpVC.popoverPresentationController
-        popoverPresentationController?.permittedArrowDirections = .any
-        popoverPresentationController?.sourceView = maintableView
-        popoverPresentationController?.sourceRect = CGRect(origin: popoverOrigin, size: .zero)
-        popoverPresentationController?.delegate = self
-        
-        // Present the popover
-        present(reactionPopUpVC, animated: true, completion: nil)
-        
-        // Set the reactionPopUpVC instance
-        self.reactionPopUpVC = reactionPopUpVC
-    }
-       private func dismissReactionPopUpIfNeeded() {
-           guard let controller = reactionPopUpVC else { return }
-           
-           DispatchQueue.main.async {
-               controller.dismiss(animated: true) {
-                   self.reactionPopUpVC = nil // Reset reactionPopUpVC instance after dismissal
-               }
-           }
-       }
-    private func updateSelectedCountLabel() {
-        lblSelectedMsgCount.text = "\(selectedMessages.count)"
-        if selectedMessages.count == 0
-        {
+        private func toggleGreenView(for indexPath: IndexPath) {
+            if let rightCell = maintableView.cellForRow(at: indexPath) as? RightViewCell {
+                let isHidden = !rightCell.greenView.isHidden
+                rightCell.greenView.isHidden = isHidden
+                rightCell.reacionView.isHidden = isHidden
+            } else if let leftCell = maintableView.cellForRow(at: indexPath) as? LeftViewCell {
+                let isHidden = !leftCell.greenView.isHidden
+                leftCell.greenView.isHidden = isHidden
+                leftCell.reacionView.isHidden = isHidden
+            }
             
-            topHideShowView.isHidden = true
-            // Hide all green views and clear selection
-               for indexPath in selectedMessages {
-                   if let rightCell = maintableView.cellForRow(at: indexPath) as? RightViewCell {
-                       rightCell.greenView.isHidden = true
-                   } else if let leftCell = maintableView.cellForRow(at: indexPath) as? LeftViewCell {
-                       leftCell.greenView.isHidden = true
-                   }
-               }
+            if selectedMessages.contains(indexPath) {
+                selectedMessages.remove(indexPath)
+            } else {
+                selectedMessages.insert(indexPath)
+            }
             
-        }else
-        {
-            
+            updateSelectedCountLabel()
         }
-    }
+
+        private func updateSelectedCountLabel() {
+            lblSelectedMsgCount.text = "\(selectedMessages.count)"
+            if selectedMessages.count == 0 {
+                topHideShowView.isHidden = true
+                for indexPath in selectedMessages {
+                    if let rightCell = maintableView.cellForRow(at: indexPath) as? RightViewCell {
+                        rightCell.greenView.isHidden = true
+                        rightCell.reacionView.isHidden = true
+                    } else if let leftCell = maintableView.cellForRow(at: indexPath) as? LeftViewCell {
+                        leftCell.greenView.isHidden = true
+                        leftCell.reacionView.isHidden = true
+                    }
+                }
+                selectedMessages.removeAll()
+            }
+        }
 
 }
 // MARK: CollectionView Methods
@@ -783,4 +760,36 @@ extension InnerChatVC {
        }
    }
 
+extension InnerChatVC
+{
 
+    func onStart() {
+        openEmojiBtn.isHidden = true
+        textView.isHidden = true
+        bottomstackView.isHidden = true
+        
+        print("onStart")
+    }
+    
+    func onCancel() {
+        openEmojiBtn.isHidden = false
+        textView.isHidden = false
+        bottomstackView.isHidden = false
+        print("onCancel")
+    }
+    
+    func onFinished(duration: CGFloat) {
+        openEmojiBtn.isHidden = false
+        textView.isHidden = false
+        bottomstackView.isHidden = false
+        print("onFinished \(duration)")
+    }
+    
+    func onAnimationEnd() {
+        openEmojiBtn.isHidden = false
+        textView.isHidden = false
+        bottomstackView.isHidden = false
+        print("onAnimationEnd")
+    }
+    
+}

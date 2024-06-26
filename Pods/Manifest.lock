@@ -152,8 +152,10 @@ PODS:
     - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (3.3.2)
   - IQKeyboardManagerSwift (7.0.2)
+  - iRecordView (0.1.4)
   - leveldb-library (1.22.4)
   - Loaf (0.7.0)
+  - MGSwipeTableCell (1.6.14)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -186,7 +188,9 @@ DEPENDENCIES:
   - Firebase/Messaging
   - FirebaseDatabase
   - IQKeyboardManagerSwift
+  - iRecordView
   - Loaf
+  - MGSwipeTableCell
   - ObjectMapper
   - ReachabilitySwift
   - SDWebImage
@@ -220,8 +224,10 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
+    - iRecordView
     - leveldb-library
     - Loaf
+    - MGSwipeTableCell
     - nanopb
     - ObjectMapper
     - PromisesObjC
@@ -258,8 +264,10 @@ SPEC CHECKSUMS:
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   IQKeyboardManagerSwift: d338c11a896e9f29603443700c4567e32f830c22
+  iRecordView: 83aa080ce0c64db443a5f3969e441a7f12f9b8b5
   leveldb-library: 06a69cc7582d64b29424a63e085e683cc188230a
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
+  MGSwipeTableCell: d99ed6466f393b71cd488c6f798ba112ff5d1d01
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -271,6 +279,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   WhatsappStatusRingBar: 7965dd946799424cff0e99832b167524867f2490
 
-PODFILE CHECKSUM: 63706e918b37c96f278c193c7aaeb6031530d561
+PODFILE CHECKSUM: 70efc913c294e7d8e3856ffcb134e7b3ccb26509
 
 COCOAPODS: 1.15.2

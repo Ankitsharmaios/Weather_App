@@ -168,6 +168,8 @@ extension CommunitiesVC
                 if let imageUrl2 = URL(string: communitiesData?[indexPath.row].groupIcon ?? "") {
                     cell.userImageView?.sd_setImage(with: imageUrl2, placeholderImage: UIImage(named: "Place_Holder"))
 
+                }else {
+                    cell.userImageView.image = UIImage(named: "Place_Holder")
                 }
                 return cell
             }

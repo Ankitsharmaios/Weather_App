@@ -167,7 +167,7 @@ extension MyStatusDeleteVC:UITableViewDataSource & UITableViewDelegate
 
             // Set user image if URL is available
             if let imageURLString = mediaItem.uRL, !imageURLString.isEmpty, let imageURL = URL(string: imageURLString) {
-                cell.statusImgView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                cell.statusImgView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
                 cell.statusImgView.backgroundColor = .clear // Reset background color
             } else {
                 cell.statusImgView.image = nil

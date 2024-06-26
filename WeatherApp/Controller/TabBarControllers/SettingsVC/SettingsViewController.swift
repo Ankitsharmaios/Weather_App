@@ -49,9 +49,9 @@ class SettingsViewController: UIViewController {
             lblUserName.text = name
             
             if let imageURL = URL(string: imageURLString) {
-                userImage.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                userImage.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
             } else {
-                userImage.image = UIImage(named: "placeholder")
+                userImage.image = UIImage(named: "Place_Holder")
             }
         }
     func edituserData()
@@ -68,9 +68,9 @@ class SettingsViewController: UIViewController {
             lblUserName.text = name
             
             if let imageURL = URL(string: imageURLString) {
-                userImage.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                userImage.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
             } else {
-                userImage.image = UIImage(named: "placeholder")
+                userImage.image = UIImage(named: "Place_Holder")
             }
         }else{
             setUserData()

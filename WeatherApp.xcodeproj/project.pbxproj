@@ -24,6 +24,7 @@
 		14392C492BFF7B8D004F8894 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C462BFF7B8D004F8894 /* TabBarVC.swift */; };
 		14392C4B2BFF7BE2004F8894 /* DashBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */; };
 		144063E62C187B3A007E9A52 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 144063E52C187B3A007E9A52 /* MCEmojiPicker */; };
+		144572C12C2C177C00F8F6BA /* iRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144572C02C2C177C00F8F6BA /* iRecordView.swift */; };
 		145750DE2C04984B0001E286 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */; };
 		145750DF2C04984B0001E286 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */; };
 		145750E52C04AB960001E286 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145750E42C04AB960001E286 /* AccountTableViewCell.xib */; };
@@ -40,7 +41,6 @@
 		147DA4752C181E7900D616E7 /* RightViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DA4702C181E7900D616E7 /* RightViewCell.swift */; };
 		147DA4762C181E7900D616E7 /* RightViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147DA4712C181E7900D616E7 /* RightViewCell.xib */; };
 		147DA4782C1846AA00D616E7 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DA4772C1846AA00D616E7 /* ChatModel.swift */; };
-		1486048B2C2AA19300FBA285 /* ReactionPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486048A2C2AA19300FBA285 /* ReactionPopUpVC.swift */; };
 		148F89332C196DA200F59092 /* AppConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F89322C196DA200F59092 /* AppConfigModel.swift */; };
 		14939D582C07230D001E6A44 /* StoryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14939D572C07230D001E6A44 /* StoryListModel.swift */; };
 		14939D5C2C07269F001E6A44 /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14939D5A2C07269F001E6A44 /* StoryTableViewCell.swift */; };
@@ -170,6 +170,7 @@
 		14392C452BFF7B8D004F8894 /* DashChatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashChatsVC.swift; sourceTree = "<group>"; };
 		14392C462BFF7B8D004F8894 /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DashBoard.storyboard; sourceTree = "<group>"; };
+		144572C02C2C177C00F8F6BA /* iRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iRecordView.swift; sourceTree = "<group>"; };
 		145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		145750E32C04AB960001E286 /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
@@ -186,7 +187,6 @@
 		147DA4702C181E7900D616E7 /* RightViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightViewCell.swift; sourceTree = "<group>"; };
 		147DA4712C181E7900D616E7 /* RightViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightViewCell.xib; sourceTree = "<group>"; };
 		147DA4772C1846AA00D616E7 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
-		1486048A2C2AA19300FBA285 /* ReactionPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPopUpVC.swift; sourceTree = "<group>"; };
 		148F89322C196DA200F59092 /* AppConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigModel.swift; sourceTree = "<group>"; };
 		14939D572C07230D001E6A44 /* StoryListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListModel.swift; sourceTree = "<group>"; };
 		14939D5A2C07269F001E6A44 /* StoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -435,7 +435,6 @@
 				14392C432BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift */,
 				14EFF3522C1C605B00671970 /* DeletePopUpVC.swift */,
 				14C02AF62C22E0E000D1AD62 /* NamePopUpVC.swift */,
-				1486048A2C2AA19300FBA285 /* ReactionPopUpVC.swift */,
 			);
 			path = PopUPControllers;
 			sourceTree = "<group>";
@@ -610,6 +609,7 @@
 				14DB818C2C05A2E8000BB7FB /* UITextField.swift */,
 				14EFF34E2C1C0C4200671970 /* ActionSheet.swift */,
 				142058F82C24517A0044A9CF /* Time&DamePicker.swift */,
+				144572C02C2C177C00F8F6BA /* iRecordView.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -1023,6 +1023,7 @@
 				147DA46D2C181E1500D616E7 /* MessageStore.swift in Sources */,
 				1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */,
 				14D3CE572BFB68E000E700CB /* WebServices.swift in Sources */,
+				144572C12C2C177C00F8F6BA /* iRecordView.swift in Sources */,
 				14392C422BFF5D03004F8894 /* VerifyOTPModel.swift in Sources */,
 				14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */,
 				147DA4752C181E7900D616E7 /* RightViewCell.swift in Sources */,
@@ -1069,7 +1070,6 @@
 				1417D8AA2BFDEBA900D77EB6 /* VerifyNumberVC.swift in Sources */,
 				14CB050D2C214E7D00E69A94 /* ContactsViewController.swift in Sources */,
 				14F7ACC62C20079700FA2BBD /* CommunitiesModel.swift in Sources */,
-				1486048B2C2AA19300FBA285 /* ReactionPopUpVC.swift in Sources */,
 				149F12BA2C2068590048A84D /* CallsVC.swift in Sources */,
 				14B3742E2C006D6500AC949B /* ProfileVC.swift in Sources */,
 				145750E82C04B4AA0001E286 /* LogOutModel.swift in Sources */,
@@ -1276,7 +1276,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1313,7 +1313,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

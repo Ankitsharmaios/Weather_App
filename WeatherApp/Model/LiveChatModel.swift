@@ -27,6 +27,7 @@ struct LiveChatDataModel:Mappable{
     var unReadMessageCount:String?
     var videoCallLink:String?
     var videoCallStatus:String?
+    var replySendUserId:String?
     init?(map: ObjectMapper.Map) {
     }
     
@@ -49,7 +50,7 @@ struct LiveChatDataModel:Mappable{
         unReadMessageCount <- map["unReadMessageCount"]
         videoCallLink <- map["videoCallLink"]
         videoCallStatus <- map["videoCallStatus"]
-        
+        replySendUserId <- map["replySendUserId"]
     }
     
     

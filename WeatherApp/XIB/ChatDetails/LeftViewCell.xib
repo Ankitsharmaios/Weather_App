@@ -2,9 +2,10 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -49,25 +50,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="410" height="52"/>
                         <color key="backgroundColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1w4-LJ-4Jx">
+                        <rect key="frame" x="16" y="0.0" width="215" height="30"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Duo-ri-lXp">
+                                <rect key="frame" x="10" y="6" width="195" height="18"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8h-S5-LXy">
+                                        <rect key="frame" x="0.0" y="0.0" width="24" height="18"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="like"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdk-EH-AHu">
+                                        <rect key="frame" x="34" y="0.0" width="24.5" height="18"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="love"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ypd-vT-xDS">
+                                        <rect key="frame" x="68.5" y="0.0" width="24" height="18"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Button" image="haha"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HkC-pJ-XX2">
+                                        <rect key="frame" x="102.5" y="0.0" width="24" height="18"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="wow"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qnA-lI-GJD">
+                                        <rect key="frame" x="136.5" y="0.0" width="24.5" height="18"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="sad"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="luR-j6-eMs">
+                                        <rect key="frame" x="171" y="0.0" width="24" height="18"/>
+                                        <color key="tintColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal">
+                                            <imageReference key="image" image="plus.circle.fill" catalog="system" symbolScale="large"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="LKD-3e-Gf6"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="5MU-Ot-t7f"/>
+                            <constraint firstItem="Duo-ri-lXp" firstAttribute="centerX" secondItem="1w4-LJ-4Jx" secondAttribute="centerX" id="AJI-ns-bZP"/>
+                            <constraint firstItem="Duo-ri-lXp" firstAttribute="centerY" secondItem="1w4-LJ-4Jx" secondAttribute="centerY" id="FjH-Su-Grw"/>
+                            <constraint firstAttribute="trailing" secondItem="Duo-ri-lXp" secondAttribute="trailing" constant="10" id="ddl-3G-HQn"/>
+                            <constraint firstAttribute="width" constant="215" id="gbu-xa-an6"/>
+                            <constraint firstItem="Duo-ri-lXp" firstAttribute="leading" secondItem="1w4-LJ-4Jx" secondAttribute="leading" constant="10" id="wwg-2B-h7j"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4c7-BM-Ggr" secondAttribute="trailing" constant="64" id="7db-Rk-0du"/>
                     <constraint firstAttribute="bottom" secondItem="4c7-BM-Ggr" secondAttribute="bottom" constant="4" id="AIC-ld-9h3"/>
                     <constraint firstAttribute="trailing" secondItem="4T1-88-7PU" secondAttribute="trailing" id="Iz0-Uz-APu"/>
                     <constraint firstItem="4T1-88-7PU" firstAttribute="top" secondItem="fnA-za-ti2" secondAttribute="top" id="Ked-AA-aRU"/>
+                    <constraint firstItem="1w4-LJ-4Jx" firstAttribute="leading" secondItem="4c7-BM-Ggr" secondAttribute="leading" id="L1Y-3T-c1X"/>
                     <constraint firstAttribute="bottom" secondItem="4T1-88-7PU" secondAttribute="bottom" id="SMm-BI-zvO"/>
                     <constraint firstItem="4c7-BM-Ggr" firstAttribute="leading" secondItem="fnA-za-ti2" secondAttribute="leading" constant="16" id="Xfj-EB-DkW"/>
                     <constraint firstItem="4c7-BM-Ggr" firstAttribute="top" secondItem="fnA-za-ti2" secondAttribute="top" constant="4" id="sZF-bl-nxW"/>
                     <constraint firstItem="4T1-88-7PU" firstAttribute="leading" secondItem="fnA-za-ti2" secondAttribute="leading" id="sbD-J6-qPC"/>
+                    <constraint firstItem="1w4-LJ-4Jx" firstAttribute="top" secondItem="fnA-za-ti2" secondAttribute="top" id="vyv-ln-KD7"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="u03-WD-8hA"/>
             <connections>
                 <outlet property="greenView" destination="4T1-88-7PU" id="398-CJ-XPV"/>
                 <outlet property="messageContainerView" destination="4c7-BM-Ggr" id="TMm-40-FuW"/>
+                <outlet property="reacionView" destination="1w4-LJ-4Jx" id="PaF-7y-DkW"/>
                 <outlet property="textMessageLabel" destination="bNz-by-izB" id="mm8-Ne-XdP"/>
             </connections>
             <point key="canvasLocation" x="66.666666666666671" y="144.64285714285714"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="haha" width="81" height="81"/>
+        <image name="like" width="81" height="81"/>
+        <image name="love" width="81" height="81"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="sad" width="81" height="81"/>
+        <image name="wow" width="81" height="81"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -71,9 +71,9 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate {
 
             
             if let imageURL = URL(string: imageURLString) {
-                userImgaeView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                userImgaeView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
             } else {
-                userImgaeView.image = UIImage(named: "placeholder")
+                userImgaeView.image = UIImage(named: "Place_Holder")
             }
         }else{
             setUserData()
@@ -91,9 +91,9 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate {
             lblSHowNumber.text = number
         
             if let imageURL = URL(string: imageURLString) {
-                userImgaeView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                userImgaeView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
             } else {
-                userImgaeView.image = UIImage(named: "placeholder")
+                userImgaeView.image = UIImage(named: "Place_Holder")
             }
         }
     

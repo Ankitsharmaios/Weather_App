@@ -127,48 +127,59 @@ extension DashChatsVC{
            }
        }
        
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           if indexPath.section == 0 {
-               // Section 0: Chat cells
-               if let cell = chatTableView.dequeueReusableCell(withIdentifier: "ChatsTBlvCell", for: indexPath) as? ChatsTBlvCell {
-                   if let chatData = LastChatData?[indexPath.row] {
-                       cell.usernameLbl.text = chatData.senderName ?? ""
-                       cell.messageLbl.text = chatData.message ?? ""
-                       cell.timeLbl.text = Converter.convertApiTimeToAMPM(apiTime: chatData.time ?? "")
-                       cell.timeLbl.textColor = appThemeColor.text_Weather
-                       cell.msgLeadingLayout.constant = -13
-                       
-                       if let unReadCountString = chatData.unReadMessageCount,
-                          let unReadCount = Int(unReadCountString) {
-                           if unReadCount > 0 {
-                               cell.msgCountLbl.text = "\(unReadCount)"
-                           } else {
-                               cell.msgCountLbl.isHidden = true
-                           }
-                       } else {
-                           cell.msgCountLbl.isHidden = true
-                       }
-                       
-                       // Assuming ViewStatusImage and userImageView setup as per your cell design
-                       cell.ViewStatusImage.isHidden = true
-                       if let imageUrl = URL(string: chatData.senderImage ?? "") {
-                           cell.userImageView?.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "Place_Holder"))
-                       }
-                   }
-                   return cell
-               }
-           } else if indexPath.section == 1 {
-               // Section 1: Footer view cell
-               if let cell = chatTableView.dequeueReusableCell(withIdentifier: "FooterViewTableViewCell", for: indexPath) as? FooterViewTableViewCell {
-                   // Configure your footer cell here if needed
-                   return cell
-               }
-           }
-           
-           // Return a default cell if none matched
-           return UITableViewCell()
-       }
-       
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            // Section 0: Chat cells
+            if let cell = chatTableView.dequeueReusableCell(withIdentifier: "ChatsTBlvCell", for: indexPath) as? ChatsTBlvCell {
+                if let chatData = LastChatData?[indexPath.row] {
+                    let userId = getString(key: userDefaultsKeys.RegisterId.rawValue)
+                    let isReceiver = chatData.receiverID == userId
+                    
+                    let receiverName = (chatData.receiverName ?? "").isEmpty ? chatData.receiverID : chatData.receiverName!
+                    let senderName = (chatData.senderName ?? "").isEmpty ? chatData.sentID : chatData.senderName!
+                    
+                    cell.usernameLbl.text = isReceiver ? senderName : receiverName
+                    cell.messageLbl.text = chatData.message ?? ""
+                    cell.timeLbl.text = Converter.convertApiTimeToAMPM(apiTime: chatData.time ?? "")
+                    cell.timeLbl.textColor = appThemeColor.text_Weather
+                    cell.msgLeadingLayout.constant = -13
+                    
+                    if let unReadCountString = chatData.unReadMessageCount,
+                       let unReadCount = Int(unReadCountString), unReadCount > 0 {
+                        cell.msgCountLbl.text = "\(unReadCount)"
+                        cell.msgCountLbl.isHidden = false
+                    } else {
+                        cell.msgCountLbl.isHidden = true
+                    }
+                    
+                    cell.ViewStatusImage.isHidden = true
+                    let imageUrlString = isReceiver ? chatData.senderImage : chatData.receiverImage
+
+                    if let imageUrl = URL(string: imageUrlString ?? "") {
+                        if !imageUrl.absoluteString.isEmpty {
+                            cell.userImageView?.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "Place_Holder"))
+                        } else {
+                            cell.userImageView?.image = UIImage(named: "Place_Holder")
+                        }
+                    } else {
+                        cell.userImageView?.image = UIImage(named: "Place_Holder")
+                    }
+
+                }
+                return cell
+            }
+        } else if indexPath.section == 1 {
+            // Section 1: Footer view cell
+            if let cell = chatTableView.dequeueReusableCell(withIdentifier: "FooterViewTableViewCell", for: indexPath) as? FooterViewTableViewCell {
+                // Configure your footer cell here if needed
+                return cell
+            }
+        }
+        
+        // Return a default cell if none matched
+        return UITableViewCell()
+    }
+
        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
            if indexPath.section == 1 {
                // Adjust height for your footer view cell if needed
@@ -197,19 +208,14 @@ extension DashChatsVC{
            return CGFloat.leastNonzeroMagnitude // Hide footer for section 0
        }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
-            let controller = InnerChatVC.getInstance()
-            controller.modalPresentationStyle = .overFullScreen
-            controller.UserName = LastChatData?[indexPath.row].senderName ?? ""
-            if let selectedChat = LastChatData?[indexPath.row] {
-                
-                controller.LastChatData = selectedChat
-                
-            }
-            
-            self.present(controller, animated: true)
+        let controller = InnerChatVC.getInstance()
+        controller.modalPresentationStyle = .overFullScreen
+        if let selectedChat = LastChatData?[indexPath.row] {
+
+            controller.LastChatData = selectedChat
         }
-    
+        self.present(controller, animated: true)
+    }
 }
 extension DashChatsVC
 {

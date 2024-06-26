@@ -114,15 +114,15 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                 } else {
                     // Otherwise, set the image as usual
                     if let imageURL = URL(string: lastImageURLString) {
-                        imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                        imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
                     } else {
-                        imageView.image = UIImage(named: "placeholder")
+                        imageView.image = UIImage(named: "Place_Holder")
                     }
                     imageView.backgroundColor = .clear // Reset background color
                     lblTextStatus.isHidden = true
                 }
             } else {
-                imageView.image = UIImage(named: "placeholder")
+                imageView.image = UIImage(named: "Place_Holder")
                 imageView.backgroundColor = .clear // Reset background color
                 lblTextStatus.isHidden = true
             }
@@ -135,10 +135,10 @@ class StatusVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             let imageURLString = userdata?.result?.image ?? ""
             
             if let imageURL = URL(string: imageURLString) {
-                imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+                imageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
                 plusStatusImgView.isHidden = false
             } else {
-                imageView.image = UIImage(named: "placeholder")
+                imageView.image = UIImage(named: "Place_Holder")
                 plusStatusImgView.isHidden = false
             }
         }

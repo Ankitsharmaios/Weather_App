@@ -60,12 +60,17 @@ class ContactsTableViewCell: UITableViewCell {
         } else {
             lblStatus.text = ""
         }
-        
+        SDImageCache.shared.clearMemory()
+        SDImageCache.shared.clearDisk()
+
         // Set user image
-        if let imageURLStrings = detail.image,
+        if let imageURLStrings = detail.image, !imageURLStrings.isEmpty,
            let imageURL = URL(string: imageURLStrings) {
-            userimageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+            userimageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
+        } else {
+            userimageView.image = UIImage(named: "Place_Holder")
         }
+
     }
 
     

@@ -281,15 +281,16 @@ extension ContactsViewController:UITableViewDataSource & UITableViewDelegate
         let customID = "\(safeRegisterId)_\(safeUserId)"
         let reverseCustomID = "\(safeUserId)_\(safeRegisterId)"
         
-        if !Singleton.sharedInstance.firebaseIdsArray.contains(customID) &&
-           !Singleton.sharedInstance.firebaseIdsArray.contains(reverseCustomID) {
-            // Add the new unique customID to the firebaseIdsArray
+        // Check if either customID or reverseCustomID exists in firebaseIdsArray
+        if Singleton.sharedInstance.firebaseIdsArray.contains(customID) {
+            return customID
+        } else if Singleton.sharedInstance.firebaseIdsArray.contains(reverseCustomID) {
             return reverseCustomID
         } else {
-            // Return an empty string or handle the case where the ID already exists
-            return "Id alrady added in firebase Id Array "
+            return reverseCustomID
         }
     }
+
 }
 extension ContactsViewController
 {

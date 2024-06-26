@@ -94,9 +94,9 @@ class StoryViewController: UIViewController & UITextViewDelegate {
         let imageURLString = contactStoriesData?.userImage
         
         if let imageURL = URL(string: imageURLString ?? "") {
-            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"), options: .highPriority, completed: nil)
+            userImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Place_Holder"), options: .highPriority, completed: nil)
         } else {
-            userImageView.image = UIImage(named: "placeholder")
+            userImageView.image = UIImage(named: "Place_Holder")
         }
         
         if let firstMedia = contactStoriesData?.media?.first {

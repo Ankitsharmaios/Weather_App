@@ -26,4 +26,6 @@ target 'WeatherApp' do
   pod 'Firebase/DynamicLinks'
   pod 'FirebaseDatabase'
   pod 'WhatsappStatusRingBar'
+  pod 'iRecordView'
+  pod 'MGSwipeTableCell'
 end
