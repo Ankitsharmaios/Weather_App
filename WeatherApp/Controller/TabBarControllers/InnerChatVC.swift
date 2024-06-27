@@ -14,10 +14,17 @@ import Firebase
 import FirebaseMessaging
 import iRecordView
 import MGSwipeTableCell
-
-class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate & RecordViewDelegate {
+import MapKit
+import CoreLocation
+import Alamofire
+import UniformTypeIdentifiers
+class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate & RecordViewDelegate & CLLocationManagerDelegate & MKMapViewDelegate & UIDocumentPickerDelegate {
     
 
+    @IBOutlet weak var btnMOreOption: UIButton!
+    @IBOutlet weak var btnMessageForward: UIButton!
+    @IBOutlet weak var btnMessageCopy: UIButton!
+    @IBOutlet weak var btnMessageDelete: UIButton!
     @IBOutlet weak var lblSelectedMsgCount: UILabel!
     @IBOutlet weak var viewInnerBackBtn: UIButton!
     @IBOutlet weak var topHideShowView: UIView!
@@ -57,8 +64,9 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var longPressedIndexPath: IndexPath?
     private var selectedMessages: Set<IndexPath> = [] // Track selected messages
 
-    
-    
+    var mapView: MKMapView!
+    var locationManager: CLLocationManager!
+    var imagePath = ""
     var chatDataArray: [ChatModel] = []
     var messages = [Message]()
     var isfrom = ""
@@ -146,7 +154,8 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         // cell setup
         maintableView.register(UINib(nibName: "RightViewCell", bundle: nil), forCellReuseIdentifier: "RightViewCell")
         maintableView.register(UINib(nibName: "LeftViewCell", bundle: nil), forCellReuseIdentifier: "LeftViewCell")
-     
+        maintableView.register(UINib(nibName: "rightImgVideoTableViewCell", bundle: nil), forCellReuseIdentifier: "rightImgVideoTableViewCell")
+        maintableView.register(UINib(nibName: "LeftImgVideoTableViewCell", bundle: nil), forCellReuseIdentifier: "LeftImgVideoTableViewCell")
     }
     func setupUI(){
         optionTableView.register(UINib(nibName: "optionHeaderTblvCell", bundle: nil),forCellReuseIdentifier: "optionHeaderTblvCell")
@@ -201,7 +210,6 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             }
         }
     
- 
     func fetchData() {
         // Sort chatDataArray by indexId or any other timestamp field
         chatDataArray.sort { $0.indexId ?? "" < $1.indexId ?? "" }
@@ -212,10 +220,10 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             
             if chatModel.receiverID == currentUserID {
                 // Messages sent by the current logged-in user
-                return Message(text: chatModel.message ?? "", side: .left)
+                return Message(time: chatModel.time ?? "", text: chatModel.message ?? "", side: .left, mediaURL: chatModel.mediaurl ?? "")
             } else {
                 // Messages sent by others
-                return Message(text: chatModel.message ?? "", side: .right)
+                return Message(time: chatModel.time ?? "", text: chatModel.message ?? "", side: .right, mediaURL: chatModel.mediaurl ?? "")
             }
         }
         
@@ -224,6 +232,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             self.scrollToLastMessage()
         }
     }
+
     func scrollToLastMessage() {
             guard !messages.isEmpty else { return }
             
@@ -312,8 +321,16 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
           
     }
     
+    @IBAction func moreOptionAction(_ sender: Any) {
+    }
     
     
+    @IBAction func messageForwardAction(_ sender: Any) {
+    }
+    @IBAction func messageCopyAction(_ sender: Any) {
+    }
+    @IBAction func messageDeleteAction(_ sender: Any) {
+    }
     
     @IBAction func sendMgsAction(_ sender: Any)
     {
@@ -367,7 +384,10 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
                            senderImage: senderImage,
                            senderName: senderName,
                            senderFcmToken: AppSetting.FCMTokenString,
-                           sentID: sentID)
+                           sentID: sentID,
+                           mediatype: "T",
+                           mediaurl: ""
+               )
            }
            
            if let contactUserData = contactUserData {
@@ -392,12 +412,15 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
                            senderImage: senderImage,
                            senderName: senderName,
                            senderFcmToken: AppSetting.FCMTokenString,
-                           sentID: sentID)
+                           sentID: sentID,
+                           mediatype: "T",
+                           mediaurl: "" 
+               )
            }
        
     }
         
-    func sendMessage(chatRoomId: String, message: String, receiverID: String, receiverImage: String, receiverName: String, receiverToken: String, senderImage: String, senderName: String, senderFcmToken: String, sentID: String) {
+    func sendMessage(chatRoomId: String, message: String, receiverID: String, receiverImage: String, receiverName: String, receiverToken: String, senderImage: String, senderName: String, senderFcmToken: String, sentID: String,mediatype:String,mediaurl:String) {
         // Fetch current date and time
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -421,8 +444,8 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             "deleted": "",
             "id": chatRoomId,
             "indexId": chatPathKey,
-            "mediatype": "M",
-            "mediaurl": "",
+            "mediatype": mediatype,
+            "mediaurl": mediaurl,
             "message": message,
             "messageStatus": "",
             "receiverID": receiverID,
@@ -534,29 +557,51 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            if optionTableView == tableView {
-                if let cell = optionTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell {
-                    cell.nameLbl.text = optionNames[indexPath.row]
+        if optionTableView == tableView {
+            if let cell = optionTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell {
+                cell.nameLbl.text = optionNames[indexPath.row]
+                return cell
+            }
+        } else if maintableView == tableView {
+            let message = messages[indexPath.row]
+            
+            // Check if the message contains a media URL
+            if let mediaURL = message.mediaURL, !mediaURL.isEmpty {
+                if message.side == .left {
+                    // Dequeue and configure LeftImgVideoTableViewCell for left media message
+                    let cell = maintableView.dequeueReusableCell(withIdentifier: "LeftImgVideoTableViewCell", for: indexPath) as! LeftImgVideoTableViewCell
+                    cell.configure(with: mediaURL, time: message.time)
+                    cell.layer.cornerRadius = 10
+                    cell.clipsToBounds = true
+                    return cell
+                } else {
+                    // Dequeue and configure rightImgVideoTableViewCell for right media message
+                    let cell = maintableView.dequeueReusableCell(withIdentifier: "rightImgVideoTableViewCell", for: indexPath) as! rightImgVideoTableViewCell
+                    cell.configure(with: mediaURL, time: message.time)
+                    cell.layer.cornerRadius = 10
+                    cell.clipsToBounds = true
                     return cell
                 }
-            } else if maintableView == tableView {
-                let message = messages[indexPath.row]
+            } else {
+                // Handle text messages
                 let cell: UITableViewCell
                 if message.side == .left {
                     cell = maintableView.dequeueReusableCell(withIdentifier: "LeftViewCell", for: indexPath) as! LeftViewCell
-                    
-                    addLongPressGesture(to: cell, indexPath: indexPath)
                     (cell as! LeftViewCell).configureCell(message: message)
+                    addLongPressGesture(to: cell, indexPath: indexPath)
                 } else {
                     cell = maintableView.dequeueReusableCell(withIdentifier: "RightViewCell", for: indexPath) as! RightViewCell
-                    addLongPressGesture(to: cell, indexPath: indexPath)
-                    
                     (cell as! RightViewCell).configureCell(message: message)
+                    addLongPressGesture(to: cell, indexPath: indexPath)
                 }
                 return cell
             }
-            return UITableViewCell()
         }
+        
+        return UITableViewCell()
+    }
+
+
 
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return UITableView.automaticDimension
@@ -568,6 +613,7 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
             } else {
                 toggleGreenView(for: indexPath)
             }
+        
         }
 
         func addLongPressGesture(to cell: UITableViewCell, indexPath: IndexPath) {
@@ -647,9 +693,133 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedOption = AttachmentNames[indexPath.row]
+        if selectedOption == "Contact" {
+            DispatchQueue.main.async {
+                let ContactVC = ContactsViewController.getInstance()
+                ContactVC.modalPresentationStyle = .overCurrentContext
+                ContactVC.isfrom = "Contacts to send"
+             
+                ContactVC.stackViewHideShow.isHidden = true
+                ContactVC.stackviewHeightlayout.constant = 0
+                ContactVC.view.layoutIfNeeded()
+                ContactVC.updateHeaderViewHeight(newHeight: 0)
+                
+                ContactVC.showTabbar = {
+                    self.showTabBar(animated: true)
+                }
+                self.bottomCollectionView.isHidden = true
+                self.hideTabBar(animated: true)
+                self.present(ContactVC, animated: true)
+            }
+        }else if selectedOption == "Camera"
+        {
+            self.bottomCollectionView.isHidden = true
+            DispatchQueue.main.async {
+                self.openCamera()
+            }
+
+        }else if selectedOption == "Gallery"
+        {
+            self.bottomCollectionView.isHidden = true
+            DispatchQueue.main.async {
+                self.openGallery()
+            }
+
+        }else if selectedOption == "Document"
+        {
+            self.bottomCollectionView.isHidden = true
+            DispatchQueue.main.async {
+                let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.plainText])
+                        documentPicker.delegate = self
+                        documentPicker.modalPresentationStyle = .fullScreen
+                        self.present(documentPicker, animated: true, completion: nil)
+            }
+
+        }else if selectedOption == "Audio"
+        {
+            self.bottomCollectionView.isHidden = true
+            DispatchQueue.main.async {
+                let audioTypes: [UTType] = [
+                                   .audio,
+                                   .mp3,
+                                   .mpeg4Audio,
+                                   .wav,
+                                   .appleProtectedMPEG4Audio
+                               ]
+                               
+                               let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: audioTypes)
+                               documentPicker.delegate = self
+                               documentPicker.modalPresentationStyle = .fullScreen
+                               self.present(documentPicker, animated: true, completion: nil)
+                           }
+            
+
+        }else if selectedOption == "Location"
+        {
+            self.bottomCollectionView.isHidden = true
+            DispatchQueue.main.async {
+                self.openMap()
+            }
+
+        }
+        
+        
+    }
+
+// UIDocumentPickerDelegate methods
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let url = urls.first else { return }
+        // Handle the picked document
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        // Handle the cancellation
+    }
+
+    func openMap() {
+            let locationViewController = LocationViewController()
+            locationViewController.modalPresentationStyle = .fullScreen
+            present(locationViewController, animated: true, completion: nil)
+        }
+}
+extension InnerChatVC {
+     func openGallery() {
+         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+             let imagePicker = UIImagePickerController()
+             imagePicker.delegate = self
+             imagePicker.sourceType = .photoLibrary
+             imagePicker.allowsEditing = false
+             present(imagePicker, animated: true, completion: nil)
+         }
+     }
+     
+    // MARK: - UIImagePickerControllerDelegate Methods
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let selectedImage = info[.originalImage] as? UIImage {
+                // Do something with the selected image
+                // For example, you can set it to an UIImageView
+                
+            }
+            
+            if let imageURL = info[.imageURL] as? URL {
+                // Get the image path
+                let imagePath = imageURL.path
+                
+                self.imagePath = imagePath
+                self.AddAttachment(Media: self.imagePath)
+                print("Selected image path: \(imagePath)")
+            }
+            
+            picker.dismiss(animated: true, completion: nil)
+        }
+
+     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+         picker.dismiss(animated: true, completion: nil)
+     }
    
 }
-
 extension InnerChatVC {
     // MARK: Firebase Data Method LastChat
        func fetchFirebaseData() {
@@ -793,3 +963,195 @@ extension InnerChatVC
     }
     
 }
+extension InnerChatVC
+{
+    func hideTabBar(animated: Bool) {
+        if let tabBar = self.tabBarController?.tabBar {
+            _ = tabBar.frame.size.height
+            let duration = animated ? 0.3 : 0.0
+            
+            UIView.animate(withDuration: duration) {
+                tabBar.frame.origin.y = self.view.frame.size.height
+            }
+        }
+    }
+    
+    func showTabBar(animated: Bool) {
+        if let tabBar = self.tabBarController?.tabBar {
+            let tabBarHeight = tabBar.frame.size.height
+            let duration = animated ? 0.3 : 0.0
+            
+            UIView.animate(withDuration: duration) {
+                tabBar.frame.origin.y = self.view.frame.size.height - tabBarHeight
+            }
+        }
+    }
+}
+
+extension InnerChatVC {
+    // MARK: - API CALL
+    func AddAttachment(Media: String) {
+        guard let url = URL(string: DataManager.shared.getURL(.AddAttachment)) else {
+            print("Invalid URL")
+            return
+        }
+
+        let headers: HTTPHeaders = [
+            // Your additional headers, if any
+        ]
+
+        let parameters: [String: String] = [
+            "RegisterId": "\(Singleton.sharedInstance.RegisterId ?? 0)"
+        ]
+
+        AF.upload(multipartFormData: { multipartFormData in
+            for (key, value) in parameters {
+                if let data = value.data(using: .utf8) {
+                    multipartFormData.append(data, withName: key)
+                }
+            }
+
+            if let imageData = try? Data(contentsOf: URL(fileURLWithPath: Media)) {
+                multipartFormData.append(imageData, withName: "Media", fileName: "image.png", mimeType: "image/png")
+            } else {
+                print("Error reading image data from file")
+            }
+        }, to: url, method: .post, headers: headers)
+        .responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                if let responseDictionary = value as? [String: Any],
+                   let AddAttachmentModel = AddAttachmentModel(JSON: responseDictionary) {
+                    print("Success: \(AddAttachmentModel)")
+
+                    if let statusMessage = responseDictionary["StatusMessage"] as? String {
+                        print("Success: \(statusMessage)")
+                        DispatchQueue.main.async {
+                            if statusMessage.lowercased() == "Data added successully".lowercased() {
+                                let mediaLink = AddAttachmentModel.mediaLink ?? ""
+                                
+                                // Get file extension from mediaLink
+                                let fileExtension = (mediaLink as NSString).pathExtension.lowercased()
+                                
+                                // Determine category based on file extension
+                                var category = ""
+                                switch fileExtension {
+                                case "jpg", "png", "jpeg":
+                                    category = "I"
+                                case "pdf":
+                                    category = "P"
+                                case "txt":
+                                    category = "T"
+                                case "doc", "docx":
+                                    category = "D"
+                                case "mp4", "3gp", "mkv":
+                                    category = "V"
+                                case "csv":
+                                    category = "C"
+                                default:
+                                    category = ""
+                                }
+                                
+                                // Print category and mediaLink
+                                print("Category: \(category), MediaLink: \(mediaLink)")
+                               
+                                
+                                let userData = getUserData()
+                                
+                                // Check if sentID is not empty
+                                let sentID = getString(key: userDefaultsKeys.RegisterId.rawValue)
+                                if sentID.isEmpty {
+                                    print("Required data is missing")
+                                    return
+                                }
+
+                                if let LastChatData = self.LastChatData {
+                                    
+                                    guard let chatRoomId = LastChatData.id else {
+                                        print("Chat room ID is nil")
+                                        return
+                                    }
+                                    
+                                    let userId = getString(key: userDefaultsKeys.RegisterId.rawValue)
+                                    let isReceiver = LastChatData.receiverID == userId
+                                                   
+                                    let imageURLString = isReceiver ? LastChatData.senderImage : LastChatData.receiverImage
+                                 
+                                    
+                                    // Ensure that all required data is available
+                                    guard let receiverID = LastChatData.receiverID,
+                                          let receiverImage = imageURLString,
+                                          let receiverName = self.nameLbl.text,
+                                          let receiverToken = LastChatData.senderFcmToken,
+                                          let senderImage = userData?.result?.image,
+                                          let senderName = userData?.result?.name else {
+                                        print("Required data is missing")
+                                        return
+                                    }
+                                    
+                                    // Call the refactored function with the parameters
+                                    self.sendMessage(chatRoomId: chatRoomId,
+                                                message: "",
+                                                receiverID: String(receiverID), // Convert Int to String
+                                                receiverImage: receiverImage,
+                                                receiverName: receiverName,
+                                                receiverToken: receiverToken,
+                                                senderImage: senderImage,
+                                                senderName: senderName,
+                                                senderFcmToken: AppSetting.FCMTokenString,
+                                                sentID: sentID,
+                                                mediatype: category,
+                                                mediaurl: mediaLink
+                                    )
+                                }
+                                
+                                
+                                
+                                
+                                
+                                if let contactUserData = self.contactUserData {
+                                    // Ensure that all required data is available
+                                    guard let receiverID = contactUserData.id,
+                                          let receiverImage = contactUserData.image,
+                                          let receiverName = contactUserData.name,
+                                          let receiverToken = contactUserData.deviceToken,
+                                          let senderImage = userData?.result?.image,
+                                          let senderName = userData?.result?.name else {
+                                        print("Required data is missing")
+                                        return
+                                    }
+                                    
+                                    // Call the refactored function with the parameters
+                                    self.sendMessage(chatRoomId: self.customID,
+                                                message: "",
+                                                receiverID: String(receiverID), // Convert Int to String
+                                                receiverImage: receiverImage,
+                                                receiverName: receiverName,
+                                                receiverToken: receiverToken,
+                                                senderImage: senderImage,
+                                                senderName: senderName,
+                                                senderFcmToken: AppSetting.FCMTokenString,
+                                                sentID: sentID,
+                                                mediatype: category,
+                                                mediaurl: mediaLink
+                                    )
+                                }
+                                
+                            }
+                        }
+                    } else {
+                        print("StatusMessage not found in response")
+                    }
+                } else {
+                    print("Failed to map response to AddAttachmentModel")
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                    print("Server response: \(responseString)")
+                }
+            }
+        }
+    }
+}
+

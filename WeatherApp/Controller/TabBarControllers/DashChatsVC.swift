@@ -80,6 +80,7 @@ class DashChatsVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         DispatchQueue.main.async {
             let ContactVc = ContactsViewController.getInstance()
             ContactVc.modalPresentationStyle = .overCurrentContext
+            ContactVc.isfrom = "LastChat"
             ContactVc.showTabbar = {
                 self.showTabBar(animated: true)
                 self.fetchFirebaseData()

@@ -14,7 +14,9 @@ enum MessageSide {
 }
 
 struct Message {
+    var time: String
     var text: String
     var side: MessageSide
+    var mediaURL:String?
 }
 

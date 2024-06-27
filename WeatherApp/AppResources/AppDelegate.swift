@@ -21,6 +21,7 @@ let APPLICATION_DELEGATE = UIApplication.shared.delegate as! AppDelegate
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+
     var window: UIWindow?
     //    let getLocation = GetLocation()
     var viewControllers = UIViewController()

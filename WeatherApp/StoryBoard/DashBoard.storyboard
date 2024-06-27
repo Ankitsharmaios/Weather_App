@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -653,6 +652,9 @@
                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="Deleteimg"/>
+                                                                <connections>
+                                                                    <action selector="messageDeleteAction:" destination="BMF-pP-W8E" eventType="touchUpInside" id="edD-TS-n9s"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqD-e5-Yud">
                                                                 <rect key="frame" x="50" y="0.0" width="20" height="20"/>
@@ -663,6 +665,9 @@
                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="CopyImg"/>
+                                                                <connections>
+                                                                    <action selector="messageCopyAction:" destination="BMF-pP-W8E" eventType="touchUpInside" id="LUJ-hI-rC3"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qV8-QX-mVs">
                                                                 <rect key="frame" x="100" y="0.0" width="20" height="20"/>
@@ -673,6 +678,9 @@
                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="ForwardMgsImg"/>
+                                                                <connections>
+                                                                    <action selector="messageForwardAction:" destination="BMF-pP-W8E" eventType="touchUpInside" id="aVP-2a-02l"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qjx-rn-U6B">
                                                                 <rect key="frame" x="150" y="0.0" width="20" height="20"/>
@@ -682,6 +690,9 @@
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                                                 <state key="normal" image="DotsImage"/>
+                                                                <connections>
+                                                                    <action selector="moreOptionAction:" destination="BMF-pP-W8E" eventType="touchUpInside" id="hFB-Hp-3qE"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -884,6 +895,10 @@
                         <outlet property="bottomCollectionView" destination="AEe-N6-6Oe" id="hS7-9j-ly1"/>
                         <outlet property="bottomView" destination="HOq-LY-IhL" id="KfN-2Q-wMH"/>
                         <outlet property="bottomstackView" destination="YFn-L6-eWG" id="Qa8-l7-PqY"/>
+                        <outlet property="btnMOreOption" destination="qjx-rn-U6B" id="ZO7-zq-Fkr"/>
+                        <outlet property="btnMessageCopy" destination="aqD-e5-Yud" id="Puo-gk-Bmk"/>
+                        <outlet property="btnMessageDelete" destination="WBq-Fp-Qn4" id="l6X-8i-UnY"/>
+                        <outlet property="btnMessageForward" destination="qV8-QX-mVs" id="aKK-mz-qgk"/>
                         <outlet property="callBtn" destination="SRw-5k-5MA" id="XQI-3Q-Peq"/>
                         <outlet property="cameraBtn" destination="d1t-TI-nv0" id="0eB-o3-Wr6"/>
                         <outlet property="headerView" destination="fvT-sJ-rxz" id="sBI-WZ-iZd"/>
@@ -2618,10 +2633,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

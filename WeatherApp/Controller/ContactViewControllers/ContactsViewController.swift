@@ -36,7 +36,7 @@ class ContactsViewController: UIViewController {
     var isfrom = ""
     var headerViewHeightConstraint: NSLayoutConstraint?
     var OptionNames:[String] = ["Invite a friend","Contacts","Refresh","Help"]
-    
+    var istowsection = false
     class func getInstance()-> ContactsViewController {
         return ContactsViewController.viewController(storyboard: Constants.Storyboard.DashBoard)
     }
@@ -48,7 +48,7 @@ class ContactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("dismiss"), object: nil)
-
+        istowsection = false
         UserList()
         setUpUI()
         setUINib()
@@ -70,6 +70,15 @@ class ContactsViewController: UIViewController {
             btnMoreOptions.isHidden = true
             topStackViewWidthLayout.constant = 35
         }
+        
+        if isfrom == "Contacts to send"
+        {
+            btnMoreOptions.isHidden = true
+            topStackViewWidthLayout.constant = 35
+            lblContactsonWhatsapp.isHidden = true
+        }
+        
+        
     }
     @objc func methodOfReceivedNotification(notification: Notification) {
         self.dismiss(animated: true){
@@ -118,6 +127,7 @@ class ContactsViewController: UIViewController {
     {
         topTableView.isHidden = true
         tableView.register(UINib(nibName: "ContactsTableViewCell", bundle: nil), forCellReuseIdentifier: "ContactsTableViewCell")
+        tableView.register(UINib(nibName: "SelectContectTableViewCell", bundle: nil), forCellReuseIdentifier: "SelectContectTableViewCell")
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -188,44 +198,101 @@ extension ContactsViewController:UITableViewDataSource & UITableViewDelegate
 {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if tableView == self.tableView{
-            return 1
-        }else if tableView == topTableView{
-            return 1
-        }
+       if istowsection == true
+        {
+           if tableView == self.tableView{
+               return 2
+           }else if tableView == topTableView{
+               return 1
+           }
+       }else{
+           if tableView == self.tableView{
+               return 1
+           }else if tableView == topTableView{
+               return 1
+           }
+       }
+        
+        
         return 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
-        if tableView == self.tableView{
-            if UserListData?.result?.count ?? 0 > 0 {
-                return UserListData?.result?.count ?? 0
-            }else{
-                return 0
+        if istowsection == true
+        {
+            if tableView == self.tableView{
+              if section == 0
+                {
+                  return 1
+              }else if section == 1
+                {
+                  if UserListData?.result?.count ?? 0 > 0 {
+                      return UserListData?.result?.count ?? 0
+                  }else{
+                      return 0
+                  }
+              }else if tableView == topTableView{
+                  return OptionNames.count
+              }
+              }
+                
+        }else{
+            if tableView == self.tableView{
+                if UserListData?.result?.count ?? 0 > 0 {
+                    return UserListData?.result?.count ?? 0
+                }else{
+                    return 0
+                }
+            }else if tableView == topTableView{
+                return OptionNames.count
             }
-        }else if tableView == topTableView{
-            return OptionNames.count
         }
+        
+        
         
         return 0
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == self.tableView{
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactsTableViewCell", for: indexPath) as! ContactsTableViewCell
-        cell.userList = UserListData?.result?[indexPath.row]
-        return cell
-        
-    } else if tableView == topTableView{
-            if let cell = topTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
-                cell.nameLbl.text = OptionNames[indexPath.row]
-               
+       
+        if istowsection == true
+        {
+            if indexPath.section == 0
+            {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SelectContectTableViewCell", for: indexPath) as! SelectContectTableViewCell
                 return cell
+            }else if indexPath.section == 1{
+                if tableView == self.tableView{
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ContactsTableViewCell", for: indexPath) as! ContactsTableViewCell
+                cell.userList = UserListData?.result?[indexPath.row]
+                return cell
+                
+            } else if tableView == topTableView{
+                    if let cell = topTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
+                        cell.nameLbl.text = OptionNames[indexPath.row]
+                       
+                        return cell
+                    }
+                }
+            }
+        }else{
+            if tableView == self.tableView{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ContactsTableViewCell", for: indexPath) as! ContactsTableViewCell
+            cell.userList = UserListData?.result?[indexPath.row]
+            return cell
+            
+        } else if tableView == topTableView{
+                if let cell = topTableView.dequeueReusableCell(withIdentifier: "optionHeaderTblvCell", for: indexPath) as? optionHeaderTblvCell{
+                    cell.nameLbl.text = OptionNames[indexPath.row]
+                   
+                    return cell
+                }
             }
         }
+        
+        
+       
         return UITableViewCell()
         
         
@@ -244,14 +311,20 @@ extension ContactsViewController:UITableViewDataSource & UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.tableView {
             
+            if isfrom == "Contacts to send"
+            {
+                istowsection = true
+                self.tableView.reloadData()
+            }
+            
             if isfrom == "Communities" || isfrom == "Calls"
             {
                 
-            }else{
+            }
+            
+            if isfrom == "LastChat"
+            {
                 guard let userData = UserListData?.result?[indexPath.row] else { return }
-                
-                
-                
                 
                 let customID = generateCustomID(registerId: getString(key: userDefaultsKeys.RegisterId.rawValue), userId: "\(String(describing: userData.id!))")
                 
@@ -269,10 +342,12 @@ extension ContactsViewController:UITableViewDataSource & UITableViewDelegate
                 self.present(InnerChatVC, animated: true)
             }
             
+            }
+             
         }
         
         
-    }
+    
            
     func generateCustomID(registerId: String?, userId: String?) -> String {
         let safeRegisterId = registerId ?? ""
@@ -312,6 +387,11 @@ extension ContactsViewController
                 }else{
                     self?.lblSelectContactTitle.text = "Select Contact"
                     self?.lblContactCountShow.text = "\(UserList.result?.count ?? 0) contacts"
+                }
+                if self?.isfrom == "Contacts to send"
+                {
+                    self?.lblSelectContactTitle.text = "Contacts to send"
+                    self?.lblContactCountShow.text = "0 selected"
                 }
                 
                 self?.tableView.reloadData()

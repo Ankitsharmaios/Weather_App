@@ -12,6 +12,7 @@ import UIKit
 class LeftViewCell: UITableViewCell {
 
     
+    @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var reacionView: UIView!
     @IBOutlet weak var greenView: UIView!
     @IBOutlet weak var messageContainerView: UIView!
@@ -31,11 +32,18 @@ class LeftViewCell: UITableViewCell {
     }
     
     func configureCell(message: Message) {
-        textMessageLabel.text = message.text
-        greenView.isHidden = !isLongPressed
-        reacionView.isHidden = !isLongPressed
-    }
-    
+            textMessageLabel.text = message.text
+            lblTime.text = formatTime(message.time)
+            greenView.isHidden = !isLongPressed
+            reacionView.isHidden = !isLongPressed
+        }
+    private func formatTime(_ time: String) -> String {
+           let timeComponents = time.split(separator: ":")
+           if timeComponents.count >= 2 {
+               return "\(timeComponents[0]):\(timeComponents[1])"
+           }
+           return time
+       }
 }
 
 
