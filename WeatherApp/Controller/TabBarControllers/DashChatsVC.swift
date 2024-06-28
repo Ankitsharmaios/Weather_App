@@ -264,10 +264,14 @@ extension DashChatsVC
                             let isDeleted = userDict["isDeleted"] as? String
                             let message = userDict["message"] as? String
                             let messageStatus = userDict["messageStatus"] as? String
+                            let receiverphone = userDict["receiverphone"] as? String
+                            let receiverabout = userDict["receiverabout"] as? String
                             let receiverID = userDict["receiverID"] as? String
                             let receiverImage = userDict["receiverImage"] as? String
                             let receiverName = userDict["receiverName"] as? String
                             let receiverToken = userDict["receiverToken"] as? String
+                            let sentphone = userDict["sentphone"] as? String
+                            let sentabout = userDict["sentabout"] as? String
                             let senderFcmToken = userDict["senderFcmToken"] as? String
                             let senderImage = userDict["senderImage"] as? String
                             let senderName = userDict["senderName"] as? String

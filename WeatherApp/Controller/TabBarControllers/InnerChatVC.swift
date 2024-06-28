@@ -21,6 +21,7 @@ import UniformTypeIdentifiers
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate & RecordViewDelegate & CLLocationManagerDelegate & MKMapViewDelegate & UIDocumentPickerDelegate {
     
 
+    @IBOutlet weak var btnContactDetail: UIButton!
     @IBOutlet weak var btnMOreOption: UIButton!
     @IBOutlet weak var btnMessageForward: UIButton!
     @IBOutlet weak var btnMessageCopy: UIButton!
@@ -79,7 +80,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     var recordButton:RecordButton!
     var recordView:RecordView!
     var stateLabel:UILabel!
-
+    
     
     class func getInstance()-> InnerChatVC {
         return InnerChatVC.viewController(storyboard: Constants.Storyboard.DashBoard)
@@ -89,29 +90,29 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
        
         
         
-        let recordButton = RecordButton()
-        recordButton.translatesAutoresizingMaskIntoConstraints = false
-        recordButton.tintColor = .clear
-        let recordView = RecordView()
-        recordView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(recordButton)
-        view.addSubview(recordView)
-
-        recordButton.widthAnchor.constraint(equalToConstant: 35).isActive = true
-        recordButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
-
-        recordButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
-        recordButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: 10).isActive = true
-        
-
-        recordView.trailingAnchor.constraint(equalTo: recordButton.leadingAnchor, constant: -20).isActive = true
-        recordView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        recordView.centerYAnchor.constraint(equalTo: recordButton.centerYAnchor).isActive = true
-        recordButton.recordView = recordView
-
-        recordView.delegate = self
-        
+//        let recordButton = RecordButton()
+//        recordButton.translatesAutoresizingMaskIntoConstraints = false
+//        recordButton.tintColor = .clear
+//        let recordView = RecordView()
+//        recordView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        view.addSubview(recordButton)
+//        view.addSubview(recordView)
+//
+//        recordButton.widthAnchor.constraint(equalToConstant: 35).isActive = true
+//        recordButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
+//
+//        recordButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+//        recordButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: 10).isActive = true
+//        
+//
+//        recordView.trailingAnchor.constraint(equalTo: recordButton.leadingAnchor, constant: -20).isActive = true
+//        recordView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+//        recordView.centerYAnchor.constraint(equalTo: recordButton.centerYAnchor).isActive = true
+//        recordButton.recordView = recordView
+//
+//        recordView.delegate = self
+//        
         
         
         
@@ -301,6 +302,16 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         }
     }
     
+    @IBAction func contactDetailAction(_ sender: Any) 
+    {
+        DispatchQueue.main.async {
+            let ContactDetailVc = ContactDetailVC.getInstance()
+            ContactDetailVc.chatData = self.chatDataArray
+            ContactDetailVc.isfrom = "InnerChat"
+            ContactDetailVc.modalPresentationStyle = .overCurrentContext
+            self.present(ContactDetailVc, animated: true)
+        }
+    }
     @IBAction func viewInnerBackAction(_ sender: Any)
     {
         // Hide all green views and clear selection
@@ -329,8 +340,41 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     }
     @IBAction func messageCopyAction(_ sender: Any) {
     }
-    @IBAction func messageDeleteAction(_ sender: Any) {
+    @IBAction func messageDeleteAction(_ sender: Any) 
+    {
+        let lastChatId = LastChatData?.id ?? ""
+        let indexId = LastChatData?.indexId ?? ""
+        let status = "yes" // Update with your desired status ("yes" or
+        // Call the function to create a new entry under "Chat" table
+        updateOrInsertChatEntry(lastChatId: lastChatId, indexId: indexId, status: status)
+        
+        
     }
+    // Function to update or create a new entry under "Chat" table
+    func updateOrInsertChatEntry(lastChatId: String, indexId: String, status: String) {
+        guard status == "yes" || status == "no" else {
+            print("Invalid status value. Use 'yes' or 'no'.")
+            return
+        }
+
+        let ref = Database.database().reference()
+        let chatPathRef = ref.child("Chat").child(lastChatId).child(indexId) // Use indexId as parent and lastChatId as child
+
+        let data = [
+            "deleted": status
+        ] as [String : Any]
+
+        chatPathRef.updateChildValues(data) { error, _ in
+            if let error = error {
+                print("Error updating entry for \(lastChatId) under \(indexId): \(error.localizedDescription)")
+            } else {
+                print("Entry updated successfully for \(lastChatId) under \(indexId)!")
+                
+            }
+        }
+    }
+    
+    
     
     @IBAction func sendMgsAction(_ sender: Any)
     {
@@ -368,6 +412,10 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
                      let receiverImage = imageURLString,
                      let receiverName = self.nameLbl.text,
                      let receiverToken = LastChatData.senderFcmToken,
+                     let receiverphone = LastChatData.receiverphone,
+                     let receiverabout = LastChatData.receiverabout,
+                     let sentabout = userData?.result?.about,
+                     let sentphone = userData?.result?.phoneNo,
                      let senderImage = userData?.result?.image,
                      let senderName = userData?.result?.name else {
                    print("Required data is missing")
@@ -377,10 +425,14 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
                // Call the refactored function with the parameters
                sendMessage(chatRoomId: chatRoomId,
                            message: text,
-                           receiverID: String(receiverID), // Convert Int to String
+                           receiverphone: receiverphone, // Convert Int to String
+                           receiverabout: receiverabout,
+                           receiverID: String(receiverID),
                            receiverImage: receiverImage,
                            receiverName: receiverName,
                            receiverToken: receiverToken,
+                           sentphone: sentphone,
+                           sentabout:sentabout,
                            senderImage: senderImage,
                            senderName: senderName,
                            senderFcmToken: AppSetting.FCMTokenString,
@@ -393,9 +445,14 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
            if let contactUserData = contactUserData {
                // Ensure that all required data is available
                guard let receiverID = contactUserData.id,
+                     
                      let receiverImage = contactUserData.image,
                      let receiverName = contactUserData.name,
                      let receiverToken = contactUserData.deviceToken,
+                     let receiverphone = contactUserData.phoneno,
+                     let receiverabout = contactUserData.about,
+                     let sentabout = userData?.result?.about,
+                     let sentphone = userData?.result?.phoneNo,
                      let senderImage = userData?.result?.image,
                      let senderName = userData?.result?.name else {
                    print("Required data is missing")
@@ -405,10 +462,14 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
                // Call the refactored function with the parameters
                sendMessage(chatRoomId: self.customID,
                            message: text,
-                           receiverID: String(receiverID), // Convert Int to String
+                           receiverphone: receiverphone, // Convert Int to String
+                           receiverabout: receiverabout,
+                           receiverID: String(receiverID),
                            receiverImage: receiverImage,
                            receiverName: receiverName,
                            receiverToken: receiverToken,
+                           sentphone: sentabout,
+                           sentabout: sentphone,
                            senderImage: senderImage,
                            senderName: senderName,
                            senderFcmToken: AppSetting.FCMTokenString,
@@ -420,7 +481,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
        
     }
         
-    func sendMessage(chatRoomId: String, message: String, receiverID: String, receiverImage: String, receiverName: String, receiverToken: String, senderImage: String, senderName: String, senderFcmToken: String, sentID: String,mediatype:String,mediaurl:String) {
+    func sendMessage(chatRoomId: String, message: String,receiverphone:String,receiverabout:String, receiverID: String, receiverImage: String, receiverName: String, receiverToken: String,sentphone:String,sentabout:String,senderImage: String, senderName: String, senderFcmToken: String, sentID: String,mediatype:String,mediaurl:String) {
         // Fetch current date and time
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -435,7 +496,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         
         // Generate a unique key for each path
         let chatPathKey = ref.child("Chat").child(chatRoomId).childByAutoId().key ?? ""
-        let lastChatPathKey = ref.child("LastChat").child(chatRoomId).childByAutoId().key ?? ""
+       // let lastChatPathKey = ref.child("LastChat").child(chatRoomId).childByAutoId().key ?? ""
         
         // Create a dictionary to hold the data
         let data: [String: Any] = [
@@ -448,12 +509,16 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             "mediaurl": mediaurl,
             "message": message,
             "messageStatus": "",
+            "receiverphone":receiverphone,
+            "receiverabout":receiverabout,
             "receiverID": receiverID,
             "receiverImage": receiverImage,
             "receiverName": receiverName,
             "receiverToken": receiverToken,
             "replyMessage": "",
             "replySendUserId": sentID,
+            "sentphone":sentphone,
+            "sentabout":sentabout,
             "sendType": "Send",
             "senderFcmToken": senderFcmToken,
             "senderImage": senderImage,
@@ -908,6 +973,7 @@ extension InnerChatVC {
                                // Check if the id matches lastChatdataId and create ChatModel instance
                                if id == LastChatData?.id || id == self.customID, let chatModel = ChatModel(JSON: tempDic) {
                                    self.chatDataArray.append(chatModel)
+                                   
                                } else {
                                    print("ID does not match or failed to initialize ChatModel with dictionary:")
                                }
@@ -921,7 +987,7 @@ extension InnerChatVC {
                    self.fetchData()
                    self.maintableView.reloadData()
                    
-                   print("=====self.chatDataArray=====>",self.LastChatData?.id ?? "",self.chatDataArray.count)
+                   print("=====self.chatDataArray=====>",self.LastChatData?.id ?? "",self.chatDataArray)
                }
            }) { (error) in
                print("Error in fetching from firebase:", error.localizedDescription)
@@ -1081,10 +1147,15 @@ extension InnerChatVC {
                                     // Ensure that all required data is available
                                     guard let receiverID = LastChatData.receiverID,
                                           let receiverImage = imageURLString,
+                                          let receiverphone = LastChatData.receiverphone,
+                                          let receiverabout = LastChatData.receiverabout,
                                           let receiverName = self.nameLbl.text,
                                           let receiverToken = LastChatData.senderFcmToken,
+                                          let sentabout = userData?.result?.about,
+                                          let sentphone = userData?.result?.phoneNo,
                                           let senderImage = userData?.result?.image,
                                           let senderName = userData?.result?.name else {
+                                          
                                         print("Required data is missing")
                                         return
                                     }
@@ -1092,10 +1163,14 @@ extension InnerChatVC {
                                     // Call the refactored function with the parameters
                                     self.sendMessage(chatRoomId: chatRoomId,
                                                 message: "",
-                                                receiverID: String(receiverID), // Convert Int to String
+                                                receiverphone: receiverphone, // Convert Int to String
+                                                receiverabout: receiverabout,
+                                                receiverID: String(receiverID),
                                                 receiverImage: receiverImage,
                                                 receiverName: receiverName,
                                                 receiverToken: receiverToken,
+                                                sentphone: sentabout,
+                                                sentabout: sentphone,
                                                 senderImage: senderImage,
                                                 senderName: senderName,
                                                 senderFcmToken: AppSetting.FCMTokenString,
@@ -1115,6 +1190,10 @@ extension InnerChatVC {
                                           let receiverImage = contactUserData.image,
                                           let receiverName = contactUserData.name,
                                           let receiverToken = contactUserData.deviceToken,
+                                          let receiverphone = contactUserData.phoneno,
+                                          let receiverabout = contactUserData.about,
+                                          let sentabout = userData?.result?.about,
+                                          let sentphone = userData?.result?.phoneNo,
                                           let senderImage = userData?.result?.image,
                                           let senderName = userData?.result?.name else {
                                         print("Required data is missing")
@@ -1124,10 +1203,14 @@ extension InnerChatVC {
                                     // Call the refactored function with the parameters
                                     self.sendMessage(chatRoomId: self.customID,
                                                 message: "",
-                                                receiverID: String(receiverID), // Convert Int to String
+                                                receiverphone: receiverphone, // Convert Int to String
+                                                receiverabout: receiverabout,
+                                                receiverID: String(receiverID),
                                                 receiverImage: receiverImage,
                                                 receiverName: receiverName,
                                                 receiverToken: receiverToken,
+                                                sentphone: sentabout,
+                                                sentabout: sentphone,
                                                 senderImage: senderImage,
                                                 senderName: senderName,
                                                 senderFcmToken: AppSetting.FCMTokenString,

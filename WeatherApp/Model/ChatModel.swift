@@ -23,6 +23,10 @@ struct ChatModel: Mappable {
     var receiverToken: String?
     var replyMessage: String?
     var replySendUserId: String?
+    var receiverphone:String?
+    var receiverabout:String?
+    var sentabout:String?
+    var sentphone:String?
     var sendType: String?
     var senderFcmToken: String?
     var senderImage: String?
@@ -51,6 +55,10 @@ struct ChatModel: Mappable {
         receiverToken <- map["receiverToken"]
         replyMessage <- map["replyMessage"]
         replySendUserId <- map["replySendUserId"]
+        receiverphone <- map["receiverphone"]
+        receiverabout <- map["receiverabout"]
+        sentabout <- map["sentabout"]
+        sentphone <- map["sentphone"]
         sendType <- map["sendType"]
         senderFcmToken <- map["senderFcmToken"]
         senderImage <- map["senderImage"]

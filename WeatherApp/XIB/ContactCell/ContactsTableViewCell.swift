@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class ContactsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var imgeSelectContact: UIImageView!
     @IBOutlet weak var lblStatus: UILabel!
     @IBOutlet weak var userimageView: UIImageView!
     @IBOutlet weak var lblName: UILabel!
@@ -37,6 +38,10 @@ class ContactsTableViewCell: UITableViewCell {
     
     func setUpCell()
     {
+       
+        imgeSelectContact.isHidden = true
+        
+        
         userimageView.layer.cornerRadius = userimageView.frame.size.width / 2
         userimageView.clipsToBounds = true
         

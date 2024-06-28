@@ -31,6 +31,11 @@
 		14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C452BFF7B8D004F8894 /* DashChatsVC.swift */; };
 		14392C492BFF7B8D004F8894 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14392C462BFF7B8D004F8894 /* TabBarVC.swift */; };
 		14392C4B2BFF7BE2004F8894 /* DashBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */; };
+		143943842C2E9E0300652F8C /* ContactDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143943832C2E9E0300652F8C /* ContactDetailVC.swift */; };
+		143943882C2EB4BE00652F8C /* ContactMediaColletionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143943862C2EB4BE00652F8C /* ContactMediaColletionCell.swift */; };
+		143943892C2EB4BE00652F8C /* ContactMediaColletionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 143943872C2EB4BE00652F8C /* ContactMediaColletionCell.xib */; };
+		1439438C2C2EC04C00652F8C /* ContactGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439438A2C2EC04C00652F8C /* ContactGroupTableViewCell.swift */; };
+		1439438D2C2EC04C00652F8C /* ContactGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1439438B2C2EC04C00652F8C /* ContactGroupTableViewCell.xib */; };
 		144063E62C187B3A007E9A52 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 144063E52C187B3A007E9A52 /* MCEmojiPicker */; };
 		144572C12C2C177C00F8F6BA /* iRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144572C02C2C177C00F8F6BA /* iRecordView.swift */; };
 		145750DE2C04984B0001E286 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */; };
@@ -185,6 +190,11 @@
 		14392C452BFF7B8D004F8894 /* DashChatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashChatsVC.swift; sourceTree = "<group>"; };
 		14392C462BFF7B8D004F8894 /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		14392C4A2BFF7BE2004F8894 /* DashBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DashBoard.storyboard; sourceTree = "<group>"; };
+		143943832C2E9E0300652F8C /* ContactDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailVC.swift; sourceTree = "<group>"; };
+		143943862C2EB4BE00652F8C /* ContactMediaColletionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactMediaColletionCell.swift; sourceTree = "<group>"; };
+		143943872C2EB4BE00652F8C /* ContactMediaColletionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactMediaColletionCell.xib; sourceTree = "<group>"; };
+		1439438A2C2EC04C00652F8C /* ContactGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroupTableViewCell.swift; sourceTree = "<group>"; };
+		1439438B2C2EC04C00652F8C /* ContactGroupTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactGroupTableViewCell.xib; sourceTree = "<group>"; };
 		144572C02C2C177C00F8F6BA /* iRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iRecordView.swift; sourceTree = "<group>"; };
 		145750DC2C04984B0001E286 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		145750DD2C04984B0001E286 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
@@ -341,6 +351,17 @@
 				14AFB24F2C0092CA00F0D93D /* InnerChatVC.swift */,
 			);
 			path = TabBarControllers;
+			sourceTree = "<group>";
+		};
+		143943852C2EB47E00652F8C /* ContactDetailCell */ = {
+			isa = PBXGroup;
+			children = (
+				143943862C2EB4BE00652F8C /* ContactMediaColletionCell.swift */,
+				143943872C2EB4BE00652F8C /* ContactMediaColletionCell.xib */,
+				1439438A2C2EC04C00652F8C /* ContactGroupTableViewCell.swift */,
+				1439438B2C2EC04C00652F8C /* ContactGroupTableViewCell.xib */,
+			);
+			path = ContactDetailCell;
 			sourceTree = "<group>";
 		};
 		145750DB2C04981E0001E286 /* SettingsCells */ = {
@@ -507,6 +528,7 @@
 			isa = PBXGroup;
 			children = (
 				14CB050C2C214E7D00E69A94 /* ContactsViewController.swift */,
+				143943832C2E9E0300652F8C /* ContactDetailVC.swift */,
 			);
 			path = ContactViewControllers;
 			sourceTree = "<group>";
@@ -751,6 +773,7 @@
 		14D3CE5C2BFB791300E700CB /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				143943852C2EB47E00652F8C /* ContactDetailCell */,
 				14C02AFE2C22FB8E00D1AD62 /* aboutCell */,
 				14CB050E2C21584700E69A94 /* ContactCell */,
 				147DA4722C181E7900D616E7 /* ChatDetails */,
@@ -928,6 +951,8 @@
 				14F11F902C0F186F00F29729 /* font5.ttf in Resources */,
 				14CB05122C21586300E69A94 /* ContactsTableViewCell.xib in Resources */,
 				14A3E29F2C00557900417919 /* optionHeaderTblvCell.xib in Resources */,
+				143943892C2EB4BE00652F8C /* ContactMediaColletionCell.xib in Resources */,
+				1439438D2C2EC04C00652F8C /* ContactGroupTableViewCell.xib in Resources */,
 				14D3CE2E2BFB5F0C00E700CB /* nunitosans_semibold.TTF in Resources */,
 				14D3CE1D2BFB5D9500E700CB /* WeatherDayListCollectionCell.xib in Resources */,
 				14BD6B572C05DD4200D76C36 /* InnerChatTblvCell.xib in Resources */,
@@ -1036,6 +1061,7 @@
 				14D3CE332BFB625000E700CB /* CommonFile.swift in Sources */,
 				14E1FC712C09FE6B001739C3 /* OuterCell.swift in Sources */,
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
+				143943842C2E9E0300652F8C /* ContactDetailVC.swift in Sources */,
 				147366272C0092D700419797 /* EditProfileModel.swift in Sources */,
 				14C02AF72C22E0E000D1AD62 /* NamePopUpVC.swift in Sources */,
 				14939D582C07230D001E6A44 /* StoryListModel.swift in Sources */,
@@ -1059,6 +1085,7 @@
 				148F89332C196DA200F59092 /* AppConfigModel.swift in Sources */,
 				14E1FC6F2C09FDFA001739C3 /* StoryHandler.swift in Sources */,
 				14A3E2A02C00557900417919 /* optionHeaderTblvCell.swift in Sources */,
+				1439438C2C2EC04C00652F8C /* ContactGroupTableViewCell.swift in Sources */,
 				14D3CE302BFB5F7300E700CB /* WeatherListModel.swift in Sources */,
 				14D3CE552BFB68E000E700CB /* NetworkManager.swift in Sources */,
 				14D3CE1C2BFB5D9500E700CB /* WeatherDayListCollectionCell.swift in Sources */,
@@ -1090,6 +1117,7 @@
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
 				141F5D772C2D90E200C43254 /* SelectContectTableViewCell.swift in Sources */,
 				14CB05112C21586300E69A94 /* ContactsTableViewCell.swift in Sources */,
+				143943882C2EB4BE00652F8C /* ContactMediaColletionCell.swift in Sources */,
 				141F5D622C2D3C6C00C43254 /* LocationViewController.swift in Sources */,
 				1463100E2C00C1DD0034896A /* AttachmentCLvCell.swift in Sources */,
 				14C0AEC22C1ADF1600F737A4 /* MyStatusTableViewCell.swift in Sources */,

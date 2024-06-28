@@ -15,14 +15,18 @@ struct LiveChatDataModel:Mappable{
     var isDeleted:String?
     var message:String?
     var messageStatus:String?
+    var receiverphone:String?
     var receiverID:String?
     var receiverImage:String?
     var receiverName:String?
     var receiverToken:String?
+    var receiverabout:String?
+    var sentabout:String?
     var senderFcmToken:String?
     var senderImage:String?
     var senderName:String?
     var sentID:String?
+    var sentphone:String?
     var time:String?
     var unReadMessageCount:String?
     var videoCallLink:String?
@@ -38,10 +42,14 @@ struct LiveChatDataModel:Mappable{
         isDeleted <- map["isDeleted"]
         message <- map["message"]
         messageStatus <- map["messageStatus"]
+        receiverabout <- map["receiverabout"]
+        receiverphone <- map["receiverphone"]
         receiverID <- map["receiverID"]
         receiverImage <- map["receiverImage"]
         receiverName <- map["receiverName"]
         receiverToken <- map["receiverToken"]
+        sentabout <- map["sentabout"]
+        sentphone <- map["sentphone"]
         senderFcmToken <- map["senderFcmToken"]
         senderImage <- map["senderImage"]
         senderName <- map["senderName"]
