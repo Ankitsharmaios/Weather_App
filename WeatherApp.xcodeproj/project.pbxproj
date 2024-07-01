@@ -131,6 +131,31 @@
 		14E1FC6F2C09FDFA001739C3 /* StoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1FC6C2C09FDFA001739C3 /* StoryHandler.swift */; };
 		14E1FC712C09FE6B001739C3 /* OuterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1FC702C09FE6B001739C3 /* OuterCell.swift */; };
 		14E1FC732C09FEA5001739C3 /* InnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1FC722C09FEA5001739C3 /* InnerCell.swift */; };
+		14EF7D6C2C327E150003AA11 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D4E2C327E150003AA11 /* CameraVC.swift */; };
+		14EF7D6D2C327E150003AA11 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D4F2C327E150003AA11 /* Orientation.swift */; };
+		14EF7D6E2C327E150003AA11 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D502C327E150003AA11 /* PreviewView.swift */; };
+		14EF7D6F2C327E150003AA11 /* SwiftyCamButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D512C327E150003AA11 /* SwiftyCamButton.swift */; };
+		14EF7D702C327E150003AA11 /* SwiftyCamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D522C327E150003AA11 /* SwiftyCamViewController.swift */; };
+		14EF7D712C327E150003AA11 /* SwiftyCamViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D532C327E150003AA11 /* SwiftyCamViewControllerDelegate.swift */; };
+		14EF7D722C327E150003AA11 /* SwiftyRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D542C327E150003AA11 /* SwiftyRecordButton.swift */; };
+		14EF7D732C327E150003AA11 /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D562C327E150003AA11 /* Ext.swift */; };
+		14EF7D742C327E150003AA11 /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D572C327E150003AA11 /* PhotoHelper.swift */; };
+		14EF7D752C327E150003AA11 /* TLPHAsset+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D582C327E150003AA11 /* TLPHAsset+Ext.swift */; };
+		14EF7D762C327E150003AA11 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D592C327E150003AA11 /* Utils.swift */; };
+		14EF7D772C327E150003AA11 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D5A2C327E150003AA11 /* VideoPlayerView.swift */; };
+		14EF7D782C327E150003AA11 /* ImgListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D5C2C327E150003AA11 /* ImgListCell.swift */; };
+		14EF7D792C327E150003AA11 /* ImgListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14EF7D5D2C327E150003AA11 /* ImgListCell.xib */; };
+		14EF7D7A2C327E150003AA11 /* ImgMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D5E2C327E150003AA11 /* ImgMainCell.swift */; };
+		14EF7D7B2C327E150003AA11 /* ImgMainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14EF7D5F2C327E150003AA11 /* ImgMainCell.xib */; };
+		14EF7D7C2C327E150003AA11 /* EditImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D612C327E150003AA11 /* EditImageVC.swift */; };
+		14EF7D7D2C327E150003AA11 /* EditImageVC+AddImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D622C327E150003AA11 /* EditImageVC+AddImage.swift */; };
+		14EF7D7E2C327E150003AA11 /* EditImageVC+Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D632C327E150003AA11 /* EditImageVC+Draw.swift */; };
+		14EF7D7F2C327E150003AA11 /* EditImageVC+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D642C327E150003AA11 /* EditImageVC+Gestures.swift */; };
+		14EF7D802C327E150003AA11 /* EditImageVC+Model+Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D652C327E150003AA11 /* EditImageVC+Model+Enum.swift */; };
+		14EF7D812C327E150003AA11 /* EditImageVC+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D662C327E150003AA11 /* EditImageVC+Text.swift */; };
+		14EF7D822C327E150003AA11 /* EditImageVC+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D672C327E150003AA11 /* EditImageVC+UITextView.swift */; };
+		14EF7D832C327E150003AA11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D692C327E150003AA11 /* BaseViewController.swift */; };
+		14EF7D872C32D6450003AA11 /* VideoPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF7D862C32D6450003AA11 /* VideoPlayerVC.swift */; };
 		14EFF34F2C1C0C4200671970 /* ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFF34E2C1C0C4200671970 /* ActionSheet.swift */; };
 		14EFF3512C1C4ACB00671970 /* DeleteStoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFF3502C1C4ACB00671970 /* DeleteStoryModel.swift */; };
 		14EFF3532C1C605B00671970 /* DeletePopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFF3522C1C605B00671970 /* DeletePopUpVC.swift */; };
@@ -297,6 +322,31 @@
 		14E1FC6C2C09FDFA001739C3 /* StoryHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryHandler.swift; sourceTree = "<group>"; };
 		14E1FC702C09FE6B001739C3 /* OuterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OuterCell.swift; sourceTree = "<group>"; };
 		14E1FC722C09FEA5001739C3 /* InnerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerCell.swift; sourceTree = "<group>"; };
+		14EF7D4E2C327E150003AA11 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVC.swift; sourceTree = "<group>"; };
+		14EF7D4F2C327E150003AA11 /* Orientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		14EF7D502C327E150003AA11 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		14EF7D512C327E150003AA11 /* SwiftyCamButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyCamButton.swift; sourceTree = "<group>"; };
+		14EF7D522C327E150003AA11 /* SwiftyCamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyCamViewController.swift; sourceTree = "<group>"; };
+		14EF7D532C327E150003AA11 /* SwiftyCamViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyCamViewControllerDelegate.swift; sourceTree = "<group>"; };
+		14EF7D542C327E150003AA11 /* SwiftyRecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyRecordButton.swift; sourceTree = "<group>"; };
+		14EF7D562C327E150003AA11 /* Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
+		14EF7D572C327E150003AA11 /* PhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
+		14EF7D582C327E150003AA11 /* TLPHAsset+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TLPHAsset+Ext.swift"; sourceTree = "<group>"; };
+		14EF7D592C327E150003AA11 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		14EF7D5A2C327E150003AA11 /* VideoPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		14EF7D5C2C327E150003AA11 /* ImgListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgListCell.swift; sourceTree = "<group>"; };
+		14EF7D5D2C327E150003AA11 /* ImgListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImgListCell.xib; sourceTree = "<group>"; };
+		14EF7D5E2C327E150003AA11 /* ImgMainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgMainCell.swift; sourceTree = "<group>"; };
+		14EF7D5F2C327E150003AA11 /* ImgMainCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImgMainCell.xib; sourceTree = "<group>"; };
+		14EF7D612C327E150003AA11 /* EditImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditImageVC.swift; sourceTree = "<group>"; };
+		14EF7D622C327E150003AA11 /* EditImageVC+AddImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditImageVC+AddImage.swift"; sourceTree = "<group>"; };
+		14EF7D632C327E150003AA11 /* EditImageVC+Draw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditImageVC+Draw.swift"; sourceTree = "<group>"; };
+		14EF7D642C327E150003AA11 /* EditImageVC+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditImageVC+Gestures.swift"; sourceTree = "<group>"; };
+		14EF7D652C327E150003AA11 /* EditImageVC+Model+Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditImageVC+Model+Enum.swift"; sourceTree = "<group>"; };
+		14EF7D662C327E150003AA11 /* EditImageVC+Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditImageVC+Text.swift"; sourceTree = "<group>"; };
+		14EF7D672C327E150003AA11 /* EditImageVC+UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditImageVC+UITextView.swift"; sourceTree = "<group>"; };
+		14EF7D692C327E150003AA11 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		14EF7D862C32D6450003AA11 /* VideoPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerVC.swift; sourceTree = "<group>"; };
 		14EFF34E2C1C0C4200671970 /* ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheet.swift; sourceTree = "<group>"; };
 		14EFF3502C1C4ACB00671970 /* DeleteStoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStoryModel.swift; sourceTree = "<group>"; };
 		14EFF3522C1C605B00671970 /* DeletePopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePopUpVC.swift; sourceTree = "<group>"; };
@@ -703,6 +753,7 @@
 		14D3CE392BFB62E500E700CB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				14EF7D4D2C327B9A0003AA11 /* EditPhotoVideoViewController */,
 				14CB050B2C214E6200E69A94 /* ContactViewControllers */,
 				149F12B82C2068330048A84D /* CallsViewController */,
 				14F7ACC22C1FFD2600FA2BBD /* CommunitiesViewControllers */,
@@ -795,6 +846,86 @@
 				14E1FC6C2C09FDFA001739C3 /* StoryHandler.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		14EF7D4D2C327B9A0003AA11 /* EditPhotoVideoViewController */ = {
+			isa = PBXGroup;
+			children = (
+				14EF7D852C32D6160003AA11 /* VideoPlayerViewController */,
+				14EF7D552C327E150003AA11 /* Camera */,
+				14EF7D5B2C327E150003AA11 /* Helper */,
+				14EF7D6B2C327E150003AA11 /* ViewController */,
+			);
+			path = EditPhotoVideoViewController;
+			sourceTree = "<group>";
+		};
+		14EF7D552C327E150003AA11 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				14EF7D4E2C327E150003AA11 /* CameraVC.swift */,
+				14EF7D4F2C327E150003AA11 /* Orientation.swift */,
+				14EF7D502C327E150003AA11 /* PreviewView.swift */,
+				14EF7D512C327E150003AA11 /* SwiftyCamButton.swift */,
+				14EF7D522C327E150003AA11 /* SwiftyCamViewController.swift */,
+				14EF7D532C327E150003AA11 /* SwiftyCamViewControllerDelegate.swift */,
+				14EF7D542C327E150003AA11 /* SwiftyRecordButton.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		14EF7D5B2C327E150003AA11 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				14EF7D562C327E150003AA11 /* Ext.swift */,
+				14EF7D572C327E150003AA11 /* PhotoHelper.swift */,
+				14EF7D582C327E150003AA11 /* TLPHAsset+Ext.swift */,
+				14EF7D592C327E150003AA11 /* Utils.swift */,
+				14EF7D5A2C327E150003AA11 /* VideoPlayerView.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		14EF7D602C327E150003AA11 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				14EF7D5C2C327E150003AA11 /* ImgListCell.swift */,
+				14EF7D5D2C327E150003AA11 /* ImgListCell.xib */,
+				14EF7D5E2C327E150003AA11 /* ImgMainCell.swift */,
+				14EF7D5F2C327E150003AA11 /* ImgMainCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		14EF7D682C327E150003AA11 /* EditImageVC */ = {
+			isa = PBXGroup;
+			children = (
+				14EF7D602C327E150003AA11 /* Cell */,
+				14EF7D612C327E150003AA11 /* EditImageVC.swift */,
+				14EF7D622C327E150003AA11 /* EditImageVC+AddImage.swift */,
+				14EF7D632C327E150003AA11 /* EditImageVC+Draw.swift */,
+				14EF7D642C327E150003AA11 /* EditImageVC+Gestures.swift */,
+				14EF7D652C327E150003AA11 /* EditImageVC+Model+Enum.swift */,
+				14EF7D662C327E150003AA11 /* EditImageVC+Text.swift */,
+				14EF7D672C327E150003AA11 /* EditImageVC+UITextView.swift */,
+			);
+			path = EditImageVC;
+			sourceTree = "<group>";
+		};
+		14EF7D6B2C327E150003AA11 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				14EF7D682C327E150003AA11 /* EditImageVC */,
+				14EF7D692C327E150003AA11 /* BaseViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		14EF7D852C32D6160003AA11 /* VideoPlayerViewController */ = {
+			isa = PBXGroup;
+			children = (
+				14EF7D862C32D6450003AA11 /* VideoPlayerVC.swift */,
+			);
+			path = VideoPlayerViewController;
 			sourceTree = "<group>";
 		};
 		14F7ACC22C1FFD2600FA2BBD /* CommunitiesViewControllers */ = {
@@ -937,7 +1068,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				145750E52C04AB960001E286 /* AccountTableViewCell.xib in Resources */,
+				14EF7D792C327E150003AA11 /* ImgListCell.xib in Resources */,
 				141F5D6C2C2D639300C43254 /* rightImgVideoTableViewCell.xib in Resources */,
+				14EF7D7B2C327E150003AA11 /* ImgMainCell.xib in Resources */,
 				14939D5D2C0726A0001E6A44 /* StoryTableViewCell.xib in Resources */,
 				147DA4742C181E7900D616E7 /* LeftViewCell.xib in Resources */,
 				14F11F8F2C0F186F00F29729 /* font6.ttf in Resources */,
@@ -1048,10 +1181,12 @@
 				142058F92C24517A0044A9CF /* Time&DamePicker.swift in Sources */,
 				147DA4732C181E7900D616E7 /* LeftViewCell.swift in Sources */,
 				14BD6B512C05AF0F00D76C36 /* LiveChatModel.swift in Sources */,
+				14EF7D702C327E150003AA11 /* SwiftyCamViewController.swift in Sources */,
 				14D950A62C00AC1900EDD4E8 /* PinSetVC.swift in Sources */,
 				14D3CE542BFB68E000E700CB /* DataManager.swift in Sources */,
 				14AF4BBF2BFC80940042CB95 /* CitysCollectionViewCell.swift in Sources */,
 				14AF4BB42BFC72540042CB95 /* UIViewControllerExtented.swift in Sources */,
+				14EF7D7C2C327E150003AA11 /* EditImageVC.swift in Sources */,
 				149F12BC2C206EC20048A84D /* UserListModel.swift in Sources */,
 				14D3CE232BFB5F0300E700CB /* AppResources.swift in Sources */,
 				14939D5C2C07269F001E6A44 /* StoryTableViewCell.swift in Sources */,
@@ -1059,16 +1194,21 @@
 				14D3CE532BFB68E000E700CB /* CounterManaged.swift in Sources */,
 				1423389B2C05D72500328AB1 /* StatusVC.swift in Sources */,
 				14D3CE332BFB625000E700CB /* CommonFile.swift in Sources */,
+				14EF7D7F2C327E150003AA11 /* EditImageVC+Gestures.swift in Sources */,
 				14E1FC712C09FE6B001739C3 /* OuterCell.swift in Sources */,
 				14392C402BFF4256004F8894 /* RegisterModel.swift in Sources */,
 				143943842C2E9E0300652F8C /* ContactDetailVC.swift in Sources */,
+				14EF7D802C327E150003AA11 /* EditImageVC+Model+Enum.swift in Sources */,
 				147366272C0092D700419797 /* EditProfileModel.swift in Sources */,
 				14C02AF72C22E0E000D1AD62 /* NamePopUpVC.swift in Sources */,
 				14939D582C07230D001E6A44 /* StoryListModel.swift in Sources */,
 				14D3CE1E2BFB5D9500E700CB /* WeatherListCell.swift in Sources */,
+				14EF7D742C327E150003AA11 /* PhotoHelper.swift in Sources */,
+				14EF7D822C327E150003AA11 /* EditImageVC+UITextView.swift in Sources */,
 				14D950AB2C00C8EC00EDD4E8 /* AddTwoStepVerificationcodeModel.swift in Sources */,
 				14C0AEBF2C1AC86000F737A4 /* MyStatusDeleteVC.swift in Sources */,
 				14AF4BB62BFC72EC0042CB95 /* UIColores.swift in Sources */,
+				14EF7D712C327E150003AA11 /* SwiftyCamViewControllerDelegate.swift in Sources */,
 				14C02B012C22FBA400D1AD62 /* AboutTableViewCell.swift in Sources */,
 				1404D67C2C0487C4008E9CDE /* SettingsViewController.swift in Sources */,
 				14D3CE572BFB68E000E700CB /* WebServices.swift in Sources */,
@@ -1076,18 +1216,23 @@
 				14392C422BFF5D03004F8894 /* VerifyOTPModel.swift in Sources */,
 				14392C482BFF7B8D004F8894 /* DashChatsVC.swift in Sources */,
 				147DA4752C181E7900D616E7 /* RightViewCell.swift in Sources */,
+				14EF7D6E2C327E150003AA11 /* PreviewView.swift in Sources */,
 				14E1FC6E2C09FDFA001739C3 /* StoryBar.swift in Sources */,
 				14392C492BFF7B8D004F8894 /* TabBarVC.swift in Sources */,
 				14D3CE162BFB5D4700E700CB /* WeatherViewController.swift in Sources */,
 				14AFB2502C0092CA00F0D93D /* InnerChatVC.swift in Sources */,
+				14EF7D7E2C327E150003AA11 /* EditImageVC+Draw.swift in Sources */,
 				14D3CE412BFB652300E700CB /* UITableViewCell.swift in Sources */,
 				14D3CE432BFB655A00E700CB /* UICollectionViewCell.swift in Sources */,
 				148F89332C196DA200F59092 /* AppConfigModel.swift in Sources */,
 				14E1FC6F2C09FDFA001739C3 /* StoryHandler.swift in Sources */,
+				14EF7D812C327E150003AA11 /* EditImageVC+Text.swift in Sources */,
+				14EF7D872C32D6450003AA11 /* VideoPlayerVC.swift in Sources */,
 				14A3E2A02C00557900417919 /* optionHeaderTblvCell.swift in Sources */,
 				1439438C2C2EC04C00652F8C /* ContactGroupTableViewCell.swift in Sources */,
 				14D3CE302BFB5F7300E700CB /* WeatherListModel.swift in Sources */,
 				14D3CE552BFB68E000E700CB /* NetworkManager.swift in Sources */,
+				14EF7D832C327E150003AA11 /* BaseViewController.swift in Sources */,
 				14D3CE1C2BFB5D9500E700CB /* WeatherDayListCollectionCell.swift in Sources */,
 				14E1FC732C09FEA5001739C3 /* InnerCell.swift in Sources */,
 				14D3CE502BFB68E000E700CB /* Constant.swift in Sources */,
@@ -1106,8 +1251,11 @@
 				14AFB24C2C0073D200F0D93D /* ChatsTBlvCell.swift in Sources */,
 				140B20DD2C08517200BDCFAC /* addStoryModel.swift in Sources */,
 				14D3CE512BFB68E000E700CB /* APILogs.swift in Sources */,
+				14EF7D772C327E150003AA11 /* VideoPlayerView.swift in Sources */,
 				141F5D682C2D4D9600C43254 /* AddAttachmentModel.swift in Sources */,
+				14EF7D7D2C327E150003AA11 /* EditImageVC+AddImage.swift in Sources */,
 				1404D67A2C0458AB008E9CDE /* CheckTwoFactorModel.swift in Sources */,
+				14EF7D782C327E150003AA11 /* ImgListCell.swift in Sources */,
 				14D3CDE62BFB5CCD00E700CB /* AppDelegate.swift in Sources */,
 				14F7ACC42C1FFD4900FA2BBD /* CommunitiesVC.swift in Sources */,
 				140765F32C29A09A000236EC /* FooterViewTableViewCell.swift in Sources */,
@@ -1117,7 +1265,9 @@
 				14D3CE5B2BFB6AA300E700CB /* Validation.swift in Sources */,
 				141F5D772C2D90E200C43254 /* SelectContectTableViewCell.swift in Sources */,
 				14CB05112C21586300E69A94 /* ContactsTableViewCell.swift in Sources */,
+				14EF7D762C327E150003AA11 /* Utils.swift in Sources */,
 				143943882C2EB4BE00652F8C /* ContactMediaColletionCell.swift in Sources */,
+				14EF7D6C2C327E150003AA11 /* CameraVC.swift in Sources */,
 				141F5D622C2D3C6C00C43254 /* LocationViewController.swift in Sources */,
 				1463100E2C00C1DD0034896A /* AttachmentCLvCell.swift in Sources */,
 				14C0AEC22C1ADF1600F737A4 /* MyStatusTableViewCell.swift in Sources */,
@@ -1127,12 +1277,18 @@
 				14CB050D2C214E7D00E69A94 /* ContactsViewController.swift in Sources */,
 				14F7ACC62C20079700FA2BBD /* CommunitiesModel.swift in Sources */,
 				149F12BA2C2068590048A84D /* CallsVC.swift in Sources */,
+				14EF7D7A2C327E150003AA11 /* ImgMainCell.swift in Sources */,
 				14B3742E2C006D6500AC949B /* ProfileVC.swift in Sources */,
+				14EF7D6D2C327E150003AA11 /* Orientation.swift in Sources */,
 				145750E82C04B4AA0001E286 /* LogOutModel.swift in Sources */,
 				14A3E2A22C00578500417919 /* UIView.swift in Sources */,
 				14D950A82C00B6CC00EDD4E8 /* ConfirmPinVC.swift in Sources */,
+				14EF7D732C327E150003AA11 /* Ext.swift in Sources */,
 				14D950A42C00A32C00EDD4E8 /* Two-step-verificationVC.swift in Sources */,
+				14EF7D752C327E150003AA11 /* TLPHAsset+Ext.swift in Sources */,
 				14AF4BE32BFCC1B60042CB95 /* Singleton.swift in Sources */,
+				14EF7D722C327E150003AA11 /* SwiftyRecordButton.swift in Sources */,
+				14EF7D6F2C327E150003AA11 /* SwiftyCamButton.swift in Sources */,
 				14D3CDE82BFB5CCD00E700CB /* SceneDelegate.swift in Sources */,
 				14392C442BFF6A41004F8894 /* Two-step-verificationPopUpVC.swift in Sources */,
 			);

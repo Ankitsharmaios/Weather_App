@@ -3,6 +3,7 @@ PODS:
   - AlamofireObjectMapper (6.2.0):
     - Alamofire (= 5.0.0-rc.2)
     - ObjectMapper (~> 3.5.1)
+  - ColorPicKit (1.2.3)
   - DPOTPView (1.5.12)
   - EFCountingLabel (5.1.5)
   - Firebase/Analytics (10.23.1):
@@ -153,8 +154,10 @@ PODS:
   - GTMSessionFetcher/Core (3.3.2)
   - IQKeyboardManagerSwift (7.0.2)
   - iRecordView (0.1.4)
+  - Kingfisher (7.11.0)
   - leveldb-library (1.22.4)
   - Loaf (0.7.0)
+  - MBProgressHUD (1.2.0)
   - MGSwipeTableCell (1.6.14)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
@@ -173,12 +176,14 @@ PODS:
   - SVProgressHUD (2.3.1):
     - SVProgressHUD/Core (= 2.3.1)
   - SVProgressHUD/Core (2.3.1)
+  - TLPhotoPicker (2.1.9)
   - Toast-Swift (5.0.1)
   - WhatsappStatusRingBar (0.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.2)
   - AlamofireObjectMapper
+  - ColorPicKit (from `https://github.com/zakkhoyt/ColorPicKit`, branch `1.2.3`)
   - DPOTPView
   - EFCountingLabel
   - Firebase/Analytics
@@ -189,12 +194,15 @@ DEPENDENCIES:
   - FirebaseDatabase
   - IQKeyboardManagerSwift
   - iRecordView
+  - Kingfisher (~> 7.0)
   - Loaf
+  - MBProgressHUD (~> 1.2.0)
   - MGSwipeTableCell
   - ObjectMapper
   - ReachabilitySwift
   - SDWebImage
   - SVProgressHUD
+  - TLPhotoPicker
   - Toast-Swift (~> 5.0.0)
   - WhatsappStatusRingBar
 
@@ -225,8 +233,10 @@ SPEC REPOS:
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
     - iRecordView
+    - Kingfisher
     - leveldb-library
     - Loaf
+    - MBProgressHUD
     - MGSwipeTableCell
     - nanopb
     - ObjectMapper
@@ -236,12 +246,24 @@ SPEC REPOS:
     - RecaptchaInterop
     - SDWebImage
     - SVProgressHUD
+    - TLPhotoPicker
     - Toast-Swift
     - WhatsappStatusRingBar
+
+EXTERNAL SOURCES:
+  ColorPicKit:
+    :branch: 1.2.3
+    :git: https://github.com/zakkhoyt/ColorPicKit
+
+CHECKOUT OPTIONS:
+  ColorPicKit:
+    :commit: b5d5ac6ce45b53a764811beee33377c3b4fc129c
+    :git: https://github.com/zakkhoyt/ColorPicKit
 
 SPEC CHECKSUMS:
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
   AlamofireObjectMapper: 74d1440c92c42bbcc2b5f4dc81654ac095ec669f
+  ColorPicKit: fd8b3e261673b725c42e3efe5a9a672f0eaa95f1
   DPOTPView: 28d8a0a84a2ff4b1e4a7712065aba1cbb14e2704
   EFCountingLabel: d2e259de6ffa896cb9c325e14d5be1fccf8bfa7f
   Firebase: cf09623f98ae25a3ad484e23c7e0e5f464152d80
@@ -265,8 +287,10 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   IQKeyboardManagerSwift: d338c11a896e9f29603443700c4567e32f830c22
   iRecordView: 83aa080ce0c64db443a5f3969e441a7f12f9b8b5
+  Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
   leveldb-library: 06a69cc7582d64b29424a63e085e683cc188230a
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MGSwipeTableCell: d99ed6466f393b71cd488c6f798ba112ff5d1d01
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
@@ -276,9 +300,10 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
+  TLPhotoPicker: 939c40eaad130b69f9571e61e021e8120fa76329
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   WhatsappStatusRingBar: 7965dd946799424cff0e99832b167524867f2490
 
-PODFILE CHECKSUM: 70efc913c294e7d8e3856ffcb134e7b3ccb26509
+PODFILE CHECKSUM: 5efeb335e8a9e29233a1d8bc111c2ddb01d1af3c
 
 COCOAPODS: 1.15.2

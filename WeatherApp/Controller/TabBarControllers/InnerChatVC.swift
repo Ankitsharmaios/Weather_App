@@ -18,7 +18,10 @@ import MapKit
 import CoreLocation
 import Alamofire
 import UniformTypeIdentifiers
+import TLPhotoPicker
 class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate & RecordViewDelegate & CLLocationManagerDelegate & MKMapViewDelegate & UIDocumentPickerDelegate {
+   
+    
     
 
     @IBOutlet weak var btnContactDetail: UIButton!
@@ -87,7 +90,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        PhotoHelper.shared.fetchPhotos()
         
         
 //        let recordButton = RecordButton()
@@ -113,7 +116,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
 //
 //        recordView.delegate = self
 //        
-        
+//        
         
         
         
@@ -346,12 +349,12 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         let indexId = LastChatData?.indexId ?? ""
         let status = "yes" // Update with your desired status ("yes" or
         // Call the function to create a new entry under "Chat" table
-        updateOrInsertChatEntry(lastChatId: lastChatId, indexId: indexId, status: status)
-        
+        updateOrInsertChatEntryChat(lastChatId: lastChatId, indexId: indexId, status: status)
+        updateOrInsertChatEntryLastChat(lastChatId: lastChatId, status: status)
         
     }
     // Function to update or create a new entry under "Chat" table
-    func updateOrInsertChatEntry(lastChatId: String, indexId: String, status: String) {
+    func updateOrInsertChatEntryChat(lastChatId: String, indexId: String, status: String) {
         guard status == "yes" || status == "no" else {
             print("Invalid status value. Use 'yes' or 'no'.")
             return
@@ -369,6 +372,29 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
                 print("Error updating entry for \(lastChatId) under \(indexId): \(error.localizedDescription)")
             } else {
                 print("Entry updated successfully for \(lastChatId) under \(indexId)!")
+                
+            }
+        }
+    }
+    // Function to update or create a new entry under "Chat" table
+    func updateOrInsertChatEntryLastChat(lastChatId: String, status: String) {
+        guard status == "yes" || status == "no" else {
+            print("Invalid status value. Use 'yes' or 'no'.")
+            return
+        }
+
+        let ref = Database.database().reference()
+        let chatPathRef = ref.child("LastChat").child(lastChatId) // Use indexId as parent and lastChatId as child
+
+        let data = [
+            "deleted": status
+        ] as [String : Any]
+
+        chatPathRef.updateChildValues(data) { error, _ in
+            if let error = error {
+                print("Error updating entry for \(lastChatId),\(error.localizedDescription)")
+            } else {
+                print("Entry updated successfully for \(lastChatId)")
                 
             }
         }
@@ -576,7 +602,12 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
         }
     }
     @IBAction func cameraBtn(_ sender: Any) {
-        openCamera()
+       
+        let camVC = CameraVC.getInstance()
+        camVC.modalPresentationStyle = .overFullScreen
+        camVC.cameraActionDelegate = self
+        self.present(camVC, animated: true, completion: nil)
+
     }
     @IBAction func optionBtn(_ sender: Any) {
         self.isTableViewHide.toggle()
@@ -586,25 +617,7 @@ class InnerChatVC: UIViewController,UITextViewDelegate,UIImagePickerControllerDe
             self.optionTableView.isHidden = true
         }
     }
-    
-  
-    func openCamera() {
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = UIImagePickerController.SourceType.camera
-            //If you dont want to edit the photo then you can set allowsEditing to false
-            imagePicker.allowsEditing = true
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        else{
-            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
     }
-    
-}
 // MARK: Tableview Methods
 extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -672,7 +685,17 @@ extension InnerChatVC:UITableViewDataSource,UITableViewDelegate{
             return UITableView.automaticDimension
         }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            if longPressedIndexPath == nil || indexPath == longPressedIndexPath {
+           
+        
+        let selectedMessage = messages[indexPath.row]
+        print("Selected message: \(selectedMessage)")
+
+        let VideoPlayerVC = VideoPlayerVC.getInstance()
+        VideoPlayerVC.modalPresentationStyle = .overFullScreen
+        VideoPlayerVC.selectedmessages = selectedMessage
+        self.present(VideoPlayerVC, animated: true, completion: nil)
+        
+        if longPressedIndexPath == nil || indexPath == longPressedIndexPath {
                 toggleGreenView(for: indexPath)
                 longPressedIndexPath = nil
             } else {
@@ -776,20 +799,31 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
                 }
                 self.bottomCollectionView.isHidden = true
                 self.hideTabBar(animated: true)
+                self.isCollectionHide = false
                 self.present(ContactVC, animated: true)
             }
         }else if selectedOption == "Camera"
         {
             self.bottomCollectionView.isHidden = true
             DispatchQueue.main.async {
-                self.openCamera()
+                
+                let camVC = CameraVC.getInstance()
+                camVC.modalPresentationStyle = .overFullScreen
+                camVC.cameraActionDelegate = self
+                self.isCollectionHide = false
+                self.present(camVC, animated: true, completion: nil)
             }
 
         }else if selectedOption == "Gallery"
         {
             self.bottomCollectionView.isHidden = true
             DispatchQueue.main.async {
-                self.openGallery()
+                self.isCollectionHide = false
+                let camVC = CameraVC.getInstance()
+                camVC.modalPresentationStyle = .overFullScreen
+                camVC.cameraActionDelegate = self
+                self.isCollectionHide = false
+                self.present(camVC, animated: true, completion: nil)
             }
 
         }else if selectedOption == "Document"
@@ -799,6 +833,7 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
                 let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.plainText])
                         documentPicker.delegate = self
                         documentPicker.modalPresentationStyle = .fullScreen
+                        self.isCollectionHide = false
                         self.present(documentPicker, animated: true, completion: nil)
             }
 
@@ -817,6 +852,7 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
                                let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: audioTypes)
                                documentPicker.delegate = self
                                documentPicker.modalPresentationStyle = .fullScreen
+                               self.isCollectionHide = false
                                self.present(documentPicker, animated: true, completion: nil)
                            }
             
@@ -825,6 +861,7 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
         {
             self.bottomCollectionView.isHidden = true
             DispatchQueue.main.async {
+                self.isCollectionHide = false
                 self.openMap()
             }
 
@@ -849,42 +886,7 @@ extension InnerChatVC:UICollectionViewDataSource,UICollectionViewDelegateFlowLay
             present(locationViewController, animated: true, completion: nil)
         }
 }
-extension InnerChatVC {
-     func openGallery() {
-         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-             let imagePicker = UIImagePickerController()
-             imagePicker.delegate = self
-             imagePicker.sourceType = .photoLibrary
-             imagePicker.allowsEditing = false
-             present(imagePicker, animated: true, completion: nil)
-         }
-     }
      
-    // MARK: - UIImagePickerControllerDelegate Methods
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let selectedImage = info[.originalImage] as? UIImage {
-                // Do something with the selected image
-                // For example, you can set it to an UIImageView
-                
-            }
-            
-            if let imageURL = info[.imageURL] as? URL {
-                // Get the image path
-                let imagePath = imageURL.path
-                
-                self.imagePath = imagePath
-                self.AddAttachment(Media: self.imagePath)
-                print("Selected image path: \(imagePath)")
-            }
-            
-            picker.dismiss(animated: true, completion: nil)
-        }
-
-     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-         picker.dismiss(animated: true, completion: nil)
-     }
-   
-}
 extension InnerChatVC {
     // MARK: Firebase Data Method LastChat
        func fetchFirebaseData() {
@@ -1077,11 +1079,33 @@ extension InnerChatVC {
                 }
             }
 
-            if let imageData = try? Data(contentsOf: URL(fileURLWithPath: Media)) {
-                multipartFormData.append(imageData, withName: "Media", fileName: "image.png", mimeType: "image/png")
-            } else {
-                print("Error reading image data from file")
+            // Determine file extension and mime type based on the Media URL
+            let url = URL(fileURLWithPath: Media)
+            let fileExtension = url.pathExtension.lowercased()
+            var mimeType = ""
+
+            switch fileExtension {
+            case "jpg", "jpeg", "png":
+                mimeType = "image/jpeg"
+            case "mp4","mov":
+                mimeType = "video/mp4"
+            case "mp3":
+                mimeType = "audio/mpeg"
+            default:
+                print("Unsupported file type")
+                return
             }
+
+            // Append media data to multipart form data
+            do {
+                let mediaData = try Data(contentsOf: url)
+                multipartFormData.append(mediaData, withName: "Media", fileName: url.lastPathComponent, mimeType: mimeType)
+            } catch {
+                print("Error reading media data:", error)
+            }
+            
+            
+            
         }, to: url, method: .post, headers: headers)
         .responseJSON { response in
             switch response.result {
@@ -1110,7 +1134,7 @@ extension InnerChatVC {
                                     category = "T"
                                 case "doc", "docx":
                                     category = "D"
-                                case "mp4", "3gp", "mkv":
+                                case "mp4", "3gp", "mkv","mov":
                                     category = "V"
                                 case "csv":
                                     category = "C"
@@ -1233,6 +1257,113 @@ extension InnerChatVC {
                 if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
                     print("Server response: \(responseString)")
                 }
+            }
+        }
+    }
+}
+extension InnerChatVC: GetCameraActionDelegate {
+    
+    func getClickImage(img: UIImage) {
+        guard let editImageVC = UIStoryboard(name: "DashBoard", bundle: nil).instantiateViewController(withIdentifier: "EditImageVC") as? EditImageVC else {
+            return
+        }
+        print(img)
+        editImageVC.modalPresentationStyle = .fullScreen
+        editImageVC.arrEditPhoto = [.init(isPhoto: true, videoUrl: nil, image: img, lines: nil, doneImage: img)]
+        self.present(editImageVC, animated: true)
+        //self.navigationController?.pushViewController(editImageVC, animated: true)
+    }
+    
+    func getVideoUrl(url: URL) {
+        guard let editImageVC = UIStoryboard(name: "DashBoard", bundle: nil).instantiateViewController(withIdentifier: "EditImageVC") as? EditImageVC else {
+            return
+        }
+        print(url)
+        editImageVC.modalPresentationStyle = .fullScreen
+        editImageVC.arrEditPhoto = [.init(isPhoto: false, videoUrl: url, image: nil, lines: nil)]
+        self.present(editImageVC, animated: true)
+        //self.navigationController?.pushViewController(editImageVC, animated: true)
+    }
+    
+    
+    func skipButtonAction(sender: UIButton) {
+        guard let editImageVC = UIStoryboard(name: "DashBoard", bundle: nil).instantiateViewController(withIdentifier: "EditImageVC") as? EditImageVC else {
+            return
+        }
+        editImageVC.modalPresentationStyle = .fullScreen
+        self.present(editImageVC, animated: true)
+        
+    }
+    
+    func openPhotoLibrary(sender: UIButton) {
+        setupAndOpenImagePicker()
+    }
+    
+}
+
+extension InnerChatVC: TLPhotosPickerViewControllerDelegate {
+    
+    func setupAndOpenImagePicker() {
+        let viewController = TLPhotosPickerViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.delegate = self
+        var configure = TLPhotosPickerConfigure()
+        configure.numberOfColumn = 4
+        configure.usedCameraButton = false
+        configure.minimumLineSpacing = 2
+        configure.minimumInteritemSpacing = 2
+        viewController.configure = configure
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    // TLPhotosPickerViewControllerDelegate method
+    func dismissPhotoPicker(withTLPHAssets: [TLPHAsset]) {
+        print(withTLPHAssets)
+        print("Show Loader")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+           
+            var arrEditPhoto = [EditPhotoModel]()
+            let group = DispatchGroup()
+            
+            for i in withTLPHAssets {
+                group.enter()
+                switch i.type {
+                case .photo:
+                    arrEditPhoto.append(.init(isPhoto: true, videoUrl: nil, image: i.fullResolutionImage, lines: nil, doneImage: i.fullResolutionImage))
+                    group.leave()
+                case .video:
+                    i.exportVideoFileLowQuality { url, str in
+                        print(url)
+                        print(str)
+                        arrEditPhoto.append(.init(isPhoto: false, videoUrl: url, image: nil, lines: nil))
+                        group.leave()
+                    }
+                case .livePhoto:
+                    arrEditPhoto.append(.init(isPhoto: true, videoUrl: nil, image: i.fullResolutionImage, lines: nil, doneImage: i.fullResolutionImage))
+                    group.leave()
+                }
+            }
+            
+            group.notify(queue: .main) {
+                print("Hide Loader")
+         
+                    guard let editImageVC = UIStoryboard(name: "DashBoard", bundle: nil).instantiateViewController(withIdentifier: "EditImageVC") as? EditImageVC else {
+                        return
+                    }
+                editImageVC.callback =
+                { ImagePath in
+                        // Here, fetchedData is the data passed back through the closure
+                        print("Received data: \(ImagePath)")
+                    self.AddAttachment(Media: ImagePath)
+                    self.dismiss(animated: true)
+                    }
+                
+                   editImageVC.modalPresentationStyle = .fullScreen
+                   editImageVC.arrEditPhoto = arrEditPhoto
+                   self.present(editImageVC, animated: true)
+                
+           
             }
         }
     }

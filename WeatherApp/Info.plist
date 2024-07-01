@@ -2,12 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take photos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to show it on the map</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We need your Video Access.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need your Gallery Access.</string>
+	<string>We need access to your microphone for recording audio</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to choose photos</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

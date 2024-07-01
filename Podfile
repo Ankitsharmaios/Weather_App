@@ -28,4 +28,12 @@ target 'WeatherApp' do
   pod 'WhatsappStatusRingBar'
   pod 'iRecordView'
   pod 'MGSwipeTableCell'
+  pod "TLPhotoPicker"
+  pod 'IQKeyboardManagerSwift'
+  pod 'Kingfisher', '~> 7.0'
+  pod 'ColorPicKit', :git => 'https://github.com/zakkhoyt/ColorPicKit', :branch => '1.2.3'
+  pod 'MBProgressHUD', '~> 1.2.0'
+
+
+
 end
